@@ -5,13 +5,27 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import styles from '@/styles/blog.module.css';
-import { Bot, Check, ClipboardList, DollarSign, Flame, Link2, MailOpen, Rocket, Star, Tag, TrendingUp, Wrench, Zap } from 'lucide-react';
+import { Bot, Check, ClipboardList, DollarSign, Flame, Link2, MailOpen, Rocket, Star, Tag, TrendingUp, Wrench, Zap, Bookmark, Brain, CalendarDays, BarChart3 } from 'lucide-react';
+
+const Twitter = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={className}
+    style={{ display: 'inline-block', verticalAlign: 'middle' }}
+  >
+    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+  </svg>
+);
 
 interface Post {
   id: string;
   title: string;
   excerpt: string;
-  emoji: string;
+  emoji: React.ReactNode;
   category: string;
   categoryLabel: string;
   tagClass: string;
@@ -31,7 +45,7 @@ const MOCK_POSTS: Post[] = [
     id: 'complete-youtube-automation',
     title: 'The Complete YouTube Automation OS: How to Build a Channel That Runs Without You',
     excerpt: "Most creators think YouTube automation is about AI tools. It's not. It's about building a system — a repeatable workflow where every step from idea to upload is defined, delegated, or automated. Here's exactly how to do it in 2026.",
-    emoji: '<Brain size={16} />',
+    emoji: <Brain size={16} />,
     category: 'strategy',
     categoryLabel: 'Strategy',
     tagClass: styles.tagStrategy,
@@ -97,7 +111,7 @@ const MOCK_POSTS: Post[] = [
     id: '7-viral-video-frameworks',
     title: '7 Viral Video Frameworks That Work in Any Niche',
     excerpt: "These aren't just hooks — they're full structural blueprints. Use any one of them and your retention will measurably improve.",
-    emoji: '<Flame size={16} />',
+    emoji: <Flame size={16} />,
     category: 'growth',
     categoryLabel: 'Growth',
     tagClass: styles.tagGrowth,
@@ -131,7 +145,7 @@ const MOCK_POSTS: Post[] = [
     id: 'high-rpm-niches-2026',
     title: 'High RPM Niches in 2026: Where the Real Ad Money Is',
     excerpt: "Finance isn't the only niche with $20+ RPM anymore. Here are 11 underserved niches with top-tier ad rates and almost no faceless competition.",
-    emoji: '<DollarSign size={16} />',
+    emoji: <DollarSign size={16} />,
     category: 'monetize',
     categoryLabel: 'Monetize',
     tagClass: styles.tagMonetize,
@@ -163,7 +177,7 @@ const MOCK_POSTS: Post[] = [
     id: 'claude-vs-chatgpt-scripts',
     title: 'Claude vs ChatGPT for YouTube Scripts: An Honest Comparison',
     excerpt: "We ran 200 scripts through both models. The results were surprisingly clear — but not in the direction most people expect.",
-    emoji: '<Bot size={16} />',
+    emoji: <Bot size={16} />,
     category: 'ai',
     categoryLabel: 'AI Tools',
     tagClass: styles.tagAi,
@@ -189,7 +203,7 @@ const MOCK_POSTS: Post[] = [
     id: 'turn-1-video-into-5-shorts',
     title: 'How to Turn 1 Long Video Into 5 Viral Shorts (Without Watching It)',
     excerpt: "The exact AI-powered process we use to identify the best clips, rewrite hooks for Shorts format, and schedule them on autopilot.",
-    emoji: '<Zap size={16} />',
+    emoji: <Zap size={16} />,
     category: 'shorts',
     categoryLabel: 'Shorts',
     tagClass: styles.tagShorts,
@@ -215,7 +229,7 @@ const MOCK_POSTS: Post[] = [
     id: 'tech-stack-5k-channel',
     title: 'The Exact Tech Stack for a $5K/Month Faceless Channel',
     excerpt: "Voiceovers, thumbnails, scripts, editing, scheduling — here's every tool we use, what we pay, and what we'd replace first.",
-    emoji: '<BarChart3 size={16} />',
+    emoji: <BarChart3 size={16} />,
     category: 'tools',
     categoryLabel: 'Tools',
     tagClass: styles.tagTools,
@@ -242,7 +256,7 @@ const MOCK_POSTS: Post[] = [
     id: '90-day-content-calendar',
     title: 'The 90-Day Content Calendar That Grew a Channel to 100K',
     excerpt: "We're publishing the exact calendar — every topic, format, upload date, and thumbnail strategy — that took a brand-new finance channel to 100K in 3 months.",
-    emoji: '<CalendarDays size={16} />',
+    emoji: <CalendarDays size={16} />,
     category: 'strategy',
     categoryLabel: 'Strategy',
     tagClass: styles.tagStrategy,
@@ -598,8 +612,8 @@ export default function Blog() {
               </div>
               <div className={styles.aShare}>
                 <div className={styles.shareBtn} title="Share" onClick={() => alert('Link copied to clipboard!')}><Link2 size={16} /></div>
-                <div className={styles.shareBtn} title="Twitter" onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedPost.title)}`)}>🐦</div>
-                <div className={styles.shareBtn} title="Save" onClick={() => alert('Article saved!')}>🔖</div>
+                <div className={styles.shareBtn} title="Twitter" onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedPost.title)}`)}><Twitter size={16} /></div>
+                <div className={styles.shareBtn} title="Save" onClick={() => alert('Article saved!')}><Bookmark size={16} /></div>
               </div>
             </div>
 

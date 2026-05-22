@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/onboarding.module.css";
-import { BarChart3, Check, Flame, Lightbulb, Lock, Mail, Play, RefreshCw, Rocket, Sparkles, Target } from 'lucide-react';
+import { BarChart3, Bot, Brain, Building, Check, DollarSign, Dumbbell, Flame, Gamepad2, Globe, Handshake, Lightbulb, Lock, Mail, Palette, PartyPopper, PenTool, Plane, Play, RefreshCw, Rocket, ShoppingCart, Smartphone, Sparkles, Target, TrendingUp, Zap } from 'lucide-react';
 
 interface NicheItem {
   name: string;
-  icon: string;
+  icon: React.ReactNode;
   desc: string;
 }
 
@@ -52,27 +52,27 @@ export default function Onboarding() {
   ];
 
   const niches: NicheItem[] = [
-    { name: "Finance", icon: "<DollarSign size={16} />", desc: "Money, investing, wealth" },
-    { name: "AI & Tech", icon: "<Bot size={16} />", desc: "Tools, reviews, tutorials" },
-    { name: "Health", icon: "<Dumbbell size={16} />", desc: "Fitness, nutrition, wellness" },
-    { name: "Self Improvement", icon: "<Brain size={16} />", desc: "Habits, mindset, productivity" },
-    { name: "Gaming", icon: "🎮", desc: "Reviews, walkthroughs" },
-    { name: "Business", icon: "<Building size={16} />", desc: "Startups, entrepreneurship" },
-    { name: "Travel", icon: "✈️", desc: "Destinations, tips, vlogs" },
-    { name: "Creative", icon: "<Palette size={16} />", desc: "Design, art, storytelling" },
-    { name: "Other", icon: "<Sparkles size={16} />", desc: "Something else entirely" },
+    { name: "Finance", icon: <DollarSign size={16} />, desc: "Money, investing, wealth" },
+    { name: "AI & Tech", icon: <Bot size={16} />, desc: "Tools, reviews, tutorials" },
+    { name: "Health", icon: <Dumbbell size={16} />, desc: "Fitness, nutrition, wellness" },
+    { name: "Self Improvement", icon: <Brain size={16} />, desc: "Habits, mindset, productivity" },
+    { name: "Gaming", icon: <Gamepad2 size={16} />, desc: "Reviews, walkthroughs" },
+    { name: "Business", icon: <Building size={16} />, desc: "Startups, entrepreneurship" },
+    { name: "Travel", icon: <Plane size={16} />, desc: "Destinations, tips, vlogs" },
+    { name: "Creative", icon: <Palette size={16} />, desc: "Design, art, storytelling" },
+    { name: "Other", icon: <Sparkles size={16} />, desc: "Something else entirely" },
   ];
 
   const goalOptions = [
-    "<DollarSign size={16} /> Make money from ads",
-    "<TrendingUp size={16} /> Grow subscribers fast",
-    "<Zap size={16} /> Publish more consistently",
-    "<Bot size={16} /> Automate my workflow",
-    "<Smartphone size={16} /> Repurpose to Shorts",
-    "<Building size={16} /> Run a YouTube agency",
-    "<Globe size={16} /> Build a personal brand",
-    "🛒 Sell products / courses",
-    "<Handshake size={16} /> Get brand sponsorships",
+    { id: "Make money from ads", label: "Make money from ads", icon: <DollarSign size={16} /> },
+    { id: "Grow subscribers fast", label: "Grow subscribers fast", icon: <TrendingUp size={16} /> },
+    { id: "Publish more consistently", label: "Publish more consistently", icon: <Zap size={16} /> },
+    { id: "Automate my workflow", label: "Automate my workflow", icon: <Bot size={16} /> },
+    { id: "Repurpose to Shorts", label: "Repurpose to Shorts", icon: <Smartphone size={16} /> },
+    { id: "Run a YouTube agency", label: "Run a YouTube agency", icon: <Building size={16} /> },
+    { id: "Build a personal brand", label: "Build a personal brand", icon: <Globe size={16} /> },
+    { id: "Sell products / courses", label: "Sell products / courses", icon: <ShoppingCart size={16} /> },
+    { id: "Get brand sponsorships", label: "Get brand sponsorships", icon: <Handshake size={16} /> },
   ];
 
   const go = (n: number) => {
@@ -159,7 +159,7 @@ export default function Onboarding() {
       {/* RIGHT PANEL */}
       <div className={styles.right}>
         <div className={styles.topbar}>
-          <span style={{ fontSize: "12px", color: "var(--muted2)" }}>Almost there 👋</span>
+          <span style={{ fontSize: "12px", color: "var(--muted2)", display: "flex", alignItems: "center", gap: "4px" }}>Almost there <Sparkles size={12} style={{ color: "var(--red)" }} /></span>
           <div className={styles.progressTrack}>
             <div className={styles.progressFill} style={{ width: `${(cur / total) * 100}%` }}></div>
           </div>
@@ -286,11 +286,12 @@ export default function Onboarding() {
             <div className={styles.pillWrap}>
               {goalOptions.map((g) => (
                 <div
-                  key={g}
-                  className={`${styles.pill} ${goals.includes(g) ? styles.on : ""}`}
-                  onClick={() => toggleGoal(g)}
+                  key={g.id}
+                  className={`${styles.pill} ${goals.includes(g.id) ? styles.on : ""}`}
+                  onClick={() => toggleGoal(g.id)}
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
                 >
-                  {g}
+                  {g.icon} {g.label}
                 </div>
               ))}
             </div>
@@ -338,7 +339,7 @@ export default function Onboarding() {
                 <div className={styles.connSub}>Sync analytics, subscribers & video data</div>
               </div>
               <div className={`${styles.connStatus} ${conn.youtube ? styles.csOn : styles.csOff}`}>
-                {conn.youtube ? "<Check size={16} /> Connected" : "Connect"}
+                {conn.youtube ? <><Check size={16} /> Connected</> : "Connect"}
               </div>
             </div>
             <div
@@ -351,7 +352,7 @@ export default function Onboarding() {
                 <div className={styles.connSub}>Track traffic from YouTube to your website</div>
               </div>
               <div className={`${styles.connStatus} ${conn.ga ? styles.csOn : styles.csOff}`}>
-                {conn.ga ? "<Check size={16} /> Connected" : "Connect"}
+                {conn.ga ? <><Check size={16} /> Connected</> : "Connect"}
               </div>
             </div>
             <div
@@ -364,7 +365,7 @@ export default function Onboarding() {
                 <div className={styles.connSub}>Convert views to email subscribers</div>
               </div>
               <div className={`${styles.connStatus} ${conn.newsletter ? styles.csOn : styles.csOff}`}>
-                {conn.newsletter ? "<Check size={16} /> Connected" : "Connect"}
+                {conn.newsletter ? <><Check size={16} /> Connected</> : "Connect"}
               </div>
             </div>
             <div
@@ -427,7 +428,7 @@ export default function Onboarding() {
                   className={`${styles.ib} ${styles.ibRed}`}
                   onClick={() => setIdeaConfirmed(true)}
                 >
-                  {ideaConfirmed ? "<Check size={16} /> Confirmed" : "<PenTool size={16} /> Write Script Now"}
+                  {ideaConfirmed ? <><Check size={16} /> Confirmed</> : <><PenTool size={16} /> Write Script Now</>}
                 </button>
               </div>
             </div>
@@ -455,7 +456,7 @@ export default function Onboarding() {
               </div>
               <div className={styles.ci}>
                 <div className={`${styles.ciBox} ${ideaConfirmed ? styles.done : styles.pend}`}>
-                  {ideaConfirmed ? "<Check size={16} />" : ""}
+                  {ideaConfirmed ? <Check size={16} /> : ""}
                 </div>
                 <div className={`${styles.ciText} ${ideaConfirmed ? styles.done : ""}`}>
                   First video topic confirmed
@@ -466,7 +467,7 @@ export default function Onboarding() {
 
           {/* S6: SUCCESS */}
           <div className={`${styles.screen} ${styles.success} ${cur === 6 ? styles.active : ""}`}>
-            <div className={styles.confetti}>🎉 <Rocket size={16} /> <Sparkles size={16} /> <Target size={16} /> <Flame size={16} /></div>
+            <div className={styles.confetti}><PartyPopper size={16} /> <Rocket size={16} /> <Sparkles size={16} /> <Target size={16} /> <Flame size={16} /></div>
             <div className={styles.sLabel} style={{ textAlign: "center" }}>
               You&apos;re all set!
             </div>
@@ -533,7 +534,7 @@ export default function Onboarding() {
             </button>
             <div className={styles.hint}>{hints[cur - 1] || ""}</div>
             <button className={styles.nextBtn} onClick={() => go(cur + 1)}>
-              {cur === total - 1 ? "Finish Setup <Rocket size={16} />" : "Continue"} <span>→</span>
+              {cur === total - 1 ? <><span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Finish Setup <Rocket size={16} /></span></> : "Continue"} <span>→</span>
             </button>
           </div>
         )}

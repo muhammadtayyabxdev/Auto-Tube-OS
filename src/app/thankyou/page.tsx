@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/thankyou.module.css';
-import { CalendarDays, Check, CreditCard, Mail, Rocket, Sparkles, Target } from 'lucide-react';
+import { CalendarDays, Check, CreditCard, Mail, PartyPopper, Rocket, Sparkles, Target } from 'lucide-react';
 
 export default function ThankYouPage() {
   return (
@@ -15,7 +15,7 @@ export default function ThankYouPage() {
         <div className={styles.gridBg}></div>
         <div className={styles.glow}></div>
         <div className={styles.inner}>
-          <div className={styles.confetti}>🎉 <Rocket size={16} /> <Sparkles size={16} /> <Target size={16} /></div>
+          <div className={styles.confetti}><PartyPopper size={16} /> <Rocket size={16} /> <Sparkles size={16} /> <Target size={16} /></div>
           <div className={styles.badge}><Check size={14} /> Payment Confirmed</div>
           <h1 className={styles.title}>
             Welcome to

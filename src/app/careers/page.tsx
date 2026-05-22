@@ -4,7 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/careers.module.css";
-import { BookOpen, Bot, Building, Check, DollarSign, Globe, Handshake, MailOpen, MapPin, Monitor, Rocket, Target, TrendingUp, Wrench } from 'lucide-react';
+import { BookOpen, Bot, Building, Check, DollarSign, Globe, Handshake, MailOpen, MapPin, Monitor, Rocket, Target, TrendingUp, Wrench, Zap, Palmtree, Heart } from 'lucide-react';
 
 export default function Careers() {
   const [showToast, setShowToast] = useState(false);
@@ -43,7 +43,7 @@ export default function Careers() {
             </p>
           </div>
           <div className={styles.cc}>
-            <div className={styles.ccIcon}>🏃</div>
+            <div className={styles.ccIcon}><Zap size={16} /></div>
             <div className={styles.ccTitle}>Move fast, ship often</div>
             <p className={styles.ccDesc}>
               We ship weekly. No 6-month roadmaps. You&apos;ll see your work used by real creators within days of writing it.
@@ -90,7 +90,7 @@ export default function Careers() {
             <p className={styles.perkDesc}>Market-rate pay — no &quot;startup discount.&quot;</p>
           </div>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>🌴</div>
+            <div className={styles.perkIcon}><Palmtree size={16} /></div>
             <div className={styles.perkTitle}>Unlimited PTO</div>
             <p className={styles.perkDesc}>Take time off when you need it.</p>
           </div>
@@ -105,7 +105,7 @@ export default function Careers() {
             <p className={styles.perkDesc}>Courses, books, conferences.</p>
           </div>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>🏥</div>
+            <div className={styles.perkIcon}><Heart size={16} /></div>
             <div className={styles.perkTitle}>Health coverage</div>
             <p className={styles.perkDesc}>Full medical or stipend.</p>
           </div>

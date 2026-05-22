@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/status.module.css';
-import { Check, MailOpen } from 'lucide-react';
+import { AlertTriangle, Check, MailOpen } from 'lucide-react';
 
 interface ServiceItemProps {
   name: string;
@@ -155,7 +155,9 @@ export default function StatusPage() {
         <h2 className={styles.secTitle}>Recent Incidents</h2>
         <div className={styles.incCard}>
           <div className={styles.incHeader}>
-            <div className={styles.incName}>🟡 Shorts Repurposer — Degraded Performance</div>
+            <div className={styles.incName} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <AlertTriangle size={16} style={{ color: 'var(--amber)' }} /> Shorts Repurposer — Degraded Performance
+            </div>
             <span className={styles.incInvestigating}>Investigating</span>
           </div>
           <div className={styles.tl}>

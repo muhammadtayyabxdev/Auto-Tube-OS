@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/email-verify.module.css";
-import { Check, Lightbulb, Mail } from 'lucide-react';
+import { Check, Lightbulb, Mail, PartyPopper } from 'lucide-react';
 
 export default function EmailVerify() {
   const router = useRouter();
@@ -142,7 +142,7 @@ export default function EmailVerify() {
             <div className={styles.cardBody} style={{ padding: "40px 32px", textAlign: "center" }}>
               <div className={styles.checkmark}><Check size={16} /></div>
               <h2 style={{ fontFamily: "var(--fh)", fontSize: "1.4rem", fontWeight: 800, marginBottom: "8px" }}>
-                Email verified! 🎉
+                Email verified! <PartyPopper size={18} style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: '6px', color: 'var(--red)' }} />
               </h2>
               <p style={{ fontSize: "13px", color: "var(--muted)", marginBottom: "16px" }}>
                 Your account is active. Welcome to AutoTubeOS!

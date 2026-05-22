@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/auth.module.css";
-import { Star } from 'lucide-react';
+import { Star, Eye, EyeOff } from 'lucide-react';
 
 export default function Auth() {
   const router = useRouter();
@@ -175,7 +175,7 @@ export default function Auth() {
                   className={styles.inpIcon}
                   onClick={() => setShowSignInPw(!showSignInPw)}
                 >
-                  {showSignInPw ? "🙈" : "<Eye size={16} />"}
+                  {showSignInPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </span>
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function Auth() {
                   className={styles.inpIcon}
                   onClick={() => setShowSignUpPw(!showSignUpPw)}
                 >
-                  {showSignUpPw ? "🙈" : "<Eye size={16} />"}
+                  {showSignUpPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </span>
               </div>
               {password && (

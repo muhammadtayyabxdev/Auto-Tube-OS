@@ -5,7 +5,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/comparison.module.css";
-import { BarChart3, Bot, Check, DollarSign, RefreshCw, Rocket, Trophy, X } from 'lucide-react';
+import { BarChart3, Bot, Bug, Check, DollarSign, RefreshCw, Rocket, Trophy, X } from 'lucide-react';
 
 export default function Comparison() {
   const [activeTab, setActiveTab] = useState<"tubebuddy" | "vidiq" | "all">("tubebuddy");
@@ -200,7 +200,7 @@ export default function Comparison() {
             <div className={styles.painGrid}>
               <div className={styles.painCard}>
                 <div className={styles.painHeader}>
-                  <div className={styles.painLogo}>🐛</div>
+                  <div className={styles.painLogo}><Bug size={20} /></div>
                   <div className={styles.painName}>TubeBuddy Limitations</div>
                 </div>
                 <div className={styles.painList}>

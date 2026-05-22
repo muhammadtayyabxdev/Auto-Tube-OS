@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from '@/styles/script-generator.module.css';
-import { AlertTriangle, ArrowDown, Bot, Brain, Check, ClipboardList, DollarSign, FileText, Link2, PenTool, Pin, Plus, RefreshCw, Settings, Sparkles, Target, Trash2, Zap } from 'lucide-react';
+import { AlertCircle, AlertTriangle, ArrowDown, BookOpen, Bot, Brain, Check, ClipboardList, DollarSign, Eye, EyeOff, FileText, Flame, Ghost, Link2, Magnet, MessageCircle, PenTool, Pin, Play, Plus, RefreshCw, Settings, Smile, Sparkles, Target, Trash2, XCircle, Zap } from 'lucide-react';
 
 interface SectionDef {
   key: string;
@@ -12,6 +12,25 @@ interface SectionDef {
   tag: string;
   time: string;
 }
+
+const formats = [
+  { val: 'Listicle', label: 'Listicle', icon: <ClipboardList size={16} /> },
+  { val: 'Documentary', label: 'Documentary', icon: <Play size={16} /> },
+  { val: 'Finance', label: 'Finance', icon: <DollarSign size={16} /> },
+  { val: 'Horror Story', label: 'Horror Story', icon: <Ghost size={16} /> },
+  { val: 'Reddit Story', label: 'Reddit Story', icon: <MessageCircle size={16} /> },
+  { val: 'Shorts (60s)', label: 'Shorts (60s)', icon: <Zap size={16} /> },
+  { val: 'Educational', label: 'Educational', icon: <Brain size={16} /> },
+  { val: 'Motivational', label: 'Motivational', icon: <Smile size={16} /> },
+];
+
+const tones = [
+  { val: 'Urgent', label: 'Urgent', icon: <Flame size={16} /> },
+  { val: 'Educational', label: 'Educational', icon: <BookOpen size={16} /> },
+  { val: 'Shocking', label: 'Shocking', icon: <AlertCircle size={16} /> },
+  { val: 'Friendly', label: 'Friendly', icon: <Smile size={16} /> },
+  { val: 'Analytical', label: 'Analytical', icon: <Brain size={16} /> },
+];
 
 function ScriptGeneratorContent() {
   const searchParams = useSearchParams();
@@ -35,14 +54,14 @@ function ScriptGeneratorContent() {
   const [geminiKey, setGeminiKey] = useState<string>('');
   const [showGroqKey, setShowGroqKey] = useState<boolean>(false);
   const [showGeminiKey, setShowGeminiKey] = useState<boolean>(false);
-  const [groqStatus, setGroqStatus] = useState<string>('Enter your API key');
+  const [groqStatus, setGroqStatus] = useState<React.ReactNode>('Enter your API key');
   const [groqDotClass, setGroqDotClass] = useState<string>('');
-  const [geminiStatus, setGeminiStatus] = useState<string>('Enter your API key');
+  const [geminiStatus, setGeminiStatus] = useState<React.ReactNode>('Enter your API key');
   const [geminiDotClass, setGeminiDotClass] = useState<string>('');
 
   // Selected config states
-  const [selectedFormat, setSelectedFormat] = useState<string>('<ClipboardList size={16} /> Listicle');
-  const [selectedTone, setSelectedTone] = useState<string>('<Flame size={16} /> Urgent');
+  const [selectedFormat, setSelectedFormat] = useState<string>('Listicle');
+  const [selectedTone, setSelectedTone] = useState<string>('Urgent');
   const [selectedLength, setSelectedLength] = useState<string>('8min');
   const [creativity, setCreativity] = useState<number>(0.7);
 
@@ -96,7 +115,7 @@ function ScriptGeneratorContent() {
     }
     const isValid = val.startsWith('gsk_');
     setGroqDotClass(isValid ? styles.ok : styles.err);
-    setGroqStatus(isValid ? '<Check size={16} /> Key format looks correct' : '✗ Check key format (starts with gsk_)');
+    setGroqStatus(isValid ? <><Check size={16} /> Key format looks correct</> : <><XCircle size={16} style={{ color: 'var(--red)' }} /> Check key format (starts with gsk_)</>);
   };
 
   const validateGeminiKey = (val: string) => {
@@ -108,7 +127,7 @@ function ScriptGeneratorContent() {
     }
     const isValid = val.startsWith('AIza');
     setGeminiDotClass(isValid ? styles.ok : styles.err);
-    setGeminiStatus(isValid ? '<Check size={14} /> Key format looks correct' : '✗ Check key format (starts with AIza)');
+    setGeminiStatus(isValid ? <><Check size={14} /> Key format looks correct</> : <><XCircle size={14} style={{ color: 'var(--red)' }} /> Check key format (starts with AIza)</>);
   };
 
   const handleProviderSwitch = (p: 'groq' | 'gemini') => {
@@ -134,7 +153,7 @@ function ScriptGeneratorContent() {
 
   const parseTextIntoSections = (text: string) => {
     const sectionDefs: SectionDef[] = [
-      { key: '[HOOK]', label: '🎣 Hook', tag: styles.tagHook, time: '0–15s' },
+      { key: '[HOOK]', label: 'Hook', tag: styles.tagHook, time: '0–15s' },
       { key: '[INTRO]', label: '<Pin size={14} /> Intro', tag: styles.tagIntro, time: '15–45s' },
       { key: '[MAIN CONTENT]', label: '<ClipboardList size={14} /> Main Content', tag: styles.tagMain, time: '45s–End' },
       { key: '[CTA]', label: '<Target size={14} /> Call to Action', tag: styles.tagCta, time: 'Final 20s' }
@@ -525,7 +544,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                   className={`${styles.apiOpt} ${styles.gemini} ${currentProvider === 'gemini' ? styles.on : ''}`}
                   onClick={() => handleProviderSwitch('gemini')}
                 >
-                  ✦ Gemini
+                  <Sparkles size={16} /> Gemini
                 </div>
               </div>
             </div>
@@ -544,7 +563,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                       onChange={(e) => validateGroqKey(e.target.value)}
                     />
                     <button className={styles.eyeBtn} onClick={() => setShowGroqKey(!showGroqKey)}>
-                      {showGroqKey ? '🙈' : '<Eye size={16} />'}
+                      {showGroqKey ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
                   <div className={styles.apiStatus}>
@@ -581,7 +600,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                       onChange={(e) => validateGeminiKey(e.target.value)}
                     />
                     <button className={styles.eyeBtn} onClick={() => setShowGeminiKey(!showGeminiKey)}>
-                      {showGeminiKey ? '🙈' : '<Eye size={14} />'}
+                      {showGeminiKey ? <EyeOff size={14} /> : <Eye size={14} />}
                     </button>
                   </div>
                   <div className={styles.apiStatus}>
@@ -622,17 +641,13 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           <div className={styles.inpBlock}>
             <div className={styles.cfgLabel}>Script Format</div>
             <div className={styles.formatGrid}>
-              {[
-                '<ClipboardList size={16} /> Listicle', '<Play size={16} /> Documentary', '<DollarSign size={16} /> Finance', 
-                '👻 Horror Story', '<MessageCircle size={16} /> Reddit Story', '<Zap size={16} /> Shorts (60s)', 
-                '<Brain size={16} /> Educational', '🎭 Motivational'
-              ].map((fmt) => (
+              {formats.map((fmt) => (
                 <div 
-                  key={fmt} 
-                  className={`${styles.fmtChip} ${selectedFormat === fmt ? styles.on : ''}`}
-                  onClick={() => setSelectedFormat(fmt)}
+                  key={fmt.val} 
+                  className={`${styles.fmtChip} ${selectedFormat === fmt.val ? styles.on : ''}`}
+                  onClick={() => setSelectedFormat(fmt.val)}
                 >
-                  {fmt}
+                  {fmt.icon} {fmt.label}
                 </div>
               ))}
             </div>
@@ -642,13 +657,13 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           <div className={styles.inpBlock}>
             <div className={styles.cfgLabel}>Tone</div>
             <div className={styles.toneRow}>
-              {['<Flame size={16} /> Urgent', '<BookOpen size={16} /> Educational', '😮 Shocking', '😊 Friendly', '🤔 Analytical'].map((tn) => (
+              {tones.map((tn) => (
                 <div 
-                  key={tn} 
-                  className={`${styles.tonePill} ${selectedTone === tn ? styles.on : ''}`}
-                  onClick={() => setSelectedTone(tn)}
+                  key={tn.val} 
+                  className={`${styles.tonePill} ${selectedTone === tn.val ? styles.on : ''}`}
+                  onClick={() => setSelectedTone(tn.val)}
                 >
-                  {tn}
+                  {tn.icon} {tn.label}
                 </div>
               ))}
             </div>
@@ -719,7 +734,11 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
         <div className={styles.topbar}>
           <div className={styles.tbTitle}>Script Generator</div>
           <div className={`${styles.tbPill} ${styles.tbProvider} ${currentProvider === 'groq' ? styles.groq : styles.gemini}`}>
-            {currentProvider === 'groq' ? '<Zap size={14} /> Groq' : '✦ Gemini'}
+            {currentProvider === 'groq' ? (
+              <><Zap size={14} /> Groq</>
+            ) : (
+              <><Sparkles size={14} /> Gemini</>
+            )}
           </div>
           {totalTokens > 0 && (
             <div className={`${styles.tbPill} ${styles.tbTokens}`}>{totalTokens.toLocaleString()} tokens</div>
@@ -735,7 +754,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           {/* TOAST DISPLAY */}
           {toastMessage && (
             <div className={`${styles.toast} ${styles.show} ${toastType === 'error' ? styles.error : styles.success}`}>
-              {toastType === 'error' ? '✗' : '<Check size={16} />'} {toastMessage}
+              {toastType === 'error' ? <XCircle size={16} /> : <Check size={16} />} {toastMessage}
             </div>
           )}
 
@@ -770,7 +789,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                   className={styles.exChip} 
                   onClick={() => setTopic('The dark truth about passive income no one tells you')}
                 >
-                  <span className={styles.exIcon}>👻</span> The dark truth about passive income
+                  <span className={styles.exIcon}><Ghost size={16} /></span> The dark truth about passive income
                 </div>
               </div>
             </div>
@@ -792,13 +811,17 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
               {/* Meta indicators */}
               <div className={styles.scriptMeta}>
                 <div className={styles.smItem}>
-                  <ClipboardList size={14} /> <span className={`${styles.smBadge} ${styles.badgeFormat}`}>{selectedFormat.replace(/[^\w ]/g, '').trim()}</span>
+                  <ClipboardList size={14} /> <span className={`${styles.smBadge} ${styles.badgeFormat}`}>{selectedFormat}</span>
                 </div>
                 <div className={styles.smItem}>
-                  🎭 <span className={`${styles.smBadge} ${styles.badgeTone}`}>{selectedTone.replace(/[^\w ]/g, '').trim()}</span>
+                  <Smile size={14} /> <span className={`${styles.smBadge} ${styles.badgeTone}`}>{selectedTone}</span>
                 </div>
                 <div className={styles.smItem} style={{ marginLeft: 'auto', color: 'var(--muted2)' }}>
-                  {currentProvider === 'groq' ? '<Zap size={14} /> Groq Llama' : '✦ Google Gemini'} · {currentProvider === 'groq' ? groqModel.split('-')[0].toUpperCase() : 'FLASH 2.0'}
+                  {currentProvider === 'groq' ? (
+                    <><Zap size={14} /> Groq Llama</>
+                  ) : (
+                    <><Sparkles size={14} /> Google Gemini</>
+                  )} · {currentProvider === 'groq' ? groqModel.split('-')[0].toUpperCase() : 'FLASH 2.0'}
                 </div>
               </div>
 
@@ -847,7 +870,9 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                 {parsedSections['[HOOK]'] !== undefined && (
                   <div className={styles.scriptSection}>
                     <div className={styles.sectionHeader} onClick={() => toggleSectionExpand('[HOOK]')}>
-                      <span className={`${styles.sectionTag} ${styles.tagHook}`}>🎣 Hook</span>
+                      <span className={`${styles.sectionTag} ${styles.tagHook}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                        <Magnet size={16} /> Hook
+                      </span>
                       <span className={styles.sectionTime}>0–15s</span>
                       <span className={`${styles.sectionToggle} ${openSections['[HOOK]'] ? styles.open : ''}`}>▾</span>
                     </div>
@@ -937,8 +962,8 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           <button className={styles.actionBtn} onClick={handleGenerate} disabled={buttonsDisabled || isGenerating}>
             <RefreshCw size={16} /> Regenerate
           </button>
-          <button className={styles.actionBtn} onClick={handleImproveHook} disabled={buttonsDisabled || isGenerating}>
-            🎣 Improve Hook
+          <button className={styles.actionBtn} onClick={handleImproveHook} disabled={buttonsDisabled || isGenerating} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}>
+            <Magnet size={16} /> Improve Hook
           </button>
           <button className={styles.actionBtn} onClick={handleAddPoint} disabled={buttonsDisabled || isGenerating}>
             <Plus size={16} /> Add Point

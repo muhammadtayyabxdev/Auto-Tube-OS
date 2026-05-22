@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/cookie.module.css';
-import { Check, Lightbulb, X } from 'lucide-react';
+import { Check, Lightbulb, X, Cookie } from 'lucide-react';
 
 export default function CookieBannerPage() {
   const [toastMessage, setToastMessage] = useState<string>('');
@@ -38,7 +38,10 @@ export default function CookieBannerPage() {
       <Navbar />
 
       <div className={styles.page}>
-        <h1 className={styles.pageTitle}>🍪 Cookie Banner Variants</h1>
+        <h1 className={styles.pageTitle} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Cookie size={28} style={{ color: 'var(--red)' }} />
+          Cookie Banner Variants
+        </h1>
         <p className={styles.pageSub}>
           Four GDPR-compliant cookie consent styles. Copy the HTML and drop into any page. All fully functional with
           accept/decline/settings logic.
@@ -48,7 +51,9 @@ export default function CookieBannerPage() {
         <div className={styles.variantBlock}>
           <div className={styles.demoLabel}>Variant 1 — Standard Banner</div>
           <div className={styles.cb} style={{ opacity: standardOpacity }}>
-            <div className={styles.cbIcon}>🍪</div>
+            <div className={styles.cbIcon}>
+              <Cookie size={24} style={{ color: 'var(--red)' }} />
+            </div>
             <div className={styles.cbContent}>
               <div className={styles.cbTitle}>We use cookies</div>
               <div className={styles.cbText}>
@@ -92,7 +97,9 @@ export default function CookieBannerPage() {
           <div className={styles.demoLabel}>Variant 2 — Detailed with Categories</div>
           <div className={styles.cbDetailed} style={{ opacity: detailedOpacity }}>
             <div className={styles.cbTop}>
-              <div className={styles.cbIcon}>🍪</div>
+              <div className={styles.cbIcon}>
+                <Cookie size={24} style={{ color: 'var(--red)' }} />
+              </div>
               <div className={styles.cbContent}>
                 <div className={styles.cbTitle}>Cookie Preferences</div>
                 <div className={styles.cbText} style={{ marginBottom: 0 }}>
@@ -204,7 +211,9 @@ export default function CookieBannerPage() {
           <div className={styles.variantBlock}>
             <div className={styles.demoLabel}>Variant 4 — Bottom Fixed Bar (dark glass)</div>
             <div className={styles.cbFixedDemo}>
-              <div className={styles.cbIcon}>🍪</div>
+              <div className={styles.cbIcon}>
+                <Cookie size={24} style={{ color: 'var(--red)' }} />
+              </div>
               <div className={styles.cbContent}>
                 <div className={styles.cbTitle}>Your privacy, your choice.</div>
                 <div className={styles.cbText}>

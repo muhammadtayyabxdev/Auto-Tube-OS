@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/legal.module.css';
-import { AlertTriangle, BookOpen, CalendarDays, Check, KeyRound, RefreshCw } from 'lucide-react';
+import { AlertTriangle, BookOpen, CalendarDays, Check, KeyRound, Receipt, RefreshCw } from 'lucide-react';
 
 type DocType = 'terms' | 'privacy';
 
@@ -202,7 +202,7 @@ export default function LegalPage() {
             </div>
 
             <div className={styles.summaryBox}>
-              <div className={styles.sbTitle}>🧾 Plain English Summary</div>
+              <div className={styles.sbTitle} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><Receipt size={18} /> Plain English Summary</div>
               <div className={styles.sbItems}>
                 <div className={styles.sbItem}>
                   <span className={styles.sbIcon}><Check size={16} /></span> You own everything you create using AutoTubeOS.

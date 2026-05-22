@@ -5,26 +5,26 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/features.module.css';
-import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Brain, CalendarDays, Check, ClipboardList, Clock, DollarSign, Eye, FileText, Flame, Globe, Image as ImageIcon, Lightbulb, MailOpen, MessageCircle, PenTool, Pin, Play, RefreshCw, Save, Search, Settings, Shuffle, Smartphone, Target, TrendingUp, Trophy, Upload, Users, Zap } from 'lucide-react';
+import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Brain, CalendarDays, Check, ClipboardList, Clock, DollarSign, Eye, FileText, Flame, Ghost, Globe, Image as ImageIcon, Keyboard, Lightbulb, Magnet, MailOpen, MessageCircle, MousePointer2, PenTool, Pin, Play, RefreshCw, Save, Search, Settings, Shuffle, Smile, Smartphone, Sparkles, Target, TrendingUp, Trophy, Tv, Upload, Users, Zap } from 'lucide-react';
 
 type TabId = 'topic' | 'script' | 'shorts' | 'retention' | 'calendar' | 'competitor' | 'agents';
 
 interface Tab {
   id: TabId;
-  label: string;
+  label: React.ReactNode;
 }
 
 export default function FeaturesPage() {
   const [activeTab, setActiveTab] = useState<TabId>('topic');
 
   const tabs: Tab[] = [
-    { id: 'topic', label: '<Flame size={16} /> Topic Finder' },
-    { id: 'script', label: '<PenTool size={16} /> Script Generator' },
-    { id: 'shorts', label: '<Zap size={16} /> Shorts Repurposer' },
-    { id: 'retention', label: '<BarChart3 size={16} /> Retention Optimizer' },
-    { id: 'calendar', label: '<CalendarDays size={16} /> Content Calendar' },
-    { id: 'competitor', label: '<Search size={16} /> Competitor Intel' },
-    { id: 'agents', label: '<Bot size={16} /> AI Agents' },
+    { id: 'topic', label: <><Flame size={16} /> Topic Finder</> },
+    { id: 'script', label: <><PenTool size={16} /> Script Generator</> },
+    { id: 'shorts', label: <><Zap size={16} /> Shorts Repurposer</> },
+    { id: 'retention', label: <><BarChart3 size={16} /> Retention Optimizer</> },
+    { id: 'calendar', label: <><CalendarDays size={16} /> Content Calendar</> },
+    { id: 'competitor', label: <><Search size={16} /> Competitor Intel</> },
+    { id: 'agents', label: <><Bot size={16} /> AI Agents</> },
   ];
 
   const handleTabChange = (id: TabId) => {
@@ -189,7 +189,7 @@ export default function FeaturesPage() {
           <div className={styles.hsteps}>
             <div className={styles.hs}>
               <div className={styles.hsN}>01</div>
-              <div className={styles.hsI}>⌨️</div>
+              <div className={styles.hsI}><Keyboard size={16} /></div>
               <div className={styles.hsT}>Enter your niche</div>
               <div className={styles.hsD}>
                 Type your niche or paste a competitor channel URL.
@@ -339,9 +339,12 @@ export default function FeaturesPage() {
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
                     marginBottom: '7px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
                   }}
                 >
-                  🎣 Hook (0–15s)
+                  <Magnet size={10} /> Hook (0–15s)
                 </div>
                 <div
                   style={{
@@ -433,7 +436,7 @@ export default function FeaturesPage() {
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>👻</div>
+              <div className={styles.fgIcon}><Ghost size={16} /></div>
               <div className={styles.fgTitle}>Horror Story</div>
               <div className={styles.fgDesc}>Suspense and dramatic reveals for story channels.</div>
             </div>
@@ -455,7 +458,7 @@ export default function FeaturesPage() {
               <div className={styles.fgDesc}>Clear structure, examples, and key takeaways.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🎭</div>
+              <div className={styles.fgIcon}><Smile size={16} /></div>
               <div className={styles.fgTitle}>Motivational</div>
               <div className={styles.fgDesc}>
                 Emotional beats, inspiring language, high shareability.
@@ -593,7 +596,7 @@ export default function FeaturesPage() {
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🪝</div>
+              <div className={styles.fgIcon}><Magnet size={16} /></div>
               <div className={styles.fgTitle}>Hook Rewriter</div>
               <div className={styles.fgDesc}>
                 Rewrites each clip's opening for the Shorts format.
@@ -856,7 +859,7 @@ export default function FeaturesPage() {
           <div className={styles.secTtl}>Content Calendar features</div>
           <div className={styles.fg}>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🖱️</div>
+              <div className={styles.fgIcon}><MousePointer2 size={16} /></div>
               <div className={styles.fgTitle}>Drag-and-Drop</div>
               <div className={styles.fgDesc}>
                 Reschedule videos instantly by dragging to a new date.
@@ -880,7 +883,7 @@ export default function FeaturesPage() {
               <div className={styles.fgDesc}>Automatic notifications 24 hours before each upload.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📺</div>
+              <div className={styles.fgIcon}><Tv size={16} /></div>
               <div className={styles.fgTitle}>Multi-Channel</div>
               <div className={styles.fgDesc}>Manage multiple YouTube channels in one calendar.</div>
             </div>
@@ -931,7 +934,7 @@ export default function FeaturesPage() {
                     marginBottom: '10px',
                   }}
                 >
-                  <span style={{ fontSize: '16px' }}>📺</span>
+                  <span><Tv size={16} /></span>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: '11px', fontWeight: 600 }}>
                       FinanceFocus — 1.2M subscribers
@@ -1066,7 +1069,9 @@ export default function FeaturesPage() {
                     background: 'var(--purple-bg)',
                   }}
                 >
-                  ✦ Beta — Pro & Agency
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                    <Sparkles size={12} /> Beta — Pro & Agency
+                  </span>
                 </div>
               </div>
             </div>
@@ -1138,7 +1143,7 @@ export default function FeaturesPage() {
                       fontSize: '11px',
                     }}
                   >
-                    <span>⏳</span>
+                    <span><Clock size={16} /></span>
                     <span style={{ color: 'var(--muted)' }}>
                       Scheduled for Friday — awaiting your review
                     </span>

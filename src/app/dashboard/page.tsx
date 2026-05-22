@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/dashboard.module.css';
-import { ArrowDown, BarChart3, Bell, Brain, Clock, DollarSign, Flame, Globe, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Zap } from 'lucide-react';
+import { ArrowDown, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Globe, Landmark, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, XCircle, Zap } from 'lucide-react';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -40,24 +40,24 @@ function DashboardContent() {
 
   // 1. HOME VIEW STATE
   const [pipelineItems] = useState([
-    { id: 1, title: 'AI Side Hustles That Pay $500/Day', meta: 'Due in 2 days · Script done', status: 'In Review', statusClass: styles.sReview, thumb: '<DollarSign size={14} />' },
-    { id: 2, title: 'Why 99% of People Stay Broke Forever', meta: 'Due tomorrow · Editing', status: 'Ready', statusClass: styles.sReady, thumb: '<Brain size={14} />' },
-    { id: 3, title: 'I Invested $10K in Index Funds for 1 Year', meta: 'Due in 5 days · Writing', status: 'Scripting', statusClass: styles.sScript, thumb: '<TrendingUp size={14} />' },
-    { id: 4, title: '10 Money Mistakes Rich People Never Make', meta: 'Idea stage · Not started', status: 'Idea', statusClass: styles.sIdea, thumb: '<Lightbulb size={14} />' }
+    { id: 1, title: 'AI Side Hustles That Pay $500/Day', meta: 'Due in 2 days · Script done', status: 'In Review', statusClass: styles.sReview, thumb: <DollarSign size={14} /> },
+    { id: 2, title: 'Why 99% of People Stay Broke Forever', meta: 'Due tomorrow · Editing', status: 'Ready', statusClass: styles.sReady, thumb: <Brain size={14} /> },
+    { id: 3, title: 'I Invested $10K in Index Funds for 1 Year', meta: 'Due in 5 days · Writing', status: 'Scripting', statusClass: styles.sScript, thumb: <TrendingUp size={14} /> },
+    { id: 4, title: '10 Money Mistakes Rich People Never Make', meta: 'Idea stage · Not started', status: 'Idea', statusClass: styles.sIdea, thumb: <Lightbulb size={14} /> }
   ]);
 
   // 2. TOPIC FINDER STATE
   const [niche, setNiche] = useState<string>('Personal Finance');
-  const [market, setMarket] = useState<string>('🇺🇸 US Market');
+  const [market, setMarket] = useState<string>('US Market');
   const [period, setPeriod] = useState<string>('This Week');
   const [isSearchingTopics, setIsSearchingTopics] = useState<boolean>(false);
   const [topicList] = useState([
-    { id: 1, title: '"AI Side Hustles That Actually Pay $500/Day in 2026"', score: 9.4, badge: '<Flame size={14} /> HOT PICK', badgeClass: styles.scoreHot, views: '2.1M', rpm: '$18', comp: 'Low', isTop: true },
-    { id: 2, title: '"Why 99% of People Stay Broke (And How to Escape)"', score: 8.8, badge: '<Flame size={14} /> TRENDING', badgeClass: styles.scoreHot, views: '1.7M', rpm: '$22', comp: 'Medium', isTop: false },
-    { id: 3, title: '"I Tested Every AI Investing Tool for 30 Days — Here\'s What Happened"', score: 8.1, badge: '<Zap size={14} /> RISING', badgeClass: styles.scoreWarm, views: '980K', rpm: '$15', comp: 'Low', isTop: false },
-    { id: 4, title: '"The $0 Budget Strategy That Made Me $100K"', score: 7.9, badge: '<Zap size={14} /> RISING', badgeClass: styles.scoreWarm, views: '850K', rpm: '$20', comp: 'Low', isTop: false },
-    { id: 5, title: '"10 Money Mistakes That Are Keeping You Poor"', score: 7.2, badge: '<BarChart3 size={14} /> STEADY', badgeClass: styles.scoreOk, views: '620K', rpm: '$19', comp: 'High', isTop: false },
-    { id: 6, title: '"How to Save $1,000 in 30 Days on Any Income"', score: 6.8, badge: '<BarChart3 size={14} /> STEADY', badgeClass: styles.scoreOk, views: '510K', rpm: '$17', comp: 'Medium', isTop: false }
+    { id: 1, title: '"AI Side Hustles That Actually Pay $500/Day in 2026"', score: 9.4, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Flame size={14} /> HOT PICK</span>, badgeClass: styles.scoreHot, views: '2.1M', rpm: '$18', comp: 'Low', isTop: true },
+    { id: 2, title: '"Why 99% of People Stay Broke (And How to Escape)"', score: 8.8, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Flame size={14} /> TRENDING</span>, badgeClass: styles.scoreHot, views: '1.7M', rpm: '$22', comp: 'Medium', isTop: false },
+    { id: 3, title: '"I Tested Every AI Investing Tool for 30 Days — Here\'s What Happened"', score: 8.1, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Zap size={14} /> RISING</span>, badgeClass: styles.scoreWarm, views: '980K', rpm: '$15', comp: 'Low', isTop: false },
+    { id: 4, title: '"The $0 Budget Strategy That Made Me $100K"', score: 7.9, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Zap size={14} /> RISING</span>, badgeClass: styles.scoreWarm, views: '850K', rpm: '$20', comp: 'Low', isTop: false },
+    { id: 5, title: '"10 Money Mistakes That Are Keeping You Poor"', score: 7.2, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><BarChart3 size={14} /> STEADY</span>, badgeClass: styles.scoreOk, views: '620K', rpm: '$19', comp: 'High', isTop: false },
+    { id: 6, title: '"How to Save $1,000 in 30 Days on Any Income"', score: 6.8, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><BarChart3 size={14} /> STEADY</span>, badgeClass: styles.scoreOk, views: '510K', rpm: '$17', comp: 'Medium', isTop: false }
   ]);
 
   const handleSearchTopics = () => {
@@ -78,11 +78,11 @@ function DashboardContent() {
   const [isProcessingShorts, setIsProcessingShorts] = useState<boolean>(false);
   const [shortsProgress, setShortsProgress] = useState<number>(100);
   const [shortsClips] = useState([
-    { id: 1, title: 'Hook: "What if I told you people are making $500/day with AI…"', meta: '0:00 – 0:38 · Perfect hook · High energy', score: 9.6, thumb: '<Flame size={14} />' },
-    { id: 2, title: 'AI Faceless YouTube breakdown — numbers revealed', meta: '2:14 – 2:58 · Surprising stat · Strong CTA', score: 8.9, thumb: '<Lightbulb size={14} />' },
-    { id: 3, title: '"This one tool replaced my $3K/mo freelancer"', meta: '5:40 – 6:22 · Value bomb · Shareable', score: 8.7, thumb: '<DollarSign size={14} />' },
-    { id: 4, title: 'AI writing hustle — $500 to $2K/month breakdown', meta: '7:05 – 7:50 · Actionable · Beginner-friendly', score: 8.2, thumb: '<Bot size={14} />' },
-    { id: 5, title: 'The #1 mistake people make with AI side hustles', meta: '9:30 – 10:08 · Contrarian · High shares', score: 7.9, thumb: '<Smartphone size={14} />' }
+    { id: 1, title: 'Hook: "What if I told you people are making $500/day with AI…"', meta: '0:00 – 0:38 · Perfect hook · High energy', score: 9.6, thumb: <Flame size={14} /> },
+    { id: 2, title: 'AI Faceless YouTube breakdown — numbers revealed', meta: '2:14 – 2:58 · Surprising stat · Strong CTA', score: 8.9, thumb: <Lightbulb size={14} /> },
+    { id: 3, title: '"This one tool replaced my $3K/mo freelancer"', meta: '5:40 – 6:22 · Value bomb · Shareable', score: 8.7, thumb: <DollarSign size={14} /> },
+    { id: 4, title: 'AI writing hustle — $500 to $2K/month breakdown', meta: '7:05 – 7:50 · Actionable · Beginner-friendly', score: 8.2, thumb: <Bot size={14} /> },
+    { id: 5, title: 'The #1 mistake people make with AI side hustles', meta: '9:30 – 10:08 · Contrarian · High shares', score: 7.9, thumb: <Smartphone size={14} /> }
   ]);
 
   const handleUploadClick = () => {
@@ -237,7 +237,7 @@ function DashboardContent() {
                 gap: '8px'
               }}
             >
-              {toastType === 'error' ? '✗' : '<Check size={16} />'} {toastMessage}
+              {toastType === 'error' ? <XCircle size={16} /> : <Check size={16} />} {toastMessage}
             </div>
           )}
 
@@ -364,9 +364,9 @@ function DashboardContent() {
                 onChange={(e) => setNiche(e.target.value)}
               />
               <select className={styles.selectInput} value={market} onChange={(e) => setMarket(e.target.value)}>
-                <option value="🇺🇸 US Market">🇺🇸 US Market</option>
-                <option value="<Globe size={16} /> Global"><Globe size={16} /> Global</option>
-                <option value="🇬🇧 UK Market">🇬🇧 UK Market</option>
+                <option value="US Market">US Market</option>
+                <option value="Global">Global</option>
+                <option value="UK Market">UK Market</option>
               </select>
               <select className={styles.selectInput} value={period} onChange={(e) => setPeriod(e.target.value)}>
                 <option value="This Week">This Week</option>
@@ -374,7 +374,7 @@ function DashboardContent() {
                 <option value="Trending Now">Trending Now</option>
               </select>
               <button className={styles.tbBtn} onClick={handleSearchTopics} disabled={isSearchingTopics}>
-                {isSearchingTopics ? 'Searching...' : '<Search size={16} /> Find Topics'}
+                {isSearchingTopics ? 'Searching...' : <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><Search size={16} /> Find Topics</span>}
               </button>
             </div>
 
@@ -597,7 +597,7 @@ function DashboardContent() {
                 <div className={`${styles.chTrend} ${styles.chDn}`}>↓ 3%</div>
               </div>
               <div className={styles.chRow}>
-                <div className={styles.chAv}>🏦</div>
+                <div className={styles.chAv}><Landmark size={16} /></div>
                 <div className={styles.chName}>The Truth About Passive Income in 2026</div>
                 <div className={styles.chSubs}>98K views · $390</div>
                 <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 8%</div>

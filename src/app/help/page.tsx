@@ -5,14 +5,14 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/help.module.css';
-import { BarChart3, Bell, CalendarDays, Clock, Eye, Flame, Info, Lightbulb, MessageCircle, Search, X } from 'lucide-react';
+import { AlertTriangle, ArrowUp, Ban, BarChart3, Bell, Bot, CalendarDays, Clock, CreditCard, DollarSign, Eye, FileText, Flame, Gauge, Globe, Home, Info, Key, Lightbulb, Link2, Mail, MessageCircle, Palette, PenTool, Play, Receipt, RefreshCw, Rocket, Search, Smartphone, Sparkles, Target, ThumbsDown, ThumbsUp, Tv, Users, Wrench, X, ClipboardList, Zap } from 'lucide-react';
 
 interface Article {
   id: string;
   category: string;
   categoryLabel: string;
   title: string;
-  icon: string;
+  icon: React.ReactNode;
   readTime: string;
   views: string;
   updatedAt: string;
@@ -32,7 +32,7 @@ const ARTICLES: Article[] = [
     category: 'getting-started',
     categoryLabel: 'Getting Started',
     title: 'Getting started with AutoTubeOS — full walkthrough',
-    icon: '<Rocket size={16} />',
+    icon: <Rocket size={16} />,
     readTime: '5 min',
     views: '12,400',
     updatedAt: 'May 14, 2026',
@@ -56,7 +56,7 @@ const ARTICLES: Article[] = [
     category: 'getting-started',
     categoryLabel: 'Getting Started',
     title: 'Completing the onboarding flow',
-    icon: '<ClipboardList size={16} />',
+    icon: <ClipboardList size={16} />,
     readTime: '3 min',
     views: '3,800',
     updatedAt: 'Apr 28, 2026',
@@ -70,7 +70,7 @@ const ARTICLES: Article[] = [
     category: 'getting-started',
     categoryLabel: 'Getting Started',
     title: 'Choosing your niche and setting goals',
-    icon: '<Target size={16} />',
+    icon: <Target size={16} />,
     readTime: '4 min',
     views: '4,100',
     updatedAt: 'May 02, 2026',
@@ -84,7 +84,7 @@ const ARTICLES: Article[] = [
     category: 'getting-started',
     categoryLabel: 'Getting Started',
     title: 'Connecting your YouTube channel',
-    icon: '📺',
+    icon: <Tv size={16} />,
     readTime: '3 min',
     views: '9,300',
     updatedAt: 'May 10, 2026',
@@ -98,7 +98,7 @@ const ARTICLES: Article[] = [
     category: 'getting-started',
     categoryLabel: 'Getting Started',
     title: 'Creating your first video from scratch',
-    icon: '<Play size={16} />',
+    icon: <Play size={16} />,
     readTime: '7 min',
     views: '6,200',
     updatedAt: 'May 12, 2026',
@@ -111,7 +111,7 @@ const ARTICLES: Article[] = [
     category: 'ai-setup',
     categoryLabel: 'AI & API Setup',
     title: 'How to add your Groq or Gemini API key',
-    icon: '<Key size={16} />',
+    icon: <Key size={16} />,
     readTime: '2 min',
     views: '11,500',
     updatedAt: 'May 15, 2026',
@@ -133,7 +133,7 @@ const ARTICLES: Article[] = [
     category: 'ai-setup',
     categoryLabel: 'AI & API Setup',
     title: 'How to get your free Google Gemini API key',
-    icon: '✦',
+    icon: <Sparkles size={16} />,
     readTime: '2 min',
     views: '4,500',
     updatedAt: 'May 12, 2026',
@@ -147,7 +147,7 @@ const ARTICLES: Article[] = [
     category: 'ai-setup',
     categoryLabel: 'AI & API Setup',
     title: 'Groq vs Gemini — which should I use?',
-    icon: '<Zap size={16} />',
+    icon: <Zap size={16} />,
     readTime: '4 min',
     views: '6,700',
     updatedAt: 'May 08, 2026',
@@ -161,7 +161,7 @@ const ARTICLES: Article[] = [
     category: 'ai-setup',
     categoryLabel: 'AI & API Setup',
     title: 'Fixing "rate limit exceeded" errors',
-    icon: '🚫',
+    icon: <Ban size={16} />,
     readTime: '3 min',
     views: '3,200',
     updatedAt: 'May 01, 2026',
@@ -175,7 +175,7 @@ const ARTICLES: Article[] = [
     category: 'ai-setup',
     categoryLabel: 'AI & API Setup',
     title: 'Generating scripts in non-English languages',
-    icon: '<Globe size={16} />',
+    icon: <Globe size={16} />,
     readTime: '3 min',
     views: '2,900',
     updatedAt: 'May 18, 2026',
@@ -190,7 +190,7 @@ const ARTICLES: Article[] = [
     category: 'billing',
     categoryLabel: 'Billing & Plans',
     title: 'What\'s included in each plan?',
-    icon: '<DollarSign size={16} />',
+    icon: <DollarSign size={16} />,
     readTime: '3 min',
     views: '2,300',
     updatedAt: 'Mar 15, 2026',
@@ -203,7 +203,7 @@ const ARTICLES: Article[] = [
     category: 'billing',
     categoryLabel: 'Billing & Plans',
     title: 'How to upgrade your plan',
-    icon: '<ArrowUp size={16} />',
+    icon: <ArrowUp size={16} />,
     readTime: '2 min',
     views: '1,900',
     updatedAt: 'Apr 02, 2026',
@@ -216,7 +216,7 @@ const ARTICLES: Article[] = [
     category: 'billing',
     categoryLabel: 'Billing & Plans',
     title: 'How to cancel your subscription',
-    icon: '<X size={16} />',
+    icon: <X size={16} />,
     readTime: '2 min',
     views: '8,400',
     updatedAt: 'May 11, 2026',
@@ -236,7 +236,7 @@ const ARTICLES: Article[] = [
     category: 'billing',
     categoryLabel: 'Billing & Plans',
     title: 'Refund policy — 7-day money back guarantee',
-    icon: '<DollarSign size={16} />',
+    icon: <DollarSign size={16} />,
     readTime: '2 min',
     views: '2,100',
     updatedAt: 'Jan 20, 2026',
@@ -249,7 +249,7 @@ const ARTICLES: Article[] = [
     category: 'billing',
     categoryLabel: 'Billing & Plans',
     title: 'Downloading invoices and receipts',
-    icon: '🧾',
+    icon: <Receipt size={16} />,
     readTime: '1 min',
     views: '1,400',
     updatedAt: 'Feb 15, 2026',
@@ -262,7 +262,7 @@ const ARTICLES: Article[] = [
     category: 'billing',
     categoryLabel: 'Billing & Plans',
     title: 'Updating your payment method',
-    icon: '<CreditCard size={16} />',
+    icon: <CreditCard size={16} />,
     readTime: '2 min',
     views: '3,000',
     updatedAt: 'May 04, 2026',
@@ -275,7 +275,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Topic Finder — complete guide',
-    icon: '<Flame size={16} />',
+    icon: <Flame size={16} />,
     readTime: '6 min',
     views: '5,600',
     updatedAt: 'May 05, 2026',
@@ -289,7 +289,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Script Generator — all 8 formats explained',
-    icon: '<PenTool size={16} />',
+    icon: <PenTool size={16} />,
     readTime: '8 min',
     views: '7,100',
     updatedAt: 'May 06, 2026',
@@ -303,7 +303,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Shorts Repurposer — full guide',
-    icon: '<Zap size={16} />',
+    icon: <Zap size={16} />,
     readTime: '6 min',
     views: '9,200',
     updatedAt: 'May 16, 2026',
@@ -317,7 +317,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Retention Optimizer — how the score works',
-    icon: '<BarChart3 size={16} />',
+    icon: <BarChart3 size={16} />,
     readTime: '4 min',
     views: '3,100',
     updatedAt: 'Mar 10, 2026',
@@ -331,7 +331,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Content Calendar — scheduling your pipeline',
-    icon: '<CalendarDays size={16} />',
+    icon: <CalendarDays size={16} />,
     readTime: '5 min',
     views: '2,800',
     updatedAt: 'Apr 11, 2026',
@@ -344,7 +344,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Competitor Intelligence — analyzing channels',
-    icon: '<Search size={16} />',
+    icon: <Search size={16} />,
     readTime: '5 min',
     views: '4,000',
     updatedAt: 'Apr 24, 2026',
@@ -357,7 +357,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'AI Agents (Beta) — full setup guide',
-    icon: '<Bot size={16} />',
+    icon: <Bot size={16} />,
     readTime: '8 min',
     views: '2,500',
     updatedAt: 'May 20, 2026',
@@ -371,7 +371,7 @@ const ARTICLES: Article[] = [
     category: 'integrations',
     categoryLabel: 'Integrations',
     title: 'Connecting YouTube — OAuth permissions explained',
-    icon: '📺',
+    icon: <Tv size={16} />,
     readTime: '4 min',
     views: '5,000',
     updatedAt: 'May 03, 2026',
@@ -384,7 +384,7 @@ const ARTICLES: Article[] = [
     category: 'integrations',
     categoryLabel: 'Integrations',
     title: 'Google Analytics integration guide',
-    icon: '<BarChart3 size={16} />',
+    icon: <BarChart3 size={16} />,
     readTime: '5 min',
     views: '1,800',
     updatedAt: 'Feb 12, 2026',
@@ -397,7 +397,7 @@ const ARTICLES: Article[] = [
     category: 'integrations',
     categoryLabel: 'Integrations',
     title: 'Connecting Beehiiv newsletter',
-    icon: '<Mail size={16} />',
+    icon: <Mail size={16} />,
     readTime: '3 min',
     views: '1,700',
     updatedAt: 'Jan 28, 2026',
@@ -410,7 +410,7 @@ const ARTICLES: Article[] = [
     category: 'integrations',
     categoryLabel: 'Integrations',
     title: 'Canva integration for thumbnail templates',
-    icon: '<Palette size={16} />',
+    icon: <Palette size={16} />,
     readTime: '4 min',
     views: '2,900',
     updatedAt: 'Apr 18, 2026',
@@ -423,7 +423,7 @@ const ARTICLES: Article[] = [
     category: 'troubleshoot',
     categoryLabel: 'Troubleshooting',
     title: 'Script generator not working — fixes',
-    icon: '<AlertTriangle size={16} />',
+    icon: <AlertTriangle size={16} />,
     readTime: '3 min',
     views: '3,800',
     updatedAt: 'May 14, 2026',
@@ -437,7 +437,7 @@ const ARTICLES: Article[] = [
     category: 'troubleshoot',
     categoryLabel: 'Troubleshooting',
     title: 'YouTube analytics not syncing',
-    icon: '<RefreshCw size={16} />',
+    icon: <RefreshCw size={16} />,
     readTime: '3 min',
     views: '2,500',
     updatedAt: 'Apr 10, 2026',
@@ -450,7 +450,7 @@ const ARTICLES: Article[] = [
     category: 'troubleshoot',
     categoryLabel: 'Troubleshooting',
     title: 'API key showing invalid — troubleshooting',
-    icon: '<Key size={16} />',
+    icon: <Key size={16} />,
     readTime: '4 min',
     views: '2,700',
     updatedAt: 'May 07, 2026',
@@ -463,7 +463,7 @@ const ARTICLES: Article[] = [
     category: 'troubleshoot',
     categoryLabel: 'Troubleshooting',
     title: 'Dashboard loading slowly — how to fix',
-    icon: '🐌',
+    icon: <Gauge size={16} />,
     readTime: '2 min',
     views: '1,400',
     updatedAt: 'Mar 08, 2026',
@@ -476,7 +476,7 @@ const ARTICLES: Article[] = [
     category: 'troubleshoot',
     categoryLabel: 'Troubleshooting',
     title: 'Can\'t log in to my account',
-    icon: '📵',
+    icon: <Smartphone size={16} />,
     readTime: '3 min',
     views: '2,100',
     updatedAt: 'May 02, 2026',
@@ -489,7 +489,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Team collaboration for Agency plan users',
-    icon: '<Users size={16} />',
+    icon: <Users size={16} />,
     readTime: '5 min',
     views: '1,200',
     updatedAt: 'May 19, 2026',
@@ -503,7 +503,7 @@ const ARTICLES: Article[] = [
     category: 'features',
     categoryLabel: 'Features',
     title: 'Generating scripts in Urdu, Hindi, and Arabic',
-    icon: '<Globe size={16} />',
+    icon: <Globe size={16} />,
     readTime: '3 min',
     views: '950',
     updatedAt: 'May 17, 2026',
@@ -515,20 +515,20 @@ const ARTICLES: Article[] = [
 ];
 
 const CATEGORIES = [
-  { id: 'overview', label: 'All Articles', icon: '<Home size={16} />' },
-  { id: 'getting-started', label: 'Getting Started', icon: '<Rocket size={16} />', count: 5 },
-  { id: 'features', label: 'Features', icon: '<Sparkles size={20} />', count: 9 },
-  { id: 'ai-setup', label: 'AI & API Setup', icon: '<Bot size={16} />', count: 5 },
-  { id: 'billing', label: 'Billing & Plans', icon: '<CreditCard size={16} />', count: 6 },
-  { id: 'integrations', label: 'Integrations', icon: '<Link2 size={16} />', count: 4 },
-  { id: 'troubleshoot', label: 'Troubleshooting', icon: '<Wrench size={16} />', count: 5 }
+  { id: 'overview', label: 'All Articles', icon: <Home size={16} /> },
+  { id: 'getting-started', label: 'Getting Started', icon: <Rocket size={16} />, count: 5 },
+  { id: 'features', label: 'Features', icon: <Sparkles size={20} />, count: 9 },
+  { id: 'ai-setup', label: 'AI & API Setup', icon: <Bot size={16} />, count: 5 },
+  { id: 'billing', label: 'Billing & Plans', icon: <CreditCard size={16} />, count: 6 },
+  { id: 'integrations', label: 'Integrations', icon: <Link2 size={16} />, count: 4 },
+  { id: 'troubleshoot', label: 'Troubleshooting', icon: <Wrench size={16} />, count: 5 }
 ];
 
 export default function HelpCenter() {
   const [activeCategory, setActiveCategory] = useState<string>('overview');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [helpfulFeedback, setHelpfulFeedback] = useState<Record<string, string>>({});
+  const [helpfulFeedback, setHelpfulFeedback] = useState<Record<string, React.ReactNode>>({});
 
   // Filter articles based on active category and search query
   const filteredArticles = useMemo(() => {
@@ -598,7 +598,7 @@ export default function HelpCenter() {
   const handleHelpfulClick = (artId: string, answer: 'yes' | 'no') => {
     setHelpfulFeedback(prev => ({
       ...prev,
-      [artId]: answer === 'yes' ? '👍 Thanks!' : '<FileText size={16} /> Noted'
+      [artId]: answer === 'yes' ? <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><ThumbsUp size={14} /> Thanks!</span> : <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><FileText size={14} /> Noted</span>
     }));
   };
 
@@ -678,7 +678,7 @@ export default function HelpCenter() {
           ))}
           <div className={styles.dsLabel}>Quick Links</div>
           <Link href="/blog" className={styles.dsItem}>
-            <span className={styles.dsIcon}>📺</span>Video Tutorials
+            <span className={styles.dsIcon}><Tv size={16} /></span>Video Tutorials
           </Link>
           <Link href="/changelog" className={styles.dsItem}>
             <span className={styles.dsIcon}><Bell size={16} /></span>Changelog
@@ -755,13 +755,13 @@ export default function HelpCenter() {
                       className={styles.helpfulBtn} 
                       onClick={() => handleHelpfulClick(selectedArticle.id, 'yes')}
                     >
-                      👍 Yes
+                      <ThumbsUp size={14} /> Yes
                     </button>
                     <button 
                       className={styles.helpfulBtn} 
                       onClick={() => handleHelpfulClick(selectedArticle.id, 'no')}
                     >
-                      👎 No
+                      <ThumbsDown size={14} /> No
                     </button>
                   </>
                 )}
@@ -823,7 +823,7 @@ export default function HelpCenter() {
                   </div>
 
                   <div className={styles.articleGroup}>
-                    <div className={styles.agTitle}>🆕 Recently Updated</div>
+                    <div className={styles.agTitle}><Sparkles size={16} /> Recently Updated</div>
                     {recentlyUpdatedArticles.map(art => (
                       <div 
                         key={art.id} 

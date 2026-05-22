@@ -1,10 +1,10 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/press.module.css';
-import { ArrowDown, ClipboardList, FileText, Newspaper, Package, Phone } from 'lucide-react';
+import { ArrowDown, BarChart3, ClipboardList, FileText, Newspaper, Package, Palette, Phone, Play, Smartphone, TrendingUp } from 'lucide-react';
 
 interface BrandAsset {
-  icon: string;
+  icon: React.ReactNode;
   name: string;
   sub: string;
   bg?: string;
@@ -24,25 +24,25 @@ interface CoverageItem {
 export default function PressPage() {
   const brandAssets: BrandAsset[] = [
     {
-      icon: '🔴⬛',
+      icon: <Package size={16} />,
       name: 'Logo Pack',
       sub: 'SVG, PNG — Dark & Light · All sizes',
       bg: 'var(--bg)',
     },
     {
-      icon: '<Palette size={16} />',
+      icon: <Palette size={16} />,
       name: 'Brand Colors & Fonts',
       sub: 'Hex codes, Poppins font',
       bg: 'var(--s3)',
     },
     {
-      icon: '<Smartphone size={16} />',
+      icon: <Smartphone size={16} />,
       name: 'Product Screenshots',
       sub: 'Dashboard, mobile · 24 images',
       bg: 'var(--s3)',
     },
     {
-      icon: '<Play size={16} />',
+      icon: <Play size={16} />,
       name: 'Product Demo Video',
       sub: '60s overview · MP4, WebM',
       bg: 'var(--s3)',
@@ -51,13 +51,13 @@ export default function PressPage() {
 
   const documents: BrandAsset[] = [
     {
-      icon: '<BarChart3 size={16} />',
+      icon: <BarChart3 size={16} />,
       name: 'Press Release — May 2026',
       sub: 'Latest announcement · PDF',
       bg: 'var(--s3)',
     },
     {
-      icon: '<TrendingUp size={16} />',
+      icon: <TrendingUp size={16} />,
       name: 'Creator Case Study',
       sub: 'Real results from 5 users',
       bg: 'var(--s3)',

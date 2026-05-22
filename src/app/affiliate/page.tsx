@@ -4,7 +4,21 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/affiliate.module.css';
-import { BarChart3, DollarSign, FileText, Gem, Image as ImageIcon, Link2, Megaphone, Palette, Rocket, Star, Video } from 'lucide-react';
+import { BarChart3, DollarSign, FileText, Gem, Image as ImageIcon, Link2, Megaphone, Palette, Rocket, Star, Video, Heart, Sprout, Check } from 'lucide-react';
+
+const Twitter = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={className}
+    style={{ display: 'inline-block', verticalAlign: 'middle' }}
+  >
+    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+  </svg>
+);
 
 export default function Affiliate() {
   // Calculator state variables
@@ -73,7 +87,7 @@ export default function Affiliate() {
         <div className={styles.gridBg}></div>
         <div className={styles.glow}></div>
         <div className={styles.heroInner}>
-          <div className={styles.hBadge}>💜 Affiliate Program · Open to Everyone</div>
+          <div className={styles.hBadge}><Heart size={14} style={{ fill: 'var(--accent)', color: 'var(--accent)', verticalAlign: 'middle', marginRight: '6px' }} /> Affiliate Program · Open to Everyone</div>
           <h1 className={styles.hTitle}>
             Earn <em>30% recurring</em><br />commission. Forever.
           </h1>
@@ -195,7 +209,7 @@ export default function Affiliate() {
         </div>
         <div className={styles.tiersGrid}>
           <div className={styles.tierCard}>
-            <div className={styles.tierIcon}>🌱</div>
+            <div className={styles.tierIcon}><Sprout size={16} /></div>
             <div className={styles.tierName}>Starter</div>
             <div className={styles.tierReq}>0–10 active referrals</div>
             <div className={styles.tierPct}>30%</div>
@@ -263,7 +277,7 @@ export default function Affiliate() {
             <button className={styles.assetBtn}>Download Copy</button>
           </div>
           <div className={styles.assetCard}>
-            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#100a1a,#18102a)' }}>🐦</div>
+            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#100a1a,#18102a)' }}><Twitter size={16} /></div>
             <div className={styles.assetName}>Twitter/X Thread</div>
             <div className={styles.assetDesc}>Pre-written thread templates that drive clicks without feeling spammy.</div>
             <button className={styles.assetBtn}>Download Threads</button>
@@ -353,7 +367,7 @@ export default function Affiliate() {
               className={styles.formSubmitBtn}
               style={submitted ? { backgroundColor: 'var(--green)' } : {}}
             >
-              {submitted ? '<Check size={16} /> Application submitted!' : "Apply Now — It's Free →"}
+              {submitted ? <><Check size={16} /> Application submitted!</> : "Apply Now — It's Free →"}
             </button>
           </form>
           <p style={{ fontSize: '11px', color: 'var(--muted2)', textAlign: 'center', marginTop: '12px' }}>

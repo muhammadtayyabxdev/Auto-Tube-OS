@@ -2,7 +2,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/home.module.css";
-import { Search, Star, TrendingDown } from 'lucide-react';
+import { Search, Star, TrendingDown, Scissors } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -91,7 +91,7 @@ export default function Home() {
             <p>Guessing video ideas instead of using data. Competitors find viral topics while you post blindly.</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemIcon}>✂️</div>
+            <div className={styles.problemIcon}><Scissors size={16} /></div>
             <h3>Shorts left on table</h3>
             <p>Every long video has 5+ shorts hiding inside it. Nobody has time to manually repurpose all of them.</p>
           </div>

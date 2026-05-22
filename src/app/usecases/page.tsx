@@ -5,25 +5,25 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/usecases.module.css';
-import { BarChart3, Bot, Building, CalendarDays, Check, Clock, Flame, PenTool, Play, Smartphone, Sparkles, Target, Zap } from 'lucide-react';
+import { BarChart3, Bot, Building, CalendarDays, Check, Clock, DollarSign, Flame, Frown, Magnet, PenTool, Play, Smartphone, Smile, Sparkles, Sprout, Target, XCircle, Zap } from 'lucide-react';
 
 type UseCaseId = 'all' | 'faceless' | 'agency' | 'beginners' | 'shorts' | 'finance';
 
 interface UseCaseTab {
   id: UseCaseId;
-  label: string;
+  label: React.ReactNode;
 }
 
 export default function UseCasesPage() {
   const [activeTab, setActiveTab] = useState<UseCaseId>('all');
 
   const tabs: UseCaseTab[] = [
-    { id: 'all', label: '<Target size={16} /> All Use Cases' },
-    { id: 'faceless', label: '🎭 Faceless Creators' },
-    { id: 'agency', label: '<Building size={16} /> YouTube Agencies' },
-    { id: 'beginners', label: '🌱 Beginners' },
-    { id: 'shorts', label: '<Zap size={16} /> Shorts Creators' },
-    { id: 'finance', label: '<DollarSign size={16} /> Finance Channels' },
+    { id: 'all', label: <><Target size={16} /> All Use Cases</> },
+    { id: 'faceless', label: <><Smile size={16} /> Faceless Creators</> },
+    { id: 'agency', label: <><Building size={16} /> YouTube Agencies</> },
+    { id: 'beginners', label: <><Sprout size={16} /> Beginners</> },
+    { id: 'shorts', label: <><Zap size={16} /> Shorts Creators</> },
+    { id: 'finance', label: <><DollarSign size={16} /> Finance Channels</> },
   ];
 
   const handleTabChange = (id: UseCaseId) => {
@@ -92,7 +92,7 @@ export default function UseCasesPage() {
           </div>
           <div className={styles.ucCardsGrid}>
             <div className={styles.uccCard} onClick={() => handleTabChange('faceless')}>
-              <div className={styles.uccIcon}>🎭</div>
+              <div className={styles.uccIcon}><Smile size={32} /></div>
               <div className={styles.uccTitle}>Faceless YouTube Creators</div>
               <div className={styles.uccDesc}>
                 AI handles everything from topic research to script generation. You focus on growth strategy — not
@@ -110,7 +110,7 @@ export default function UseCasesPage() {
               <div className={styles.uccLink}>See how it works →</div>
             </div>
             <div className={styles.uccCard} onClick={() => handleTabChange('beginners')}>
-              <div className={styles.uccIcon}>🌱</div>
+              <div className={styles.uccIcon}><Sprout size={32} /></div>
               <div className={styles.uccTitle}>Beginner Creators</div>
               <div className={styles.uccDesc}>
                 No experience needed. AutoTubeOS guides you from zero to your first video with step-by-step AI
@@ -192,24 +192,39 @@ export default function UseCasesPage() {
         <div className={styles.ucSection}>
           <div className={styles.pwinGrid}>
             <div className={styles.pwCard}>
-              <div className={styles.pwTitle} style={{ color: 'var(--red)' }}>
-                😤 Before AutoTubeOS
+              <div className={styles.pwTitle} style={{ color: 'var(--red)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <Frown size={18} /> Before AutoTubeOS
               </div>
               <div className={styles.pwList}>
                 <div className={styles.pwItem}>
-                  <span className={styles.pwIcon}>✗</span>Spending 3+ hours finding video ideas manually
+                  <span className={styles.pwIcon} style={{ color: 'var(--red)' }}>
+                    <XCircle size={16} />
+                  </span>
+                  Spending 3+ hours finding video ideas manually
                 </div>
                 <div className={styles.pwItem}>
-                  <span className={styles.pwIcon}>✗</span>Writing scripts from scratch took 4–5 hours
+                  <span className={styles.pwIcon} style={{ color: 'var(--red)' }}>
+                    <XCircle size={16} />
+                  </span>
+                  Writing scripts from scratch took 4–5 hours
                 </div>
                 <div className={styles.pwItem}>
-                  <span className={styles.pwIcon}>✗</span>Juggling ChatGPT, Canva, Notion, TubeBuddy separately
+                  <span className={styles.pwIcon} style={{ color: 'var(--red)' }}>
+                    <XCircle size={16} />
+                  </span>
+                  Juggling ChatGPT, Canva, Notion, TubeBuddy separately
                 </div>
                 <div className={styles.pwItem}>
-                  <span className={styles.pwIcon}>✗</span>Missing upload days due to workflow chaos
+                  <span className={styles.pwIcon} style={{ color: 'var(--red)' }}>
+                    <XCircle size={16} />
+                  </span>
+                  Missing upload days due to workflow chaos
                 </div>
                 <div className={styles.pwItem}>
-                  <span className={styles.pwIcon}>✗</span>Manually creating Shorts — or not at all
+                  <span className={styles.pwIcon} style={{ color: 'var(--red)' }}>
+                    <XCircle size={16} />
+                  </span>
+                  Manually creating Shorts — or not at all
                 </div>
               </div>
             </div>
@@ -806,8 +821,8 @@ export default function UseCasesPage() {
               </div>
             </div>
             <div className={styles.fuCard}>
-              <div className={styles.fuIcon} style={{ background: 'var(--green-bg)' }}>
-                🪝
+              <div className={styles.fuIcon} style={{ background: 'var(--green-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Magnet size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Hooks rewritten for Shorts</div>

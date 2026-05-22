@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/settings.module.css';
-import { AlertTriangle, ArrowDown, Bell, Bot, Check, ClipboardList, CreditCard, DollarSign, Globe, Link2, Lock, Play, Rocket, Shield, User, Users, Zap } from 'lucide-react';
+import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Check, ClipboardList, CreditCard, DollarSign, Link2, Lock, Mail, Play, Receipt, Rocket, Shield, Sparkles, User, Users, XCircle, Zap } from 'lucide-react';
 
 function SettingsContent() {
   const searchParams = useSearchParams();
@@ -51,7 +51,7 @@ function SettingsContent() {
     email: 'ahmed@example.com',
     workspaceName: 'Finance YouTube',
     niche: 'Finance',
-    market: '🇺🇸 US Market'
+    market: 'US Market'
   });
 
   const handleProfileChange = (key: string, value: string) => {
@@ -100,13 +100,21 @@ function SettingsContent() {
     setNotifications(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  interface IntegrationItem {
+    id: string;
+    name: string;
+    sub: string;
+    icon: React.ReactNode;
+    connected: boolean;
+  }
+
   // 4. Integrations State (Fully Interactive!)
-  const [integrations, setIntegrations] = useState([
-    { id: 'yt', name: 'YouTube Channel', sub: 'Finance Channel · 241K subscribers', icon: '<Play size={16} />', connected: true },
-    { id: 'ga', name: 'Google Analytics', sub: 'Track YouTube traffic to your website', icon: '<BarChart3 size={16} />', connected: false },
-    { id: 'bh', name: 'Beehiiv Newsletter', sub: 'Convert viewers to email subscribers', icon: '<Mail size={16} />', connected: false },
-    { id: 'gr', name: 'Groq API', sub: 'gsk_••••••••••3a2f · LLaMA 3.3 70B', icon: '<Zap size={16} />', connected: true },
-    { id: 'gm', name: 'Google Gemini API', sub: 'Generate high retention scripts', icon: '✦', connected: false }
+  const [integrations, setIntegrations] = useState<IntegrationItem[]>([
+    { id: 'yt', name: 'YouTube Channel', sub: 'Finance Channel · 241K subscribers', icon: <Play size={16} />, connected: true },
+    { id: 'ga', name: 'Google Analytics', sub: 'Track YouTube traffic to your website', icon: <BarChart3 size={16} />, connected: false },
+    { id: 'bh', name: 'Beehiiv Newsletter', sub: 'Convert viewers to email subscribers', icon: <Mail size={16} />, connected: false },
+    { id: 'gr', name: 'Groq API', sub: 'gsk_••••••••••3a2f · LLaMA 3.3 70B', icon: <Zap size={16} />, connected: true },
+    { id: 'gm', name: 'Google Gemini API', sub: 'Generate high retention scripts', icon: <Sparkles size={16} />, connected: false }
   ]);
 
   const toggleIntegration = (id: string) => {
@@ -219,7 +227,7 @@ function SettingsContent() {
                 gap: '8px'
               }}
             >
-              {toastType === 'error' ? '✗' : '<Check size={16} />'} {toastMessage}
+              {toastType === 'error' ? <XCircle size={16} /> : <Check size={16} />} {toastMessage}
             </div>
           )}
 
@@ -279,7 +287,7 @@ function SettingsContent() {
                 className={`${styles.sbItem} ${activeTab === 'invoices' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('invoices')}
               >
-                <span className={styles.sbIcon}>🧾</span> Invoices
+                <span className={styles.sbIcon}><Receipt size={16} /></span> Invoices
               </div>
 
               <div className={styles.sbSec}>Data</div>
@@ -376,9 +384,9 @@ function SettingsContent() {
                         value={profile.market} 
                         onChange={(e) => handleProfileChange('market', e.target.value)}
                       >
-                        <option value="🇺🇸 US Market">🇺🇸 US Market</option>
-                        <option value="<Globe size={16} /> Global"><Globe size={16} /> Global</option>
-                        <option value="🇵🇰 Pakistan">🇵🇰 Pakistan</option>
+                        <option value="US Market">US Market</option>
+                        <option value="Global">Global</option>
+                        <option value="Pakistan">Pakistan</option>
                       </select>
                     </div>
                   </div>
@@ -615,9 +623,9 @@ function SettingsContent() {
                         value={aiSettings.primaryProvider} 
                         onChange={(e) => handleAISelect('primaryProvider', e.target.value)}
                       >
-                        <option value="Groq — LLaMA 3.3 70B"><Zap size={16} /> Groq — LLaMA 3.3 70B</option>
-                        <option value="Gemini 2.0 Flash">✦ Gemini 2.0 Flash</option>
-                        <option value="Gemini 1.5 Pro">✦ Gemini 1.5 Pro</option>
+                        <option value="Groq — LLaMA 3.3 70B">Groq — LLaMA 3.3 70B</option>
+                        <option value="Gemini 2.0 Flash">Gemini 2.0 Flash</option>
+                        <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
                       </select>
                     </div>
 
@@ -631,8 +639,8 @@ function SettingsContent() {
                         value={aiSettings.fallbackProvider} 
                         onChange={(e) => handleAISelect('fallbackProvider', e.target.value)}
                       >
-                        <option value="Gemini 2.0 Flash">✦ Gemini 2.0 Flash</option>
-                        <option value="Groq — LLaMA 3.1 8B"><Zap size={16} /> Groq — LLaMA 3.1 8B</option>
+                        <option value="Gemini 2.0 Flash">Gemini 2.0 Flash</option>
+                        <option value="Groq — LLaMA 3.1 8B">Groq — LLaMA 3.1 8B</option>
                       </select>
                     </div>
                   </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/password-reset.module.css";
-import { Check, Key, Lock, Mail } from 'lucide-react';
+import { Check, Eye, EyeOff, Key, Lock, Mail, X } from 'lucide-react';
 
 export default function PasswordReset() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function PasswordReset() {
   const [showNewPw, setShowNewPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [strength, setStrength] = useState({ pct: 0, color: "#ff3d3d", label: "Enter a password" });
-  const [matchMsg, setMatchMsg] = useState({ text: "", color: "" });
+  const [matchMsg, setMatchMsg] = useState<{ text: React.ReactNode; color: string }>({ text: "", color: "" });
 
   const checkStr = (val: string) => {
     setNewPw(val);
@@ -37,9 +37,9 @@ export default function PasswordReset() {
 
     if (confirmPw) {
       if (val === confirmPw) {
-        setMatchMsg({ text: "<Check size={16} /> Passwords match", color: "var(--green)" });
+        setMatchMsg({ text: <><Check size={16} /> Passwords match</>, color: "var(--green)" });
       } else {
-        setMatchMsg({ text: "<X size={16} /> Do not match", color: "var(--red)" });
+        setMatchMsg({ text: <><X size={16} /> Do not match</>, color: "var(--red)" });
       }
     }
   };
@@ -51,9 +51,9 @@ export default function PasswordReset() {
       return;
     }
     if (newPw === val) {
-      setMatchMsg({ text: "<Check size={16} /> Passwords match", color: "var(--green)" });
+      setMatchMsg({ text: <><Check size={16} /> Passwords match</>, color: "var(--green)" });
     } else {
-      setMatchMsg({ text: "<X size={16} /> Do not match", color: "var(--red)" });
+      setMatchMsg({ text: <><X size={16} /> Do not match</>, color: "var(--red)" });
     }
   };
 
@@ -67,7 +67,7 @@ export default function PasswordReset() {
   const handleStep3 = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPw || newPw !== confirmPw) {
-      setMatchMsg({ text: "<X size={16} /> Passwords do not match", color: "var(--red)" });
+      setMatchMsg({ text: <><X size={16} /> Passwords do not match</>, color: "var(--red)" });
       return;
     }
     setStep(4);
@@ -208,7 +208,7 @@ export default function PasswordReset() {
                     className={styles.eye}
                     onClick={() => setShowNewPw(!showNewPw)}
                   >
-                    {showNewPw ? "🙈" : "<Eye size={16} />"}
+                    {showNewPw ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
                 <div className={styles.strengthBar}>
@@ -238,7 +238,7 @@ export default function PasswordReset() {
                     className={styles.eye}
                     onClick={() => setShowConfirmPw(!showConfirmPw)}
                   >
-                    {showConfirmPw ? "🙈" : "<Eye size={16} />"}
+                    {showConfirmPw ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
                 {matchMsg.text && (

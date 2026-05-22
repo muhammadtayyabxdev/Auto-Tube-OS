@@ -19,7 +19,7 @@ const templates: EmailTemplate[] = [
     id: 'welcome',
     name: 'Welcome Email',
     dotColor: 'var(--green)',
-    subject: "🎉 Welcome to AutoTubeOS — here's how to get started",
+    subject: "Welcome to AutoTubeOS — here's how to get started",
     from: 'Ahmed at AutoTubeOS <hello@autotubeos.com>',
     html: `<!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@ const templates: EmailTemplate[] = [
           <!-- Hero -->
           <tr>
             <td style="padding:40px 32px 32px;text-align:center;">
-              <span style="font-size:48px;margin-bottom:16px;display:block;">🎉</span>
+              <div style="font-size:11px;font-weight:700;color:#ff3d3d;background-color:#ffebeb;display:inline-block;padding:4px 12px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;">Welcome</div>
               <h1 style="font-size:24px;font-weight:800;color:#0d0f16;line-height:1.2;margin:0 0 10px;">You're in. Let's build your channel system.</h1>
               <p style="font-size:15px;color:#555;line-height:1.6;margin:0;">Welcome to AutoTubeOS, Ahmed. Your 14-day free trial starts now.</p>
             </td>
@@ -53,7 +53,7 @@ const templates: EmailTemplate[] = [
           <!-- Body -->
           <tr>
             <td style="padding:28px 32px;">
-              <p style="margin:0 0 14px;color:#444;font-size:15px;line-height:1.7;">Hey Ahmed 👋</p>
+              <p style="margin:0 0 14px;color:#444;font-size:15px;line-height:1.7;">Hey Ahmed,</p>
               <p style="margin:0 0 14px;color:#444;font-size:15px;line-height:1.7;">You just joined 1,200+ creators who are building YouTube channels that run without them being glued to their desk 24/7. That's a big deal — and we're glad you're here.</p>
               <p style="margin:0 0 14px;color:#444;font-size:15px;line-height:1.7;">Here's what your workspace is ready for right now:</p>
               
@@ -238,7 +238,7 @@ const templates: EmailTemplate[] = [
           <!-- Hero -->
           <tr>
             <td style="padding:40px 32px 24px;text-align:center;">
-              <span style="font-size:48px;margin-bottom:16px;display:block;">🧾</span>
+              <div style="font-size:11px;font-weight:700;color:#ff3d3d;background-color:#ffebeb;display:inline-block;padding:4px 12px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;">Receipt</div>
               <h1 style="font-size:24px;font-weight:800;color:#0d0f16;line-height:1.2;margin:0 0 10px;">Payment confirmed.</h1>
               <p style="font-size:15px;color:#555;line-height:1.6;margin:0;">Thanks for subscribing to AutoTubeOS Pro. Here's your receipt.</p>
             </td>
@@ -444,7 +444,7 @@ const templates: EmailTemplate[] = [
           <!-- Hero -->
           <tr>
             <td style="padding:40px 32px 32px;text-align:center;">
-              <span style="font-size:48px;margin-bottom:16px;display:block;">👋</span>
+              <div style="font-size:11px;font-weight:700;color:#ff3d3d;background-color:#ffebeb;display:inline-block;padding:4px 12px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;">Update</div>
               <h1 style="font-size:24px;font-weight:800;color:#0d0f16;line-height:1.2;margin:0 0 10px;">It's been a while, Ahmed.</h1>
               <p style="font-size:15px;color:#555;line-height:1.6;margin:0;">We've shipped 6 major features since you left. Come see what's new — on us.</p>
             </td>

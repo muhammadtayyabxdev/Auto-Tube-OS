@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import styles from '@/styles/changelog.module.css';
-import { Check, MailOpen } from 'lucide-react';
+import { Check, MailOpen, Bot, Zap, Search, Globe, Users, CalendarDays, Bug, BarChart3, Palette, AlertTriangle } from 'lucide-react';
 
 interface ChangeItem {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   desc: string;
   type: 'new' | 'improved' | 'fixed' | 'breaking';
@@ -23,7 +23,7 @@ interface Release {
   badges: { text: string; class: string }[];
   changes: ChangeItem[];
   isHero?: boolean;
-  heroEmoji?: string;
+  heroEmoji?: React.ReactNode;
 }
 
 const RELEASES: Release[] = [
@@ -34,7 +34,7 @@ const RELEASES: Release[] = [
     date: 'May 14, 2026',
     summary: 'Our biggest release yet. AI Agents can now run your entire content pipeline — from finding topics to scheduling uploads — autonomously. Plus a completely rebuilt Shorts Repurposer with 3× better clip detection.',
     isHero: true,
-    heroEmoji: '<Bot size={28} />',
+    heroEmoji: <Bot size={28} />,
     badges: [
       { text: 'Major Release', class: styles.badgeMajor },
       { text: 'New', class: styles.badgeNew },
@@ -42,7 +42,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '<Bot size={16} />',
+        icon: <Bot size={16} />,
         title: 'AI Agents (Beta)',
         desc: 'Set up a fully autonomous content pipeline. Define your niche, schedule, and style — AI handles topic finding, scripting, and calendar scheduling automatically every week.',
         type: 'new',
@@ -50,7 +50,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeNew
       },
       {
-        icon: '<Zap size={16} />',
+        icon: <Zap size={16} />,
         title: 'Shorts Repurposer 3.0',
         desc: 'Completely rebuilt clip detection model. 3× more accurate, supports longer videos (up to 4 hours), and now generates platform-specific hooks for YouTube Shorts, TikTok, and Instagram Reels.',
         type: 'improved',
@@ -58,7 +58,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '<Search size={16} />',
+        icon: <Search size={16} />,
         title: 'Competitor Intelligence 2.0',
         desc: 'Now analyzes thumbnail styles, color palettes, and title formulas from competitor channels — not just view counts and posting frequency.',
         type: 'improved',
@@ -66,7 +66,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '<Globe size={16} />',
+        icon: <Globe size={16} />,
         title: 'Multi-language Script Support',
         desc: 'Script Generator now supports 12 languages including Urdu, Hindi, Arabic, Spanish, and Portuguese. Niche detection works for non-English markets too.',
         type: 'new',
@@ -88,7 +88,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '<Users size={16} />',
+        icon: <Users size={16} />,
         title: 'Team Collaboration (Agency)',
         desc: 'Invite editors, scriptwriters, and thumbnail designers. Assign tasks, set deadlines, and track approval status — all inside AutoTubeOS.',
         type: 'new',
@@ -96,7 +96,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeNew
       },
       {
-        icon: '<CalendarDays size={16} />',
+        icon: <CalendarDays size={16} />,
         title: 'Drag-and-Drop Calendar',
         desc: 'Redesigned Content Calendar with drag-and-drop rescheduling, color coding by channel, and a new "Week" view alongside the existing Month view.',
         type: 'improved',
@@ -104,7 +104,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '🐛',
+        icon: <Bug size={16} />,
         title: 'Fixed: Script generator hanging on long topics',
         desc: 'Scripts with topics over 120 characters were causing the generator to hang. Fixed — now handles up to 500 character topic descriptions.',
         type: 'fixed',
@@ -112,7 +112,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeFixed
       },
       {
-        icon: '🐛',
+        icon: <Bug size={16} />,
         title: 'Fixed: Analytics not syncing for channels with 1M+ subscribers',
         desc: 'YouTube API pagination was breaking for large channels. Resolved with proper cursor-based pagination.',
         type: 'fixed',
@@ -133,7 +133,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '<BarChart3 size={16} />',
+        icon: <BarChart3 size={16} />,
         title: 'Retention Optimizer',
         desc: 'Paste your script and get a retention score (0–100) with specific feedback on hook strength, pacing issues, and drop-off risk points. Backed by analysis of 50K+ high-retention videos.',
         type: 'new',
@@ -141,7 +141,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeNew
       },
       {
-        icon: '<Search size={16} />',
+        icon: <Search size={16} />,
         title: 'SEO Generator 2.0',
         desc: 'Now generates 5 title variations with predicted CTR, optimized descriptions with timestamps, and a ranked tag list. All based on real search volume data.',
         type: 'improved',
@@ -162,7 +162,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '<Zap size={16} />',
+        icon: <Zap size={16} />,
         title: '4× Faster Dashboard',
         desc: 'Rebuilt on Next.js 15 with server components. Dashboard loads in under 400ms. All AI requests now stream in real time.',
         type: 'improved',
@@ -170,7 +170,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '<Palette size={16} />',
+        icon: <Palette size={16} />,
         title: 'New Design System',
         desc: 'Completely redesigned UI with Poppins font, improved dark mode, and a consistent component library across all pages.',
         type: 'improved',
@@ -178,7 +178,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '<AlertTriangle size={16} />',
+        icon: <AlertTriangle size={16} />,
         title: 'Breaking: YouTube & Google integrations require re-auth',
         desc: 'Due to OAuth scope changes, all users must re-connect their YouTube and Google Analytics accounts. Your data is preserved — just visit Settings → Integrations.',
         type: 'breaking',

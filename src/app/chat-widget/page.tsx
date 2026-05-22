@@ -2,7 +2,21 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from '@/styles/chat-widget.module.css';
-import { BookOpen, Bot, Check, CreditCard, Mail, MessageCircle, Phone, Rocket, Wrench, X, Zap } from 'lucide-react';
+import { BookOpen, Bot, Check, CreditCard, Mail, MessageCircle, Phone, Rocket, Wrench, X, Zap, Key, Tv, Sparkles, Send, Frown, Meh, Smile, Laugh } from 'lucide-react';
+
+const Twitter = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={className}
+    style={{ display: 'inline-block', verticalAlign: 'middle' }}
+  >
+    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+  </svg>
+);
 
 interface Message {
   id: string;
@@ -12,24 +26,24 @@ interface Message {
 }
 
 interface HelpArticle {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   readTime: string;
 }
 
 const INITIAL_ARTICLES: HelpArticle[] = [
-  { icon: '<Rocket size={16} />', title: 'Getting started with AutoTubeOS', readTime: '5 min read' },
-  { icon: '<Key size={14} />', title: 'How to add your Groq or Gemini API key', readTime: '2 min read' },
-  { icon: '📺', title: 'Connecting your YouTube channel', readTime: '3 min read' },
-  { icon: '<CreditCard size={16} />', title: 'Billing, plans, and upgrades', readTime: '4 min read' },
-  { icon: '<Zap size={16} />', title: 'Using the Shorts Repurposer', readTime: '3 min read' },
-  { icon: '<Bot size={16} />', title: 'Setting up AI Agents (Beta)', readTime: '6 min read' },
-  { icon: '🆕', title: 'v2.4.0 — AI Agents + Shorts 3.0', readTime: 'May 14, 2026' },
-  { icon: '🆕', title: 'v2.3.0 — Team Collaboration', readTime: 'Apr 8, 2026' }
+  { icon: <Rocket size={16} />, title: 'Getting started with AutoTubeOS', readTime: '5 min read' },
+  { icon: <Key size={14} />, title: 'How to add your Groq or Gemini API key', readTime: '2 min read' },
+  { icon: <Tv size={16} />, title: 'Connecting your YouTube channel', readTime: '3 min read' },
+  { icon: <CreditCard size={16} />, title: 'Billing, plans, and upgrades', readTime: '4 min read' },
+  { icon: <Zap size={16} />, title: 'Using the Shorts Repurposer', readTime: '3 min read' },
+  { icon: <Bot size={16} />, title: 'Setting up AI Agents (Beta)', readTime: '6 min read' },
+  { icon: <Sparkles size={16} />, title: 'v2.4.0 — AI Agents + Shorts 3.0', readTime: 'May 14, 2026' },
+  { icon: <Sparkles size={16} />, title: 'v2.3.0 — Team Collaboration', readTime: 'Apr 8, 2026' }
 ];
 
 const AUTO_REPLIES = [
-  "Great question! Let me help you with that 😊",
+  "Great question! Let me help you with that.",
   "Sure thing! This is one of our most common questions.",
   "Happy to help! Here's what you need to know:",
   "Thanks for reaching out. Our team is looking into this right now.",
@@ -56,13 +70,13 @@ export default function ChatWidgetDemo() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'init-1',
-      text: "Hey! 👋 I'm Ahmed, founder of AutoTubeOS. How can I help you today?",
+      text: "Hey! I'm Ahmed, founder of AutoTubeOS. How can I help you today?",
       sender: 'support',
       time: 'Just now'
     },
     {
       id: 'init-2',
-      text: "Feel free to ask about pricing, features, your account, or anything else. I personally read every message 🙂",
+      text: "Feel free to ask about pricing, features, your account, or anything else. I personally read every message.",
       sender: 'support',
       time: 'Just now'
     }
@@ -215,7 +229,7 @@ export default function ChatWidgetDemo() {
               <div className={styles.agentAv}>JL</div>
             </div>
             <div className={styles.chInfo}>
-              <div className={styles.chTitle}>Hi there 👋</div>
+              <div className={styles.chTitle}>Hi there</div>
               <div className={styles.chSub}>
                 <span className={styles.onlineDot}></span>
                 We're online · Usually reply in 2 min
@@ -296,7 +310,7 @@ export default function ChatWidgetDemo() {
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={handleKeyDown}
               />
-              <button className={styles.sendBtn} onClick={handleSend}>➤</button>
+              <button className={styles.sendBtn} onClick={handleSend} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Send size={14} /></button>
             </div>
 
             {/* SATISFACTION */}
@@ -309,10 +323,10 @@ export default function ChatWidgetDemo() {
                 <>
                   <div className={styles.satLabel}>Was this helpful?</div>
                   <div className={styles.satEmojis}>
-                    <div className={`${styles.satEmoji} ${selectedRating === 0 ? styles.selected : ''}`} onClick={() => handleRating(0)}>😞</div>
-                    <div className={`${styles.satEmoji} ${selectedRating === 1 ? styles.selected : ''}`} onClick={() => handleRating(1)}>😐</div>
-                    <div className={`${styles.satEmoji} ${selectedRating === 2 ? styles.selected : ''}`} onClick={() => handleRating(2)}>😊</div>
-                    <div className={`${styles.satEmoji} ${selectedRating === 3 ? styles.selected : ''}`} onClick={() => handleRating(3)}>🤩</div>
+                    <div className={`${styles.satEmoji} ${selectedRating === 0 ? styles.selected : ''}`} onClick={() => handleRating(0)}><Frown size={20} /></div>
+                    <div className={`${styles.satEmoji} ${selectedRating === 1 ? styles.selected : ''}`} onClick={() => handleRating(1)}><Meh size={20} /></div>
+                    <div className={`${styles.satEmoji} ${selectedRating === 2 ? styles.selected : ''}`} onClick={() => handleRating(2)}><Smile size={20} /></div>
+                    <div className={`${styles.satEmoji} ${selectedRating === 3 ? styles.selected : ''}`} onClick={() => handleRating(3)}><Laugh size={20} /></div>
                   </div>
                 </>
               )}
@@ -324,7 +338,7 @@ export default function ChatWidgetDemo() {
             <div className={styles.helpViewInner}>
               <input 
                 className={styles.helpSearch} 
-                placeholder="<Search size={16} /> Search help articles…"
+                placeholder="Search help articles…"
                 value={helpSearch}
                 onChange={(e) => setHelpSearch(e.target.value)}
               />
@@ -370,7 +384,7 @@ export default function ChatWidgetDemo() {
                 <div className={styles.coArrow}>›</div>
               </div>
               <div className={styles.contactOption} onClick={() => window.open('https://twitter.com')}>
-                <div className={styles.coIcon} style={{ background: 'rgba(29, 161, 242, 0.1)' }}>🐦</div>
+                <div className={styles.coIcon} style={{ background: 'rgba(29, 161, 242, 0.1)' }}><Twitter size={16} /></div>
                 <div>
                   <div className={styles.coName}>Twitter / X</div>
                   <div className={styles.coSub}>@AutoTubeOS · DMs open</div>
@@ -400,7 +414,7 @@ export default function ChatWidgetDemo() {
           className={`${styles.chatLauncher} ${isOpen ? styles.openLauncher : ''}`} 
           onClick={toggleWidget}
         >
-          <span>{isOpen ? '<X size={18} />' : '<MessageCircle size={16} />'}</span>
+          <span>{isOpen ? <X size={18} /> : <MessageCircle size={16} />}</span>
           {hasBadge && <div className={styles.notifBadge}>1</div>}
         </button>
 

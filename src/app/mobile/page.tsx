@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/mobile.module.css';
-import { BarChart3, Bell, CalendarDays, ClipboardList, Flame, LayoutDashboard, PenTool, Play, RefreshCw, Zap } from 'lucide-react';
+import { Apple, BarChart3, Bell, CalendarDays, ClipboardList, Flame, LayoutDashboard, Magnet, PenTool, Play, RefreshCw, Sparkles, Zap } from 'lucide-react';
 
 export default function MobilePromo() {
   const [activeTab, setActiveTab] = useState<'home' | 'ideas' | 'scripts' | 'stats' | 'profile'>('home');
@@ -59,7 +59,7 @@ export default function MobilePromo() {
             </p>
             <div className={styles.storeBtns}>
               <a href="#" className={styles.storeBtn} onClick={(e) => { e.preventDefault(); alert('iOS App download link triggered! Available on TestFlight.'); }}>
-                <span className={styles.storeIcon}>🍎</span>
+                <span className={styles.storeIcon}><Apple size={18} /></span>
                 <div>
                   <div className={styles.storeSub}>Download on the</div>
                   <div className={styles.storeName}>App Store</div>
@@ -91,7 +91,7 @@ export default function MobilePromo() {
                 </div>
 
                 <div className={styles.sGreet}>
-                  Good morning 👋
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>Good morning <Sparkles size={12} style={{ color: 'var(--red)' }} /></span>
                   <b>Ahmed's Dashboard</b>
                 </div>
 
@@ -194,10 +194,10 @@ export default function MobilePromo() {
                     style={{ background: generating ? 'var(--s4)' : 'var(--red)', borderRadius: '8px', padding: '9px', textAlign: 'center', fontSize: '10px', fontWeight: 700, color: '#fff', marginBottom: '10px', cursor: 'pointer', transition: 'all 0.2s' }}
                     onClick={handleGenerateScript}
                   >
-                    {generating ? '<Sparkles size={16} /> Generating...' : '<Sparkles size={16} /> Generate Script'}
+                    {generating ? <><Sparkles size={16} /> Generating...</> : <><Sparkles size={16} /> Generate Script</>}
                   </div>
                   <div style={{ background: 'var(--s2)', borderRadius: '8px', padding: '8px 10px' }}>
-                    <div style={{ fontSize: '8px', color: 'var(--red)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '5px' }}>🎣 Hook</div>
+                    <div style={{ fontSize: '8px', color: 'var(--red)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '5px', display: 'flex', alignItems: 'center', gap: '3px' }}><Magnet size={10} /> Hook</div>
                     <div style={{ fontSize: '9px', color: 'rgba(238,240,246,0.7)', lineHeight: 1.5, transition: 'opacity 0.2s', opacity: generating ? 0.3 : 1 }}>
                       {scriptHook}
                     </div>
@@ -282,7 +282,7 @@ export default function MobilePromo() {
         <p>Free with your Pro or Agency plan. iOS and Android.</p>
         <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href="#" className={styles.storeBtn} onClick={(e) => { e.preventDefault(); alert('App Store triggered!'); }} style={{ padding: '12px 22px' }}>
-            <span style={{ fontSize: '1.8rem' }}>🍎</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center' }}><Apple size={24} /></span>
             <div>
               <div style={{ fontSize: '11px', color: 'var(--muted)' }}>Download on the</div>
               <div style={{ fontFamily: 'var(--fh)', fontSize: '1rem', fontWeight: 700 }}>App Store</div>
