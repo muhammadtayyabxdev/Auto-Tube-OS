@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/settings.module.css';
+import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Check, ClipboardList, CreditCard, DollarSign, Globe, Link2, Lock, Mail, Play, Rocket, Shield, User, Users, Zap } from 'lucide-react';
 
 function SettingsContent() {
   const searchParams = useSearchParams();
@@ -101,10 +102,10 @@ function SettingsContent() {
 
   // 4. Integrations State (Fully Interactive!)
   const [integrations, setIntegrations] = useState([
-    { id: 'yt', name: 'YouTube Channel', sub: 'Finance Channel · 241K subscribers', icon: '▶️', connected: true },
-    { id: 'ga', name: 'Google Analytics', sub: 'Track YouTube traffic to your website', icon: '📊', connected: false },
-    { id: 'bh', name: 'Beehiiv Newsletter', sub: 'Convert viewers to email subscribers', icon: '📧', connected: false },
-    { id: 'gr', name: 'Groq API', sub: 'gsk_••••••••••3a2f · LLaMA 3.3 70B', icon: '⚡', connected: true },
+    { id: 'yt', name: 'YouTube Channel', sub: 'Finance Channel · 241K subscribers', icon: '<Play size={16} />', connected: true },
+    { id: 'ga', name: 'Google Analytics', sub: 'Track YouTube traffic to your website', icon: '<BarChart3 size={16} />', connected: false },
+    { id: 'bh', name: 'Beehiiv Newsletter', sub: 'Convert viewers to email subscribers', icon: '<Mail size={16} />', connected: false },
+    { id: 'gr', name: 'Groq API', sub: 'gsk_••••••••••3a2f · LLaMA 3.3 70B', icon: '<Zap size={16} />', connected: true },
     { id: 'gm', name: 'Google Gemini API', sub: 'Generate high retention scripts', icon: '✦', connected: false }
   ]);
 
@@ -218,7 +219,7 @@ function SettingsContent() {
                 gap: '8px'
               }}
             >
-              {toastType === 'error' ? '✗' : '✓'} {toastMessage}
+              {toastType === 'error' ? '✗' : '<Check size={16} />'} {toastMessage}
             </div>
           )}
 
@@ -232,19 +233,19 @@ function SettingsContent() {
                 className={`${styles.sbItem} ${activeTab === 'profile' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('profile')}
               >
-                <span className={styles.sbIcon}>👤</span> Profile
+                <span className={styles.sbIcon}><User size={16} /></span> Profile
               </div>
               <div 
                 className={`${styles.sbItem} ${activeTab === 'security' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('security')}
               >
-                <span className={styles.sbIcon}>🔒</span> Security
+                <span className={styles.sbIcon}><Lock size={16} /></span> Security
               </div>
               <div 
                 className={`${styles.sbItem} ${activeTab === 'notifications' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('notifications')}
               >
-                <span className={styles.sbIcon}>🔔</span> Notifications
+                <span className={styles.sbIcon}><Bell size={16} /></span> Notifications
               </div>
 
               <div className={styles.sbSec}>Workspace</div>
@@ -252,19 +253,19 @@ function SettingsContent() {
                 className={`${styles.sbItem} ${activeTab === 'integrations' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('integrations')}
               >
-                <span className={styles.sbIcon}>🔗</span> Integrations
+                <span className={styles.sbIcon}><Link2 size={16} /></span> Integrations
               </div>
               <div 
                 className={`${styles.sbItem} ${activeTab === 'team' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('team')}
               >
-                <span className={styles.sbIcon}>👥</span> Team
+                <span className={styles.sbIcon}><Users size={16} /></span> Team
               </div>
               <div 
                 className={`${styles.sbItem} ${activeTab === 'ai' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('ai')}
               >
-                <span className={styles.sbIcon}>🤖</span> AI Settings
+                <span className={styles.sbIcon}><Bot size={16} /></span> AI Settings
               </div>
 
               <div className={styles.sbSec}>Billing</div>
@@ -272,7 +273,7 @@ function SettingsContent() {
                 className={`${styles.sbItem} ${activeTab === 'billing' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('billing')}
               >
-                <span className={styles.sbIcon}>💳</span> Billing & Plan
+                <span className={styles.sbIcon}><CreditCard size={16} /></span> Billing & Plan
               </div>
               <div 
                 className={`${styles.sbItem} ${activeTab === 'invoices' ? styles.sbItemOn : ''}`}
@@ -286,13 +287,13 @@ function SettingsContent() {
                 className={`${styles.sbItem} ${activeTab === 'privacy' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('privacy')}
               >
-                <span className={styles.sbIcon}>🛡️</span> Privacy
+                <span className={styles.sbIcon}><Shield size={16} /></span> Privacy
               </div>
               <div 
                 className={`${styles.sbItem} ${activeTab === 'danger' ? styles.sbItemOn : ''}`}
                 onClick={() => handleTabChange('danger')}
               >
-                <span className={styles.sbIcon} style={{ color: 'var(--red)' }}>⚠️</span> Danger Zone
+                <span className={styles.sbIcon} style={{ color: 'var(--red)' }}><AlertTriangle size={16} /></span> Danger Zone
               </div>
             </div>
 
@@ -376,7 +377,7 @@ function SettingsContent() {
                         onChange={(e) => handleProfileChange('market', e.target.value)}
                       >
                         <option value="🇺🇸 US Market">🇺🇸 US Market</option>
-                        <option value="🌍 Global">🌍 Global</option>
+                        <option value="<Globe size={16} /> Global"><Globe size={16} /> Global</option>
                         <option value="🇵🇰 Pakistan">🇵🇰 Pakistan</option>
                       </select>
                     </div>
@@ -559,7 +560,7 @@ function SettingsContent() {
                             style={{ cursor: 'pointer' }}
                             title="Click to disconnect"
                           >
-                            ✓ Connected
+                            <Check size={16} /> Connected
                           </div>
                         ) : (
                           <div 
@@ -582,7 +583,7 @@ function SettingsContent() {
                   <div className={styles.svSub}>Manage team members and permissions. Agency plan only.</div>
                   
                   <div className={styles.teamEmpty}>
-                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>👥</div>
+                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}><Users size={16} /></div>
                     <div style={{ fontFamily: 'var(--fh)', fontSize: '0.95rem', fontWeight: 700, marginBottom: '6px' }}>
                       Team features require Agency plan
                     </div>
@@ -614,7 +615,7 @@ function SettingsContent() {
                         value={aiSettings.primaryProvider} 
                         onChange={(e) => handleAISelect('primaryProvider', e.target.value)}
                       >
-                        <option value="Groq — LLaMA 3.3 70B">⚡ Groq — LLaMA 3.3 70B</option>
+                        <option value="Groq — LLaMA 3.3 70B"><Zap size={16} /> Groq — LLaMA 3.3 70B</option>
                         <option value="Gemini 2.0 Flash">✦ Gemini 2.0 Flash</option>
                         <option value="Gemini 1.5 Pro">✦ Gemini 1.5 Pro</option>
                       </select>
@@ -631,7 +632,7 @@ function SettingsContent() {
                         onChange={(e) => handleAISelect('fallbackProvider', e.target.value)}
                       >
                         <option value="Gemini 2.0 Flash">✦ Gemini 2.0 Flash</option>
-                        <option value="Groq — LLaMA 3.1 8B">⚡ Groq — LLaMA 3.1 8B</option>
+                        <option value="Groq — LLaMA 3.1 8B"><Zap size={16} /> Groq — LLaMA 3.1 8B</option>
                       </select>
                     </div>
                   </div>
@@ -649,9 +650,9 @@ function SettingsContent() {
                         value={aiSettings.defaultFormat} 
                         onChange={(e) => handleAISelect('defaultFormat', e.target.value)}
                       >
-                        <option value="Listicle">📋 Listicle</option>
-                        <option value="Documentary">🎬 Documentary</option>
-                        <option value="Finance">💰 Finance</option>
+                        <option value="Listicle"><ClipboardList size={16} /> Listicle</option>
+                        <option value="Documentary"><Play size={16} /> Documentary</option>
+                        <option value="Finance"><DollarSign size={16} /> Finance</option>
                       </select>
                     </div>
 
@@ -695,7 +696,7 @@ function SettingsContent() {
                     <div className={styles.pcRow}>
                       <div>
                         <div style={{ fontSize: '11px', color: 'var(--muted2)', marginBottom: '4px' }}>Current Plan</div>
-                        <div className={styles.pcName}>🚀 Pro Plan</div>
+                        <div className={styles.pcName}><Rocket size={16} /> Pro Plan</div>
                       </div>
                       <div className={styles.pcPrice}>
                         $29<span className={styles.pcPriceSpan}>/mo</span>
@@ -754,25 +755,25 @@ function SettingsContent() {
                       <div className={styles.irDate}>May 1, 2026 — Pro Plan</div>
                       <div className={styles.irAmount}>$29.00</div>
                       <div className={styles.irBadge}>Paid</div>
-                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for May 2026...')}>⬇ PDF</div>
+                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for May 2026...')}><ArrowDown size={16} /> PDF</div>
                     </div>
                     <div className={styles.invRow}>
                       <div className={styles.irDate}>Apr 1, 2026 — Pro Plan</div>
                       <div className={styles.irAmount}>$29.00</div>
                       <div className={styles.irBadge}>Paid</div>
-                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for April 2026...')}>⬇ PDF</div>
+                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for April 2026...')}><ArrowDown size={16} /> PDF</div>
                     </div>
                     <div className={styles.invRow}>
                       <div className={styles.irDate}>Mar 1, 2026 — Pro Plan</div>
                       <div className={styles.irAmount}>$29.00</div>
                       <div className={styles.irBadge}>Paid</div>
-                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for March 2026...')}>⬇ PDF</div>
+                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for March 2026...')}><ArrowDown size={16} /> PDF</div>
                     </div>
                     <div className={styles.invRow}>
                       <div className={styles.irDate}>Feb 1, 2026 — Pro Plan</div>
                       <div className={styles.irAmount}>$29.00</div>
                       <div className={styles.irBadge}>Paid</div>
-                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for February 2026...')}>⬇ PDF</div>
+                      <div className={styles.irDl} onClick={() => triggerToast('Downloading invoice PDF for February 2026...')}><ArrowDown size={16} /> PDF</div>
                     </div>
                   </div>
                 </div>
@@ -843,7 +844,7 @@ function SettingsContent() {
               {/* ─── DANGER ZONE PANEL ─── */}
               {activeTab === 'danger' && (
                 <div>
-                  <div className={styles.svTitle} style={{ color: 'var(--red)' }}>⚠️ Danger Zone</div>
+                  <div className={styles.svTitle} style={{ color: 'var(--red)' }}><AlertTriangle size={16} /> Danger Zone</div>
                   <div className={styles.svSub}>These actions are irreversible. Proceed with extreme caution.</div>
                   
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

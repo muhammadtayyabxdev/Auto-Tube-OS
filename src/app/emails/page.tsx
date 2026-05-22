@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/emails.module.css';
+import { AlertTriangle, Check, Clock, Lightbulb, Play } from 'lucide-react';
 
 interface EmailTemplate {
   id: string;
@@ -59,25 +60,25 @@ const templates: EmailTemplate[] = [
               <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f8f8ff;border-radius:10px;margin:16px 0;padding:12px 18px;">
                 <tr>
                   <td style="padding:6px 0;font-size:14px;color:#444;">
-                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;">✓</span>
+                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;"><Check size={28} /></span>
                     <strong>Topic Finder</strong> — AI-ranked video ideas for your niche, updated daily
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:6px 0;font-size:14px;color:#444;">
-                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;">✓</span>
+                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;"><Check size={28} /></span>
                     <strong>Script Generator</strong> — 8 formats, hooks included, ready in 60 seconds
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:6px 0;font-size:14px;color:#444;">
-                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;">✓</span>
+                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;"><Check size={28} /></span>
                     <strong>Shorts Repurposer</strong> — Turn 1 video into 5 Shorts automatically
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:6px 0;font-size:14px;color:#444;">
-                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;">✓</span>
+                    <span style="color:#16a34a;background-color:#dcfce7;border-radius:50%;width:18px;height:18px;display:inline-block;text-align:center;line-height:18px;font-size:11px;margin-right:8px;"><Check size={28} /></span>
                     <strong>Content Calendar</strong> — Schedule your entire month in one view
                   </td>
                 </tr>
@@ -134,7 +135,7 @@ const templates: EmailTemplate[] = [
     id: 'trial',
     name: 'Trial Ending (Day 12)',
     dotColor: 'var(--amber)',
-    subject: '⏰ Your free trial ends in 2 days',
+    subject: '<Clock size={16} /> Your free trial ends in 2 days',
     from: 'Ahmed at AutoTubeOS <hello@autotubeos.com>',
     html: `<!DOCTYPE html>
 <html>
@@ -156,7 +157,7 @@ const templates: EmailTemplate[] = [
           <!-- Hero -->
           <tr>
             <td style="padding:40px 32px 32px;text-align:center;">
-              <span style="font-size:48px;margin-bottom:16px;display:block;">⏰</span>
+              <span style="font-size:48px;margin-bottom:16px;display:block;"><Clock size={28} /></span>
               <h1 style="font-size:24px;font-weight:800;color:#0d0f16;line-height:1.2;margin:0 0 10px;">Your trial ends in 2 days.</h1>
               <p style="font-size:15px;color:#555;line-height:1.6;margin:0;">Don't lose access to your workspace — upgrade now and keep everything.</p>
             </td>
@@ -174,7 +175,7 @@ const templates: EmailTemplate[] = [
               <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fff8f0;border:1px solid #fed7aa;border-radius:10px;margin:16px 0;padding:16px 18px;">
                 <tr>
                   <td>
-                    <div style="font-weight:700;color:#9a3412;margin-bottom:6px;font-size:14px;">⚠️ What you'll lose on May 19:</div>
+                    <div style="font-weight:700;color:#9a3412;margin-bottom:6px;font-size:14px;"><AlertTriangle size={16} /> What you'll lose on May 19:</div>
                     <p style="color:#7c2d12;font-size:14px;margin:0;line-height:1.5;">Unlimited topic ideas, script generation, Shorts Repurposer, Competitor Intelligence, Retention Optimizer, and your Content Calendar.</p>
                   </td>
                 </tr>
@@ -318,7 +319,7 @@ const templates: EmailTemplate[] = [
     id: 'onboarding2',
     name: 'Onboarding Day 3',
     dotColor: 'var(--red)',
-    subject: '🎬 Day 3 tip: The fastest way to get your first viral idea',
+    subject: '<Play size={16} /> Day 3 tip: The fastest way to get your first viral idea',
     from: 'Ahmed at AutoTubeOS <hello@autotubeos.com>',
     html: `<!DOCTYPE html>
 <html>
@@ -340,7 +341,7 @@ const templates: EmailTemplate[] = [
           <!-- Hero -->
           <tr>
             <td style="padding:40px 32px 32px;text-align:center;">
-              <span style="font-size:48px;margin-bottom:16px;display:block;">🎬</span>
+              <span style="font-size:48px;margin-bottom:16px;display:block;"><Play size={28} /></span>
               <h1 style="font-size:24px;font-weight:800;color:#0d0f16;line-height:1.2;margin:0 0 10px;">Day 3 tip: Find your first viral idea in under 5 minutes.</h1>
             </td>
           </tr>
@@ -595,7 +596,7 @@ export default function CreatorEmails() {
                 lineHeight: '1.6',
               }}
             >
-              💡 All emails are plain HTML — copy the source code and paste into Postmark, SendGrid, or Mailchimp.
+              <Lightbulb size={20} /> All emails are plain HTML — copy the source code and paste into Postmark, SendGrid, or Mailchimp.
             </div>
           </div>
 
@@ -647,7 +648,7 @@ export default function CreatorEmails() {
 
       {/* TOAST SUCCESS ALERT */}
       <div className={`${styles.toast} ${showToast ? styles.show : ''}`}>
-        ✓ HTML copied to clipboard!
+        <Check size={16} /> HTML copied to clipboard!
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { BarChart3, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, Mail, Menu, PenTool, Settings, X, Zap } from 'lucide-react';
 import styles from '@/styles/sidebar.module.css';
 
 interface SidebarProps {
@@ -44,7 +45,7 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
         onClick={() => setIsOpen(true)}
         aria-label="Open navigation sidebar"
       >
-        <span>☰</span>
+        <Menu size={18} />
       </button>
 
       {/* GLASSMORPHIC BACKDROP OVERLAY */}
@@ -67,14 +68,14 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
             onClick={() => setIsOpen(false)}
             aria-label="Close navigation sidebar"
           >
-            ✕
+            <X size={18} />
           </button>
         </div>
 
         <div className={styles.sbWorkspace} onClick={() => handleItemClick('home', '/dashboard')}>
           <div className={styles.wsAvatar}>FY</div>
           <div className={styles.wsName}>Finance YouTube</div>
-          <div className={styles.wsArrow}>⌄</div>
+          <div className={styles.wsArrow}><ChevronDown size={14} /></div>
         </div>
 
         <div className={styles.sbSection}>Main</div>
@@ -83,14 +84,14 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${isItemActive('home', '/dashboard') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('home', '/dashboard')}
         >
-          <span className={styles.sbIcon}>⊞</span> Overview
+          <span className={styles.sbIcon}><LayoutDashboard size={16} /></span> Overview
         </div>
         
         <div 
           className={`${styles.sbItem} ${isItemActive('topics') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('topics')}
         >
-          <span className={styles.sbIcon}>🔥</span> Topic Finder
+          <span className={styles.sbIcon}><Flame size={16} /></span> Topic Finder
           <span className={`${styles.sbBadge} ${styles.sbBadgeNew}`}>New</span>
         </div>
 
@@ -98,21 +99,21 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${isItemActive('script', '/script-generator') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('script', '/script-generator')}
         >
-          <span className={styles.sbIcon}>✍️</span> Script Generator
+          <span className={styles.sbIcon}><PenTool size={16} /></span> Script Generator
         </div>
 
         <div 
           className={`${styles.sbItem} ${isItemActive('shorts') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('shorts')}
         >
-          <span className={styles.sbIcon}>⚡</span> Shorts Repurposer
+          <span className={styles.sbIcon}><Zap size={16} /></span> Shorts Repurposer
         </div>
 
         <div 
           className={`${styles.sbItem} ${isItemActive('calendar') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('calendar')}
         >
-          <span className={styles.sbIcon}>📅</span> Content Calendar
+          <span className={styles.sbIcon}><CalendarDays size={16} /></span> Content Calendar
           <span className={styles.sbBadge}>3</span>
         </div>
 
@@ -122,21 +123,21 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${isItemActive('analytics') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('analytics')}
         >
-          <span className={styles.sbIcon}>📊</span> Analytics
+          <span className={styles.sbIcon}><BarChart3 size={16} /></span> Analytics
         </div>
 
         <div 
           className={`${styles.sbItem} ${pathname === '/affiliate-dashboard' ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('affiliate-dashboard', '/affiliate-dashboard')}
         >
-          <span className={styles.sbIcon}>🤝</span> Affiliate Dashboard
+          <span className={styles.sbIcon}><Handshake size={16} /></span> Affiliate Dashboard
         </div>
 
         <div 
           className={`${styles.sbItem} ${pathname === '/emails' ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('emails', '/emails')}
         >
-          <span className={styles.sbIcon}>✉️</span> Creator Emails
+          <span className={styles.sbIcon}><Mail size={16} /></span> Creator Emails
         </div>
 
         <div className={styles.sbSection}>Workspace</div>
@@ -145,7 +146,7 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${pathname === '/settings' ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('settings', '/settings')}
         >
-          <span className={styles.sbIcon}>⚙️</span> Settings
+          <span className={styles.sbIcon}><Settings size={16} /></span> Settings
         </div>
 
         <div className={styles.sbBottom}>

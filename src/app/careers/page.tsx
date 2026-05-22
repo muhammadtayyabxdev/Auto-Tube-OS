@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/careers.module.css";
+import { BookOpen, Bot, Building, Check, DollarSign, Globe, Handshake, MailOpen, MapPin, Monitor, Rocket, Target, TrendingUp, Wrench } from 'lucide-react';
 
 export default function Careers() {
   const [showToast, setShowToast] = useState(false);
@@ -35,7 +36,7 @@ export default function Careers() {
       <div style={{ padding: "0 6% 60px", maxWidth: "1000px", margin: "0 auto" }}>
         <div className={styles.cultureGrid}>
           <div className={styles.cc}>
-            <div className={styles.ccIcon}>🌍</div>
+            <div className={styles.ccIcon}><Globe size={16} /></div>
             <div className={styles.ccTitle}>Remote-first, always</div>
             <p className={styles.ccDesc}>
               Work from anywhere. Our team spans Lahore, London, and Manila. We care about what you ship, not where you sit.
@@ -49,28 +50,28 @@ export default function Careers() {
             </p>
           </div>
           <div className={styles.cc}>
-            <div className={styles.ccIcon}>🎯</div>
+            <div className={styles.ccIcon}><Target size={16} /></div>
             <div className={styles.ccTitle}>Outcome-driven</div>
             <p className={styles.ccDesc}>
               We measure results, not hours. Own your work, set your schedule, and make an actual dent in what you&apos;re building.
             </p>
           </div>
           <div className={styles.cc}>
-            <div className={styles.ccIcon}>📈</div>
+            <div className={styles.ccIcon}><TrendingUp size={16} /></div>
             <div className={styles.ccTitle}>Bootstrapped & profitable</div>
             <p className={styles.ccDesc}>
               No investor pressure. We grow at the pace the product deserves — decisions made by the team, not a board.
             </p>
           </div>
           <div className={styles.cc}>
-            <div className={styles.ccIcon}>🛠️</div>
+            <div className={styles.ccIcon}><Wrench size={16} /></div>
             <div className={styles.ccTitle}>Makers over managers</div>
             <p className={styles.ccDesc}>
               Small team means everyone builds. No committees, no endless meetings. 80% of your time making things.
             </p>
           </div>
           <div className={styles.cc}>
-            <div className={styles.ccIcon}>🤖</div>
+            <div className={styles.ccIcon}><Bot size={16} /></div>
             <div className={styles.ccTitle}>AI-native by default</div>
             <p className={styles.ccDesc}>
               We use AI in our own workflow to build AI tools. If you love experimenting with LLMs, you&apos;ll fit right in.
@@ -84,7 +85,7 @@ export default function Careers() {
         <div className={styles.secTitle}>Perks & Benefits</div>
         <div className={styles.perksGrid}>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>💰</div>
+            <div className={styles.perkIcon}><DollarSign size={16} /></div>
             <div className={styles.perkTitle}>Competitive salary</div>
             <p className={styles.perkDesc}>Market-rate pay — no &quot;startup discount.&quot;</p>
           </div>
@@ -94,12 +95,12 @@ export default function Careers() {
             <p className={styles.perkDesc}>Take time off when you need it.</p>
           </div>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>💻</div>
+            <div className={styles.perkIcon}><Monitor size={16} /></div>
             <div className={styles.perkTitle}>$1,500 setup budget</div>
             <p className={styles.perkDesc}>For your home office setup.</p>
           </div>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>📚</div>
+            <div className={styles.perkIcon}><BookOpen size={16} /></div>
             <div className={styles.perkTitle}>$500 learning budget</div>
             <p className={styles.perkDesc}>Courses, books, conferences.</p>
           </div>
@@ -109,17 +110,17 @@ export default function Careers() {
             <p className={styles.perkDesc}>Full medical or stipend.</p>
           </div>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>🚀</div>
+            <div className={styles.perkIcon}><Rocket size={16} /></div>
             <div className={styles.perkTitle}>Equity</div>
             <p className={styles.perkDesc}>Early team gets meaningful equity.</p>
           </div>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>🤝</div>
+            <div className={styles.perkIcon}><Handshake size={16} /></div>
             <div className={styles.perkTitle}>Annual retreat</div>
             <p className={styles.perkDesc}>Full team meets once a year — on us.</p>
           </div>
           <div className={styles.perk}>
-            <div className={styles.perkIcon}>🎯</div>
+            <div className={styles.perkIcon}><Target size={16} /></div>
             <div className={styles.perkTitle}>Free Pro access</div>
             <p className={styles.perkDesc}>AutoTubeOS Pro forever.</p>
           </div>
@@ -141,9 +142,9 @@ export default function Careers() {
             </div>
           </div>
           <div className={styles.jobMeta}>
-            <span>🏢 Engineering</span>
-            <span>💰 $80K–$120K</span>
-            <span>📍 Anywhere</span>
+            <span><Building size={16} /> Engineering</span>
+            <span><DollarSign size={16} /> $80K–$120K</span>
+            <span><MapPin size={16} /> Anywhere</span>
           </div>
           <p className={styles.jobDesc}>
             Build core AutoTubeOS platform — Next.js frontend, Node/FastAPI backend, and AI integration layer. Own features from idea to production.
@@ -170,9 +171,9 @@ export default function Careers() {
             </div>
           </div>
           <div className={styles.jobMeta}>
-            <span>🤖 AI</span>
-            <span>💰 $90K–$130K</span>
-            <span>📍 Anywhere</span>
+            <span><Bot size={16} /> AI</span>
+            <span><DollarSign size={16} /> $90K–$130K</span>
+            <span><MapPin size={16} /> Anywhere</span>
           </div>
           <p className={styles.jobDesc}>
             Own our AI pipeline — prompt engineering to fine-tuning models for YouTube script generation. Work with Groq, Gemini, Anthropic.
@@ -199,9 +200,9 @@ export default function Careers() {
             </div>
           </div>
           <div className={styles.jobMeta}>
-            <span>📈 Marketing</span>
-            <span>💰 $60K–$90K</span>
-            <span>📍 Anywhere</span>
+            <span><TrendingUp size={16} /> Marketing</span>
+            <span><DollarSign size={16} /> $60K–$90K</span>
+            <span><MapPin size={16} /> Anywhere</span>
           </div>
           <p className={styles.jobDesc}>
             Own our entire go-to-market — content, SEO, affiliate program, paid acquisition. Must understand the YouTube creator world deeply.
@@ -220,7 +221,7 @@ export default function Careers() {
         </div>
 
         <div className={styles.openApp}>
-          <div style={{ fontSize: "2rem", marginBottom: "10px" }}>📬</div>
+          <div style={{ fontSize: "2rem", marginBottom: "10px" }}><MailOpen size={16} /></div>
           <div style={{ fontFamily: "var(--font-head)", fontSize: "1rem", fontWeight: 700, marginBottom: "6px" }}>
             Don&apos;t see the right role?
           </div>
@@ -237,7 +238,7 @@ export default function Careers() {
 
       {/* TOAST */}
       <div className={`${styles.toast} ${showToast ? styles.show : ""}`}>
-        ✓ Opening application...
+        <Check size={16} /> Opening application...
       </div>
     </>
   );

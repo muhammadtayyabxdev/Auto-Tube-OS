@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/features.module.css';
+import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Brain, CalendarDays, Check, ClipboardList, Clock, DollarSign, Eye, FileText, Flame, Globe, Image, Lightbulb, MailOpen, MessageCircle, PenTool, Pin, Play, RefreshCw, Save, Search, Settings, Shuffle, Smartphone, Target, TrendingUp, Trophy, Upload, Users, Zap } from 'lucide-react';
 
 type TabId = 'topic' | 'script' | 'shorts' | 'retention' | 'calendar' | 'competitor' | 'agents';
 
@@ -17,13 +18,13 @@ export default function FeaturesPage() {
   const [activeTab, setActiveTab] = useState<TabId>('topic');
 
   const tabs: Tab[] = [
-    { id: 'topic', label: '🔥 Topic Finder' },
-    { id: 'script', label: '✍️ Script Generator' },
-    { id: 'shorts', label: '⚡ Shorts Repurposer' },
-    { id: 'retention', label: '📊 Retention Optimizer' },
-    { id: 'calendar', label: '📅 Content Calendar' },
-    { id: 'competitor', label: '🔍 Competitor Intel' },
-    { id: 'agents', label: '🤖 AI Agents' },
+    { id: 'topic', label: '<Flame size={16} /> Topic Finder' },
+    { id: 'script', label: '<PenTool size={16} /> Script Generator' },
+    { id: 'shorts', label: '<Zap size={16} /> Shorts Repurposer' },
+    { id: 'retention', label: '<BarChart3 size={16} /> Retention Optimizer' },
+    { id: 'calendar', label: '<CalendarDays size={16} /> Content Calendar' },
+    { id: 'competitor', label: '<Search size={16} /> Competitor Intel' },
+    { id: 'agents', label: '<Bot size={16} /> AI Agents' },
   ];
 
   const handleTabChange = (id: TabId) => {
@@ -196,7 +197,7 @@ export default function FeaturesPage() {
             </div>
             <div className={styles.hs}>
               <div className={styles.hsN}>02</div>
-              <div className={styles.hsI}>🔍</div>
+              <div className={styles.hsI}><Search size={16} /></div>
               <div className={styles.hsT}>AI scans the web</div>
               <div className={styles.hsD}>
                 YouTube trends, Reddit, and Google search volume analyzed.
@@ -204,7 +205,7 @@ export default function FeaturesPage() {
             </div>
             <div className={styles.hs}>
               <div className={styles.hsN}>03</div>
-              <div className={styles.hsI}>📊</div>
+              <div className={styles.hsI}><BarChart3 size={16} /></div>
               <div className={styles.hsT}>Ideas get scored</div>
               <div className={styles.hsD}>
                 Ranked 0–10 by views potential, RPM, and competition level.
@@ -212,7 +213,7 @@ export default function FeaturesPage() {
             </div>
             <div className={styles.hs}>
               <div className={styles.hsN}>04</div>
-              <div className={styles.hsI}>✍️</div>
+              <div className={styles.hsI}><PenTool size={16} /></div>
               <div className={styles.hsT}>One-click to script</div>
               <div className={styles.hsD}>
                 Hit "Write Script" on any idea and jump to the generator.
@@ -258,42 +259,42 @@ export default function FeaturesPage() {
           <div className={styles.secTtl}>Everything in Topic Finder</div>
           <div className={styles.fg}>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📈</div>
+              <div className={styles.fgIcon}><TrendingUp size={16} /></div>
               <div className={styles.fgTitle}>Viral Score (0–10)</div>
               <div className={styles.fgDesc}>
                 AI scores every idea by estimated views, trend velocity, and viral potential.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>💰</div>
+              <div className={styles.fgIcon}><DollarSign size={16} /></div>
               <div className={styles.fgTitle}>RPM Estimation</div>
               <div className={styles.fgDesc}>
                 See estimated ad revenue per 1,000 views before you record.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🎯</div>
+              <div className={styles.fgIcon}><Target size={16} /></div>
               <div className={styles.fgTitle}>Competition Level</div>
               <div className={styles.fgDesc}>
                 Low, medium, or high — so you know where you can actually win.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🔍</div>
+              <div className={styles.fgIcon}><Search size={16} /></div>
               <div className={styles.fgTitle}>Gap Analysis</div>
               <div className={styles.fgDesc}>
                 Find topics your competitors haven't covered that their audience wants.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🌍</div>
+              <div className={styles.fgIcon}><Globe size={16} /></div>
               <div className={styles.fgTitle}>Market Targeting</div>
               <div className={styles.fgDesc}>
                 Switch between US, UK, Global, and local markets instantly.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>💾</div>
+              <div className={styles.fgIcon}><Save size={16} /></div>
               <div className={styles.fgTitle}>Save to Pipeline</div>
               <div className={styles.fgDesc}>
                 Save ideas to your pipeline and add them to Calendar with one click.
@@ -366,7 +367,7 @@ export default function FeaturesPage() {
                     marginBottom: '7px',
                   }}
                 >
-                  📌 Intro (15–45s)
+                  <Pin size={16} /> Intro (15–45s)
                 </div>
                 <div
                   style={{
@@ -413,19 +414,19 @@ export default function FeaturesPage() {
           <div className={styles.secTtl}>Every format your channel needs</div>
           <div className={styles.fg} style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📋</div>
+              <div className={styles.fgIcon}><ClipboardList size={16} /></div>
               <div className={styles.fgTitle}>Listicle</div>
               <div className={styles.fgDesc}>
                 "7 Ways to..." — numbered, easy to follow, high retention.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🎬</div>
+              <div className={styles.fgIcon}><Play size={16} /></div>
               <div className={styles.fgTitle}>Documentary</div>
               <div className={styles.fgDesc}>Narrative storytelling with facts and reveals.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>💰</div>
+              <div className={styles.fgIcon}><DollarSign size={16} /></div>
               <div className={styles.fgTitle}>Finance</div>
               <div className={styles.fgDesc}>
                 Data-driven with specific numbers and case studies.
@@ -437,19 +438,19 @@ export default function FeaturesPage() {
               <div className={styles.fgDesc}>Suspense and dramatic reveals for story channels.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>💬</div>
+              <div className={styles.fgIcon}><MessageCircle size={16} /></div>
               <div className={styles.fgTitle}>Reddit Story</div>
               <div className={styles.fgDesc}>
                 First-person confessions and AITA-style formats.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>⚡</div>
+              <div className={styles.fgIcon}><Zap size={16} /></div>
               <div className={styles.fgTitle}>Shorts (60s)</div>
               <div className={styles.fgDesc}>Ultra-punchy, one insight, perfect for Shorts.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🧠</div>
+              <div className={styles.fgIcon}><Brain size={16} /></div>
               <div className={styles.fgTitle}>Educational</div>
               <div className={styles.fgDesc}>Clear structure, examples, and key takeaways.</div>
             </div>
@@ -506,7 +507,7 @@ export default function FeaturesPage() {
                       padding: '9px',
                     }}
                   >
-                    <span>🔥</span>
+                    <span><Flame size={16} /></span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: '11px', fontWeight: 600 }}>
                         Hook: "people making $500/day..."
@@ -527,7 +528,7 @@ export default function FeaturesPage() {
                       padding: '9px',
                     }}
                   >
-                    <span>💡</span>
+                    <span><Lightbulb size={16} /></span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: '11px', fontWeight: 600 }}>AI YouTube numbers revealed</div>
                       <div style={{ fontSize: '10px', color: 'var(--muted2)' }}>2:14–2:58</div>
@@ -546,7 +547,7 @@ export default function FeaturesPage() {
                       padding: '9px',
                     }}
                   >
-                    <span>💰</span>
+                    <span><DollarSign size={16} /></span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: '11px', fontWeight: 600 }}>
                         "This tool replaced my $3K/mo freelancer"
@@ -572,7 +573,7 @@ export default function FeaturesPage() {
                     cursor: 'pointer',
                   }}
                 >
-                  ⬇️ Export All 5 Shorts Scripts
+                  <ArrowDown size={16} /> Export All 5 Shorts Scripts
                 </div>
               </div>
             </div>
@@ -585,7 +586,7 @@ export default function FeaturesPage() {
           <div className={styles.secTtl}>Shorts Repurposer features</div>
           <div className={styles.fg}>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🎯</div>
+              <div className={styles.fgIcon}><Target size={16} /></div>
               <div className={styles.fgTitle}>Auto Clip Detection</div>
               <div className={styles.fgDesc}>
                 Finds the highest-energy, most shareable moments automatically.
@@ -599,26 +600,26 @@ export default function FeaturesPage() {
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📱</div>
+              <div className={styles.fgIcon}><Smartphone size={16} /></div>
               <div className={styles.fgTitle}>Multi-Platform Export</div>
               <div className={styles.fgDesc}>
                 Scripts for YouTube Shorts, TikTok, and Instagram Reels.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📊</div>
+              <div className={styles.fgIcon}><BarChart3 size={16} /></div>
               <div className={styles.fgTitle}>Virality Scoring</div>
               <div className={styles.fgDesc}>
                 Each clip scored 0–10 so you know which to post first.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>⏱️</div>
+              <div className={styles.fgIcon}><Clock size={16} /></div>
               <div className={styles.fgTitle}>Exact Timestamps</div>
               <div className={styles.fgDesc}>Start and end timestamps for your editor's reference.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🎬</div>
+              <div className={styles.fgIcon}><Play size={16} /></div>
               <div className={styles.fgTitle}>4-Hour Videos</div>
               <div className={styles.fgDesc}>
                 Works on long-form podcasts, documentaries, and deep-dives.
@@ -691,13 +692,13 @@ export default function FeaturesPage() {
                 </div>
                 <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', marginBottom: '10px' }}>
                   <span style={{ fontSize: '9px', padding: '2px 7px', borderRadius: '4px', background: 'var(--green-bg)', color: 'var(--green)' }}>
-                    ✓ Strong hook
+                    <Check size={16} /> Strong hook
                   </span>
                   <span style={{ fontSize: '9px', padding: '2px 7px', borderRadius: '4px', background: 'var(--green-bg)', color: 'var(--green)' }}>
-                    ✓ Visual cues
+                    <Check size={16} /> Visual cues
                   </span>
                   <span style={{ fontSize: '9px', padding: '2px 7px', borderRadius: '4px', background: 'var(--amber-bg)', color: 'var(--amber)' }}>
-                    ⚠ Intro too long
+                    <AlertTriangle size={16} /> Intro too long
                   </span>
                 </div>
                 <div style={{ background: 'var(--s3)', borderRadius: '8px', padding: '10px', fontSize: '11px', color: 'var(--muted)', lineHeight: 1.6 }}>
@@ -797,7 +798,7 @@ export default function FeaturesPage() {
                       color: 'var(--red)',
                     }}
                   >
-                    7<br />📤
+                    7<br /><Upload size={16} />
                   </div>
                   <div style={{ background: 'var(--s3)', borderRadius: '5px', padding: '7px 3px', textAlign: 'center', fontSize: '9px' }}>8</div>
                   <div style={{ background: 'var(--s3)', borderRadius: '5px', padding: '7px 3px', textAlign: 'center', fontSize: '9px' }}>9</div>
@@ -812,7 +813,7 @@ export default function FeaturesPage() {
                       color: 'var(--blue)',
                     }}
                   >
-                    10<br />✍️
+                    10<br /><PenTool size={16} />
                   </div>
                   <div style={{ background: 'var(--s3)', borderRadius: '5px', padding: '7px 3px', textAlign: 'center', fontSize: '9px' }}>11</div>
                   <div style={{ background: 'var(--s3)', borderRadius: '5px', padding: '7px 3px', textAlign: 'center', fontSize: '9px' }}>12</div>
@@ -828,7 +829,7 @@ export default function FeaturesPage() {
                       color: 'var(--red)',
                     }}
                   >
-                    14<br />📤
+                    14<br /><Upload size={16} />
                   </div>
                   <div
                     style={{
@@ -841,7 +842,7 @@ export default function FeaturesPage() {
                       color: 'var(--green)',
                     }}
                   >
-                    15<br />✅
+                    15<br /><Check size={16} />
                   </div>
                 </div>
               </div>
@@ -862,19 +863,19 @@ export default function FeaturesPage() {
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>👥</div>
+              <div className={styles.fgIcon}><Users size={16} /></div>
               <div className={styles.fgTitle}>Team Tasks</div>
               <div className={styles.fgDesc}>
                 Assign scripting, editing, and thumbnail tasks to team members.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>✅</div>
+              <div className={styles.fgIcon}><Check size={16} /></div>
               <div className={styles.fgTitle}>Approval Flow</div>
               <div className={styles.fgDesc}>Multi-stage: Script → Edit → Thumbnail → Publish.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🔔</div>
+              <div className={styles.fgIcon}><Bell size={16} /></div>
               <div className={styles.fgTitle}>Upload Reminders</div>
               <div className={styles.fgDesc}>Automatic notifications 24 hours before each upload.</div>
             </div>
@@ -884,7 +885,7 @@ export default function FeaturesPage() {
               <div className={styles.fgDesc}>Manage multiple YouTube channels in one calendar.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📊</div>
+              <div className={styles.fgIcon}><BarChart3 size={16} /></div>
               <div className={styles.fgTitle}>Streak Tracker</div>
               <div className={styles.fgDesc}>See your posting streak and consistency score over time.</div>
             </div>
@@ -970,7 +971,7 @@ export default function FeaturesPage() {
                     }}
                   >
                     <div style={{ color: 'var(--green)', fontWeight: 600, marginBottom: '2px' }}>
-                      🎯 Gap Found
+                      <Target size={16} /> Gap Found
                     </div>
                     <div style={{ color: 'var(--muted)', fontSize: '9px' }}>
                       Never covered "AI Investing" — 890K searches, low competition
@@ -988,42 +989,42 @@ export default function FeaturesPage() {
           <div className={styles.secTtl}>Competitor Intelligence features</div>
           <div className={styles.fg}>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📊</div>
+              <div className={styles.fgIcon}><BarChart3 size={16} /></div>
               <div className={styles.fgTitle}>Channel Analytics</div>
               <div className={styles.fgDesc}>
                 Views, subscribers, posting frequency, and engagement rates.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🖼️</div>
+              <div className={styles.fgIcon}><Image size={16} /></div>
               <div className={styles.fgTitle}>Thumbnail Patterns</div>
               <div className={styles.fgDesc}>
                 AI analyzes colors, fonts, faces, and text overlays used in thumbnails.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🎯</div>
+              <div className={styles.fgIcon}><Target size={16} /></div>
               <div className={styles.fgTitle}>Gap Finder</div>
               <div className={styles.fgDesc}>
                 Topics their audience wants but they haven't covered yet.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📅</div>
+              <div className={styles.fgIcon}><CalendarDays size={16} /></div>
               <div className={styles.fgTitle}>Post Schedule</div>
               <div className={styles.fgDesc}>
                 Detect their best posting times, frequency, and upload patterns.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🏆</div>
+              <div className={styles.fgIcon}><Trophy size={16} /></div>
               <div className={styles.fgTitle}>Top Videos Analysis</div>
               <div className={styles.fgDesc}>
                 Breakdown of their highest-performing videos and why they worked.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📝</div>
+              <div className={styles.fgIcon}><FileText size={16} /></div>
               <div className={styles.fgTitle}>Title Formulas</div>
               <div className={styles.fgDesc}>
                 Extract the exact title patterns that drive their most views.
@@ -1077,7 +1078,7 @@ export default function FeaturesPage() {
               </div>
               <div className={styles.dbBody}>
                 <div style={{ fontSize: '11px', fontWeight: 600, marginBottom: '10px' }}>
-                  🤖 Agent: Finance Channel — Weekly Run
+                  <Bot size={16} /> Agent: Finance Channel — Weekly Run
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <div
@@ -1092,7 +1093,7 @@ export default function FeaturesPage() {
                       fontSize: '11px',
                     }}
                   >
-                    <span>✓</span>
+                    <span><Check size={16} /></span>
                     <span style={{ color: 'var(--green)' }}>Found 8 viral topics in Finance niche</span>
                   </div>
                   <div
@@ -1107,7 +1108,7 @@ export default function FeaturesPage() {
                       fontSize: '11px',
                     }}
                   >
-                    <span>✓</span>
+                    <span><Check size={16} /></span>
                     <span style={{ color: 'var(--green)' }}>Selected top topic (score 9.2)</span>
                   </div>
                   <div
@@ -1122,7 +1123,7 @@ export default function FeaturesPage() {
                       fontSize: '11px',
                     }}
                   >
-                    <span>✓</span>
+                    <span><Check size={16} /></span>
                     <span style={{ color: 'var(--green)' }}>Generated 1,400-word Listicle script</span>
                   </div>
                   <div
@@ -1157,38 +1158,38 @@ export default function FeaturesPage() {
           <div className={styles.secTtl}>AI Agents features</div>
           <div className={styles.fg}>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🔄</div>
+              <div className={styles.fgIcon}><RefreshCw size={16} /></div>
               <div className={styles.fgTitle}>Weekly Auto-Run</div>
               <div className={styles.fgDesc}>
                 Agent runs every Monday, finds topics, and scripts them automatically.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>⚙️</div>
+              <div className={styles.fgIcon}><Settings size={16} /></div>
               <div className={styles.fgTitle}>Custom Rules</div>
               <div className={styles.fgDesc}>
                 Set your niche, format preference, tone, and video length rules.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>👁️</div>
+              <div className={styles.fgIcon}><Eye size={16} /></div>
               <div className={styles.fgTitle}>Human Review Step</div>
               <div className={styles.fgDesc}>Agent pauses for your approval before scheduling anything.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📬</div>
+              <div className={styles.fgIcon}><MailOpen size={16} /></div>
               <div className={styles.fgTitle}>Team Notifications</div>
               <div className={styles.fgDesc}>
                 Automatically notifies editors and voice artists when work is ready.
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>📊</div>
+              <div className={styles.fgIcon}><BarChart3 size={16} /></div>
               <div className={styles.fgTitle}>Agent Analytics</div>
               <div className={styles.fgDesc}>Track how many videos your agent produced and their performance.</div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}>🔀</div>
+              <div className={styles.fgIcon}><Shuffle size={16} /></div>
               <div className={styles.fgTitle}>Multi-Channel</div>
               <div className={styles.fgDesc}>
                 Run separate agents for each channel with different configs.

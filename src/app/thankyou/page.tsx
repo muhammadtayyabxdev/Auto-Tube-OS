@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/thankyou.module.css';
+import { CalendarDays, Check, CreditCard, Mail, Rocket, Sparkles, Target } from 'lucide-react';
 
 export default function ThankYouPage() {
   return (
@@ -14,8 +15,8 @@ export default function ThankYouPage() {
         <div className={styles.gridBg}></div>
         <div className={styles.glow}></div>
         <div className={styles.inner}>
-          <div className={styles.confetti}>🎉 🚀 ✨ 🎯</div>
-          <div className={styles.badge}>✓ Payment Confirmed</div>
+          <div className={styles.confetti}>🎉 <Rocket size={16} /> <Sparkles size={16} /> <Target size={16} /></div>
+          <div className={styles.badge}><Check size={14} /> Payment Confirmed</div>
           <h1 className={styles.title}>
             Welcome to
             <br />
@@ -28,8 +29,8 @@ export default function ThankYouPage() {
 
           <div className={styles.planCard}>
             <div className={styles.pcHeader}>
-              <div className={styles.pcPlan}>🚀 Pro Plan</div>
-              <div className={styles.pcBadge}>✓ Active</div>
+              <div className={styles.pcPlan}><Rocket size={16} /> Pro Plan</div>
+              <div className={styles.pcBadge}><Check size={14} /> Active</div>
             </div>
             <div className={styles.pcItems}>
               <div className={styles.pcItem}>
@@ -63,9 +64,9 @@ export default function ThankYouPage() {
           </div>
 
           <div className={styles.meta}>
-            <span>📧 Receipt sent to ahmed@example.com</span>
-            <span>📅 Next billing: June 1, 2026</span>
-            <span>💳 Visa •••• 4242</span>
+            <span><Mail size={16} /> Receipt sent to ahmed@example.com</span>
+            <span><CalendarDays size={16} /> Next billing: June 1, 2026</span>
+            <span><CreditCard size={16} /> Visa •••• 4242</span>
           </div>
         </div>
       </div>

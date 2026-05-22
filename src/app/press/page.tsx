@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/press.module.css';
+import { ArrowDown, BarChart3, ClipboardList, FileText, Newspaper, Package, Palette, Phone, Play, Smartphone, TrendingUp } from 'lucide-react';
 
 interface BrandAsset {
   icon: string;
@@ -29,19 +30,19 @@ export default function PressPage() {
       bg: 'var(--bg)',
     },
     {
-      icon: '🎨',
+      icon: '<Palette size={16} />',
       name: 'Brand Colors & Fonts',
       sub: 'Hex codes, Poppins font',
       bg: 'var(--s3)',
     },
     {
-      icon: '📱',
+      icon: '<Smartphone size={16} />',
       name: 'Product Screenshots',
       sub: 'Dashboard, mobile · 24 images',
       bg: 'var(--s3)',
     },
     {
-      icon: '🎬',
+      icon: '<Play size={16} />',
       name: 'Product Demo Video',
       sub: '60s overview · MP4, WebM',
       bg: 'var(--s3)',
@@ -50,13 +51,13 @@ export default function PressPage() {
 
   const documents: BrandAsset[] = [
     {
-      icon: '📊',
+      icon: '<BarChart3 size={16} />',
       name: 'Press Release — May 2026',
       sub: 'Latest announcement · PDF',
       bg: 'var(--s3)',
     },
     {
-      icon: '📈',
+      icon: '<TrendingUp size={16} />',
       name: 'Creator Case Study',
       sub: 'Real results from 5 users',
       bg: 'var(--s3)',
@@ -115,7 +116,7 @@ export default function PressPage() {
           </div>
           <div className={styles.pressGrid}>
             <div>
-              <div className={styles.assetTitle}>📦 Brand Assets</div>
+              <div className={styles.assetTitle}><Package size={16} /> Brand Assets</div>
               {brandAssets.map((asset, index) => (
                 <div key={index} className={styles.assetCard}>
                   <div className={styles.acIcon} style={{ background: asset.bg }}>
@@ -125,12 +126,12 @@ export default function PressPage() {
                     <div className={styles.acName}>{asset.name}</div>
                     <div className={styles.acSub}>{asset.sub}</div>
                   </div>
-                  <button className={styles.dlBtn}>⬇ Download</button>
+                  <button className={styles.dlBtn}><ArrowDown size={16} /> Download</button>
                 </div>
               ))}
 
               <div className={styles.assetTitle} style={{ marginTop: '24px' }}>
-                📄 Documents
+                <FileText size={16} /> Documents
               </div>
               {documents.map((doc, index) => (
                 <div key={index} className={styles.assetCard}>
@@ -141,13 +142,13 @@ export default function PressPage() {
                     <div className={styles.acName}>{doc.name}</div>
                     <div className={styles.acSub}>{doc.sub}</div>
                   </div>
-                  <button className={styles.dlBtn}>⬇ Download</button>
+                  <button className={styles.dlBtn}><ArrowDown size={16} /> Download</button>
                 </div>
               ))}
             </div>
             <div>
               <div className={styles.factSheet}>
-                <div className={styles.fsTitle}>📋 Company Fact Sheet</div>
+                <div className={styles.fsTitle}><ClipboardList size={16} /> Company Fact Sheet</div>
                 {factSheet.map((row, index) => (
                   <div key={index} className={styles.fsRow}>
                     <div className={styles.fsLbl}>{row.label}</div>
@@ -156,7 +157,7 @@ export default function PressPage() {
                 ))}
               </div>
               <div className={styles.pressContact}>
-                <div className={styles.pcTitle}>📞 Press Contact</div>
+                <div className={styles.pcTitle}><Phone size={16} /> Press Contact</div>
                 <div className={styles.pcSub}>
                   For media inquiries, interviews, and partnerships. We respond within 4 hours on
                   weekdays.
@@ -175,7 +176,7 @@ export default function PressPage() {
 
       <div className={styles.coverageSection}>
         <div style={{ fontFamily: 'var(--fh)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '16px' }}>
-          📰 Press Coverage
+          <Newspaper size={16} /> Press Coverage
         </div>
         <div className={styles.covGrid}>
           {coverage.map((item, index) => (

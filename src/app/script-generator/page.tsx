@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from '@/styles/script-generator.module.css';
+import { AlertTriangle, ArrowDown, BookOpen, Bot, Brain, Check, ClipboardList, DollarSign, Eye, FileText, Flame, Link2, MessageCircle, PenTool, Pin, Play, Plus, RefreshCw, Settings, Sparkles, Target, Trash2, Zap } from 'lucide-react';
 
 interface SectionDef {
   key: string;
@@ -41,8 +42,8 @@ function ScriptGeneratorContent() {
   const [geminiDotClass, setGeminiDotClass] = useState<string>('');
 
   // Selected config states
-  const [selectedFormat, setSelectedFormat] = useState<string>('📋 Listicle');
-  const [selectedTone, setSelectedTone] = useState<string>('🔥 Urgent');
+  const [selectedFormat, setSelectedFormat] = useState<string>('<ClipboardList size={16} /> Listicle');
+  const [selectedTone, setSelectedTone] = useState<string>('<Flame size={16} /> Urgent');
   const [selectedLength, setSelectedLength] = useState<string>('8min');
   const [creativity, setCreativity] = useState<number>(0.7);
 
@@ -96,7 +97,7 @@ function ScriptGeneratorContent() {
     }
     const isValid = val.startsWith('gsk_');
     setGroqDotClass(isValid ? styles.ok : styles.err);
-    setGroqStatus(isValid ? '✓ Key format looks correct' : '✗ Check key format (starts with gsk_)');
+    setGroqStatus(isValid ? '<Check size={16} /> Key format looks correct' : '✗ Check key format (starts with gsk_)');
   };
 
   const validateGeminiKey = (val: string) => {
@@ -108,7 +109,7 @@ function ScriptGeneratorContent() {
     }
     const isValid = val.startsWith('AIza');
     setGeminiDotClass(isValid ? styles.ok : styles.err);
-    setGeminiStatus(isValid ? '✓ Key format looks correct' : '✗ Check key format (starts with AIza)');
+    setGeminiStatus(isValid ? '<Check size={14} /> Key format looks correct' : '✗ Check key format (starts with AIza)');
   };
 
   const handleProviderSwitch = (p: 'groq' | 'gemini') => {
@@ -135,9 +136,9 @@ function ScriptGeneratorContent() {
   const parseTextIntoSections = (text: string) => {
     const sectionDefs: SectionDef[] = [
       { key: '[HOOK]', label: '🎣 Hook', tag: styles.tagHook, time: '0–15s' },
-      { key: '[INTRO]', label: '📌 Intro', tag: styles.tagIntro, time: '15–45s' },
-      { key: '[MAIN CONTENT]', label: '📋 Main Content', tag: styles.tagMain, time: '45s–End' },
-      { key: '[CTA]', label: '🎯 Call to Action', tag: styles.tagCta, time: 'Final 20s' }
+      { key: '[INTRO]', label: '<Pin size={14} /> Intro', tag: styles.tagIntro, time: '15–45s' },
+      { key: '[MAIN CONTENT]', label: '<ClipboardList size={14} /> Main Content', tag: styles.tagMain, time: '45s–End' },
+      { key: '[CTA]', label: '<Target size={14} /> Call to Action', tag: styles.tagCta, time: 'Final 20s' }
     ];
 
     const parts: Record<string, string> = {};
@@ -410,7 +411,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
   const copyToClipboard = () => {
     if (!streamContent) return;
     navigator.clipboard.writeText(streamContent).then(() => {
-      triggerToast('Script copied to clipboard! 📋');
+      triggerToast('Script copied to clipboard! <ClipboardList size={16} />');
     });
   };
 
@@ -423,7 +424,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
     link.href = url;
     link.download = `${cleanTopic.slice(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}_script.txt`;
     link.click();
-    triggerToast('Downloading TXT file... ⬇️');
+    triggerToast('Downloading TXT file... <ArrowDown size={16} />');
   };
 
   const clearAllOutput = () => {
@@ -431,7 +432,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
     setParsedSections({});
     setShowOutput(false);
     disableButtons();
-    triggerToast('Output cleared 🗑️');
+    triggerToast('Output cleared <Trash2 size={16} />');
   };
 
   const handleImproveHook = () => {
@@ -447,7 +448,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
       setStreamContent(refinedText);
       parseTextIntoSections(refinedText);
       setIsGenerating(false);
-      triggerToast('Hook improved successfully! 🔥');
+      triggerToast('Hook improved successfully! <Flame size={16} />');
     }, 1200);
   };
 
@@ -470,7 +471,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
       setStreamContent(appendedText);
       parseTextIntoSections(appendedText);
       setIsGenerating(false);
-      triggerToast('Arbitrage Point added! ➕');
+      triggerToast('Arbitrage Point added! <Plus size={16} />');
     }, 1000);
   };
 
@@ -490,13 +491,13 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           className={`${styles.mobileTabBtn} ${activeMobileTab === 'config' ? styles.active : ''}`}
           onClick={() => setActiveMobileTab('config')}
         >
-          ⚙️ Settings
+          <Settings size={16} /> Settings
         </button>
         <button 
           className={`${styles.mobileTabBtn} ${activeMobileTab === 'output' ? styles.active : ''}`}
           onClick={() => setActiveMobileTab('output')}
         >
-          📝 Script Output
+          <FileText size={16} /> Script Output
         </button>
       </div>
 
@@ -520,7 +521,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                   className={`${styles.apiOpt} ${styles.groq} ${currentProvider === 'groq' ? styles.on : ''}`}
                   onClick={() => handleProviderSwitch('groq')}
                 >
-                  ⚡ Groq
+                  <Zap size={16} /> Groq
                 </div>
                 <div 
                   className={`${styles.apiOpt} ${styles.gemini} ${currentProvider === 'gemini' ? styles.on : ''}`}
@@ -545,7 +546,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                       onChange={(e) => validateGroqKey(e.target.value)}
                     />
                     <button className={styles.eyeBtn} onClick={() => setShowGroqKey(!showGroqKey)}>
-                      {showGroqKey ? '🙈' : '👁'}
+                      {showGroqKey ? '🙈' : '<Eye size={16} />'}
                     </button>
                   </div>
                   <div className={styles.apiStatus}>
@@ -563,7 +564,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                     <option value="gemma2-9b-it">Gemma 2 9B — Efficient</option>
                   </select>
                   <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)', lineHeight: '1.6' }}>
-                    🔗 Free key at <a href="https://console.groq.com" target="_blank" rel="noreferrer" style={{ color: '#f97316' }}>console.groq.com</a><br />
+                    <Link2 size={16} /> Free key at <a href="https://console.groq.com" target="_blank" rel="noreferrer" style={{ color: '#f97316' }}>console.groq.com</a><br />
                     Daily limit: ~14,400 tokens/min free tier
                   </div>
                 </div>
@@ -582,7 +583,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                       onChange={(e) => validateGeminiKey(e.target.value)}
                     />
                     <button className={styles.eyeBtn} onClick={() => setShowGeminiKey(!showGeminiKey)}>
-                      {showGeminiKey ? '🙈' : '👁'}
+                      {showGeminiKey ? '🙈' : '<Eye size={14} />'}
                     </button>
                   </div>
                   <div className={styles.apiStatus}>
@@ -599,7 +600,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                     <option value="gemini-1.5-pro">Gemini 1.5 Pro — Best Quality</option>
                   </select>
                   <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)', lineHeight: '1.6' }}>
-                    🔗 Free key at <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: '#4285f4' }}>aistudio.google.com</a><br />
+                    <Link2 size={16} /> Free key at <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: '#4285f4' }}>aistudio.google.com</a><br />
                     Free tier: 15 req/min, 1M tokens/day
                   </div>
                 </div>
@@ -624,9 +625,9 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
             <div className={styles.cfgLabel}>Script Format</div>
             <div className={styles.formatGrid}>
               {[
-                '📋 Listicle', '🎬 Documentary', '💰 Finance', 
-                '👻 Horror Story', '💬 Reddit Story', '⚡ Shorts (60s)', 
-                '🧠 Educational', '🎭 Motivational'
+                '<ClipboardList size={16} /> Listicle', '<Play size={16} /> Documentary', '<DollarSign size={16} /> Finance', 
+                '👻 Horror Story', '<MessageCircle size={16} /> Reddit Story', '<Zap size={16} /> Shorts (60s)', 
+                '<Brain size={16} /> Educational', '🎭 Motivational'
               ].map((fmt) => (
                 <div 
                   key={fmt} 
@@ -643,7 +644,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           <div className={styles.inpBlock}>
             <div className={styles.cfgLabel}>Tone</div>
             <div className={styles.toneRow}>
-              {['🔥 Urgent', '📚 Educational', '😮 Shocking', '😊 Friendly', '🤔 Analytical'].map((tn) => (
+              {['<Flame size={16} /> Urgent', '<BookOpen size={16} /> Educational', '😮 Shocking', '😊 Friendly', '🤔 Analytical'].map((tn) => (
                 <div 
                   key={tn} 
                   className={`${styles.tonePill} ${selectedTone === tn ? styles.on : ''}`}
@@ -707,7 +708,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
             {isGenerating ? (
               <div className={styles.spinner}></div>
             ) : (
-              <span className={styles.btnLabel}>✨ Generate Script</span>
+              <span className={styles.btnLabel}><Sparkles size={16} /> Generate Script</span>
             )}
           </button>
 
@@ -720,14 +721,14 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
         <div className={styles.topbar}>
           <div className={styles.tbTitle}>Script Generator</div>
           <div className={`${styles.tbPill} ${styles.tbProvider} ${currentProvider === 'groq' ? styles.groq : styles.gemini}`}>
-            {currentProvider === 'groq' ? '⚡ Groq' : '✦ Gemini'}
+            {currentProvider === 'groq' ? '<Zap size={14} /> Groq' : '✦ Gemini'}
           </div>
           {totalTokens > 0 && (
             <div className={`${styles.tbPill} ${styles.tbTokens}`}>{totalTokens.toLocaleString()} tokens</div>
           )}
-          <div className={styles.iconBtn} onClick={copyToClipboard} title="Copy all text">📋</div>
-          <div className={styles.iconBtn} onClick={downloadScriptTxt} title="Download TXT">⬇️</div>
-          <div className={styles.iconBtn} onClick={clearAllOutput} title="Clear workspace">🗑️</div>
+          <div className={styles.iconBtn} onClick={copyToClipboard} title="Copy all text"><ClipboardList size={16} /></div>
+          <div className={styles.iconBtn} onClick={downloadScriptTxt} title="Download TXT"><ArrowDown size={16} /></div>
+          <div className={styles.iconBtn} onClick={clearAllOutput} title="Clear workspace"><Trash2 size={16} /></div>
         </div>
 
         {/* OUTPUT BODY */}
@@ -736,14 +737,14 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           {/* TOAST DISPLAY */}
           {toastMessage && (
             <div className={`${styles.toast} ${styles.show} ${toastType === 'error' ? styles.error : styles.success}`}>
-              {toastType === 'error' ? '✗' : '✓'} {toastMessage}
+              {toastType === 'error' ? '✗' : '<Check size={16} />'} {toastMessage}
             </div>
           )}
 
           {/* EMPTY STATE */}
           {!showOutput && !showThinking && (
             <div className={styles.emptyState}>
-              <div className={styles.emptyIcon}>✍️</div>
+              <div className={styles.emptyIcon}><PenTool size={16} /></div>
               <div className={styles.emptyTitle}>Your script will appear here</div>
               <div className={styles.emptySub}>
                 Add your API key, enter a topic, choose a format, and hit Generate. Script streams in real time.
@@ -753,19 +754,19 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                   className={styles.exChip} 
                   onClick={() => setTopic('AI side hustles that pay $500 a day in 2026')}
                 >
-                  <span className={styles.exIcon}>💰</span> AI side hustles that pay $500 a day
+                  <span className={styles.exIcon}><DollarSign size={16} /></span> AI side hustles that pay $500 a day
                 </div>
                 <div 
                   className={styles.exChip} 
                   onClick={() => setTopic('Why 99% of people stay broke forever')}
                 >
-                  <span className={styles.exIcon}>🧠</span> Why 99% of people stay broke forever
+                  <span className={styles.exIcon}><Brain size={16} /></span> Why 99% of people stay broke forever
                 </div>
                 <div 
                   className={styles.exChip} 
                   onClick={() => setTopic('I tested every AI tool for 30 days — results')}
                 >
-                  <span className={styles.exIcon}>🤖</span> I tested every AI tool for 30 days
+                  <span className={styles.exIcon}><Bot size={16} /></span> I tested every AI tool for 30 days
                 </div>
                 <div 
                   className={styles.exChip} 
@@ -793,13 +794,13 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
               {/* Meta indicators */}
               <div className={styles.scriptMeta}>
                 <div className={styles.smItem}>
-                  📋 <span className={`${styles.smBadge} ${styles.badgeFormat}`}>{selectedFormat.replace(/[^\w ]/g, '').trim()}</span>
+                  <ClipboardList size={14} /> <span className={`${styles.smBadge} ${styles.badgeFormat}`}>{selectedFormat.replace(/[^\w ]/g, '').trim()}</span>
                 </div>
                 <div className={styles.smItem}>
                   🎭 <span className={`${styles.smBadge} ${styles.badgeTone}`}>{selectedTone.replace(/[^\w ]/g, '').trim()}</span>
                 </div>
                 <div className={styles.smItem} style={{ marginLeft: 'auto', color: 'var(--muted2)' }}>
-                  {currentProvider === 'groq' ? '⚡ Groq Llama' : '✦ Google Gemini'} · {currentProvider === 'groq' ? groqModel.split('-')[0].toUpperCase() : 'FLASH 2.0'}
+                  {currentProvider === 'groq' ? '<Zap size={14} /> Groq Llama' : '✦ Google Gemini'} · {currentProvider === 'groq' ? groqModel.split('-')[0].toUpperCase() : 'FLASH 2.0'}
                 </div>
               </div>
 
@@ -819,22 +820,22 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                     </div>
                     <div className={styles.retTags}>
                       {retentionScore >= 75 ? (
-                        <span className={`${styles.retTag} ${styles.good}`}>✓ Strong hook</span>
+                        <span className={`${styles.retTag} ${styles.good}`}><Check size={14} /> Strong hook</span>
                       ) : (
-                        <span className={`${styles.retTag} ${styles.warn}`}>⚠ Weak hook</span>
+                        <span className={`${styles.retTag} ${styles.warn}`}><AlertTriangle size={14} /> Weak hook</span>
                       )}
                       {streamContent.includes('[VISUAL') && (
-                        <span className={`${styles.retTag} ${styles.good}`}>✓ Visual cues</span>
+                        <span className={`${styles.retTag} ${styles.good}`}><Check size={14} /> Visual cues</span>
                       )}
                       {streamContent.includes('[CTA]') ? (
-                        <span className={`${styles.retTag} ${styles.good}`}>✓ Has CTA</span>
+                        <span className={`${styles.retTag} ${styles.good}`}><Check size={14} /> Has CTA</span>
                       ) : (
-                        <span className={`${styles.retTag} ${styles.warn}`}>⚠ No CTA</span>
+                        <span className={`${styles.retTag} ${styles.warn}`}><AlertTriangle size={14} /> No CTA</span>
                       )}
                       {wordCount > 800 ? (
-                        <span className={`${styles.retTag} ${styles.good}`}>✓ Good length</span>
+                        <span className={`${styles.retTag} ${styles.good}`}><Check size={14} /> Good length</span>
                       ) : (
-                        <span className={`${styles.retTag} ${styles.warn}`}>⚠ Too short</span>
+                        <span className={`${styles.retTag} ${styles.warn}`}><AlertTriangle size={14} /> Too short</span>
                       )}
                       <span className={styles.retTag}>{wordCount} words</span>
                     </div>
@@ -864,7 +865,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                 {parsedSections['[INTRO]'] !== undefined && (
                   <div className={styles.scriptSection}>
                     <div className={styles.sectionHeader} onClick={() => toggleSectionExpand('[INTRO]')}>
-                      <span className={`${styles.sectionTag} ${styles.tagIntro}`}>📌 Intro</span>
+                      <span className={`${styles.sectionTag} ${styles.tagIntro}`}><Pin size={20} /> Intro</span>
                       <span className={styles.sectionTime}>15–45s</span>
                       <span className={`${styles.sectionToggle} ${openSections['[INTRO]'] ? styles.open : ''}`}>▾</span>
                     </div>
@@ -880,7 +881,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                 {parsedSections['[MAIN CONTENT]'] !== undefined && (
                   <div className={styles.scriptSection}>
                     <div className={styles.sectionHeader} onClick={() => toggleSectionExpand('[MAIN CONTENT]')}>
-                      <span className={`${styles.sectionTag} ${styles.tagMain}`}>📋 Main Content</span>
+                      <span className={`${styles.sectionTag} ${styles.tagMain}`}><ClipboardList size={20} /> Main Content</span>
                       <span className={styles.sectionTime}>45s–End</span>
                       <span className={`${styles.sectionToggle} ${openSections['[MAIN CONTENT]'] ? styles.open : ''}`}>▾</span>
                     </div>
@@ -896,7 +897,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                 {parsedSections['[CTA]'] !== undefined && (
                   <div className={styles.scriptSection}>
                     <div className={styles.sectionHeader} onClick={() => toggleSectionExpand('[CTA]')}>
-                      <span className={`${styles.sectionTag} ${styles.tagCta}`}>🎯 Call to Action</span>
+                      <span className={`${styles.sectionTag} ${styles.tagCta}`}><Target size={20} /> Call to Action</span>
                       <span className={styles.sectionTime}>Final 20s</span>
                       <span className={`${styles.sectionToggle} ${openSections['[CTA]'] ? styles.open : ''}`}>▾</span>
                     </div>
@@ -936,16 +937,16 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
         {/* BOTTOM ACTIONS BAR */}
         <div className={styles.actionsBar}>
           <button className={styles.actionBtn} onClick={handleGenerate} disabled={buttonsDisabled || isGenerating}>
-            🔄 Regenerate
+            <RefreshCw size={16} /> Regenerate
           </button>
           <button className={styles.actionBtn} onClick={handleImproveHook} disabled={buttonsDisabled || isGenerating}>
             🎣 Improve Hook
           </button>
           <button className={styles.actionBtn} onClick={handleAddPoint} disabled={buttonsDisabled || isGenerating}>
-            ➕ Add Point
+            <Plus size={16} /> Add Point
           </button>
           <button className={`${styles.actionBtn} ${styles.primary}`} onClick={copyToClipboard} disabled={buttonsDisabled || isGenerating}>
-            📋 Copy Script
+            <ClipboardList size={16} /> Copy Script
           </button>
           {wordCount > 0 && (
             <div className={styles.wordCount}>

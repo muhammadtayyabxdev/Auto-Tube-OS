@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/status.module.css';
+import { Check, MailOpen } from 'lucide-react';
 
 interface ServiceItemProps {
   name: string;
@@ -187,13 +188,13 @@ export default function StatusPage() {
         </div>
 
         <div className={styles.noInc} style={{ marginTop: '12px' }}>
-          <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>✅</div>
+          <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}><Check size={16} /></div>
           <div style={{ fontSize: '13px', color: 'var(--muted)' }}>No other incidents in the past 90 days.</div>
         </div>
       </div>
 
       <section className={styles.subSection}>
-        <h3 className={styles.subTitle}>📬 Get status notifications</h3>
+        <h3 className={styles.subTitle}><MailOpen size={16} /> Get status notifications</h3>
         <div style={{ fontSize: '13px', color: 'var(--muted)' }}>
           We'll email you when incidents are created, updated, or resolved.
         </div>
@@ -216,7 +217,7 @@ export default function StatusPage() {
 
       {/* TOAST NOTIFICATION */}
       <div className={`${styles.toast} ${toastVisible ? styles.show : ''}`}>
-        ✓ Subscribed to status updates!
+        <Check size={16} /> Subscribed to status updates!
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/contact.module.css";
+import { Briefcase, CalendarDays, Check, Clock, Globe, Handshake, Mail, MailOpen, MessageCircle, Play, Wrench, Zap } from 'lucide-react';
 
 type ContactType = 'support' | 'sales' | 'partner';
 
@@ -66,30 +67,30 @@ export default function Contact() {
           className={`${styles.coCard} ${contactType === 'support' ? styles.active : ""}`}
           onClick={() => setContactType('support')}
         >
-          <div className={styles.coIcon}>🛠️</div>
+          <div className={styles.coIcon}><Wrench size={16} /></div>
           <div className={styles.coTitle}>Support</div>
           <p className={styles.coSub}>Bug reports, account issues, billing questions, or anything technical.</p>
-          <div className={styles.coTime}>⚡ Avg reply: 2 hours</div>
+          <div className={styles.coTime}><Zap size={16} /> Avg reply: 2 hours</div>
         </div>
 
         <div
           className={`${styles.coCard} ${contactType === 'sales' ? styles.active : ""}`}
           onClick={() => setContactType('sales')}
         >
-          <div className={styles.coIcon}>💼</div>
+          <div className={styles.coIcon}><Briefcase size={16} /></div>
           <div className={styles.coTitle}>Sales & Agency</div>
           <p className={styles.coSub}>Custom pricing, white-label, enterprise plans, or bulk seat inquiries.</p>
-          <div className={styles.coTime}>📅 Avg reply: 4 hours</div>
+          <div className={styles.coTime}><CalendarDays size={16} /> Avg reply: 4 hours</div>
         </div>
 
         <div
           className={`${styles.coCard} ${contactType === 'partner' ? styles.active : ""}`}
           onClick={() => setContactType('partner')}
         >
-          <div className={styles.coIcon}>🤝</div>
+          <div className={styles.coIcon}><Handshake size={16} /></div>
           <div className={styles.coTitle}>Partnerships</div>
           <p className={styles.coSub}>Affiliate program, integrations, press inquiries, or co-marketing opportunities.</p>
-          <div className={styles.coTime}>📬 Avg reply: 1 business day</div>
+          <div className={styles.coTime}><MailOpen size={16} /> Avg reply: 1 business day</div>
         </div>
       </div>
 
@@ -147,7 +148,7 @@ export default function Contact() {
             </form>
           ) : (
             <div className={styles.successMsg}>
-              <div className={styles.successIcon}>✅</div>
+              <div className={styles.successIcon}><Check size={16} /></div>
               <h3 className={styles.successTitle}>Message sent!</h3>
               <p className={styles.successSub}>
                 We&apos;ll get back to you at your email within 2 hours. Check your inbox (and spam, just in case).
@@ -164,7 +165,7 @@ export default function Contact() {
           <div className={styles.sbInfo}>
             <h3 className={styles.sbInfoTitle}>Contact Details</h3>
             <div className={styles.infoRow}>
-              <div className={styles.infoIcon}>📧</div>
+              <div className={styles.infoIcon}><Mail size={16} /></div>
               <div>
                 <div className={styles.infoLabel}>Email</div>
                 <div className={styles.infoVal}>
@@ -182,14 +183,14 @@ export default function Contact() {
               </div>
             </div>
             <div className={styles.infoRow}>
-              <div className={styles.infoIcon}>🌍</div>
+              <div className={styles.infoIcon}><Globe size={16} /></div>
               <div>
                 <div className={styles.infoLabel}>Location</div>
                 <div className={styles.infoVal}>Lahore, Pakistan (Remote Team)</div>
               </div>
             </div>
             <div className={styles.infoRow}>
-              <div className={styles.infoIcon}>⏰</div>
+              <div className={styles.infoIcon}><Clock size={16} /></div>
               <div>
                 <div className={styles.infoLabel}>Support Hours</div>
                 <div className={styles.infoVal}>Mon–Fri, 9am–6pm PKT</div>
@@ -238,12 +239,12 @@ export default function Contact() {
                 <span className={styles.slHandle}>@AutoTubeOS</span>
               </a>
               <a href="#" className={styles.socialLink}>
-                <span className={styles.slIcon}>▶️</span>
+                <span className={styles.slIcon}><Play size={16} /></span>
                 <span className={styles.slName}>YouTube</span>
                 <span className={styles.slHandle}>AutoTubeOS</span>
               </a>
               <a href="#" className={styles.socialLink}>
-                <span className={styles.slIcon}>💬</span>
+                <span className={styles.slIcon}><MessageCircle size={16} /></span>
                 <span className={styles.slName}>Discord Community</span>
                 <span className={styles.slHandle}>1.2K members</span>
               </a>

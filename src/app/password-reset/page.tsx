@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/password-reset.module.css";
+import { Check, Eye, Key, Lock, Mail, X } from 'lucide-react';
 
 export default function PasswordReset() {
   const router = useRouter();
@@ -36,9 +37,9 @@ export default function PasswordReset() {
 
     if (confirmPw) {
       if (val === confirmPw) {
-        setMatchMsg({ text: "✓ Passwords match", color: "var(--green)" });
+        setMatchMsg({ text: "<Check size={16} /> Passwords match", color: "var(--green)" });
       } else {
-        setMatchMsg({ text: "❌ Do not match", color: "var(--red)" });
+        setMatchMsg({ text: "<X size={16} /> Do not match", color: "var(--red)" });
       }
     }
   };
@@ -50,9 +51,9 @@ export default function PasswordReset() {
       return;
     }
     if (newPw === val) {
-      setMatchMsg({ text: "✓ Passwords match", color: "var(--green)" });
+      setMatchMsg({ text: "<Check size={16} /> Passwords match", color: "var(--green)" });
     } else {
-      setMatchMsg({ text: "❌ Do not match", color: "var(--red)" });
+      setMatchMsg({ text: "<X size={16} /> Do not match", color: "var(--red)" });
     }
   };
 
@@ -66,7 +67,7 @@ export default function PasswordReset() {
   const handleStep3 = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPw || newPw !== confirmPw) {
-      setMatchMsg({ text: "❌ Passwords do not match", color: "var(--red)" });
+      setMatchMsg({ text: "<X size={16} /> Passwords do not match", color: "var(--red)" });
       return;
     }
     setStep(4);
@@ -93,7 +94,7 @@ export default function PasswordReset() {
         {step === 1 && (
           <form onSubmit={handleStep1} className={styles.card}>
             <div className={styles.cardHeader}>
-              <div className={`${styles.iconWrap} ${styles.iconRed}`}>🔑</div>
+              <div className={`${styles.iconWrap} ${styles.iconRed}`}><Key size={16} /></div>
               <div className={styles.steps}>
                 <div className={`${styles.sDot} ${styles.active}`}></div>
                 <div className={styles.sDot}></div>
@@ -130,7 +131,7 @@ export default function PasswordReset() {
         {step === 2 && (
           <div className={styles.card}>
             <div className={styles.cardHeader}>
-              <div className={`${styles.iconWrap} ${styles.iconBlue}`}>📧</div>
+              <div className={`${styles.iconWrap} ${styles.iconBlue}`}><Mail size={16} /></div>
               <div className={styles.steps}>
                 <div className={`${styles.sDot} ${styles.done}`}></div>
                 <div className={`${styles.sDot} ${styles.active}`}></div>
@@ -180,7 +181,7 @@ export default function PasswordReset() {
         {step === 3 && (
           <form onSubmit={handleStep3} className={styles.card}>
             <div className={styles.cardHeader}>
-              <div className={`${styles.iconWrap} ${styles.iconRed}`}>🔒</div>
+              <div className={`${styles.iconWrap} ${styles.iconRed}`}><Lock size={16} /></div>
               <div className={styles.steps}>
                 <div className={`${styles.sDot} ${styles.done}`}></div>
                 <div className={`${styles.sDot} ${styles.done}`}></div>
@@ -207,7 +208,7 @@ export default function PasswordReset() {
                     className={styles.eye}
                     onClick={() => setShowNewPw(!showNewPw)}
                   >
-                    {showNewPw ? "🙈" : "👁"}
+                    {showNewPw ? "🙈" : "<Eye size={16} />"}
                   </button>
                 </div>
                 <div className={styles.strengthBar}>
@@ -237,7 +238,7 @@ export default function PasswordReset() {
                     className={styles.eye}
                     onClick={() => setShowConfirmPw(!showConfirmPw)}
                   >
-                    {showConfirmPw ? "🙈" : "👁"}
+                    {showConfirmPw ? "🙈" : "<Eye size={16} />"}
                   </button>
                 </div>
                 {matchMsg.text && (
@@ -257,7 +258,7 @@ export default function PasswordReset() {
         {step === 4 && (
           <div className={styles.card}>
             <div className={styles.cardBody} style={{ padding: "36px", textAlign: "center" }}>
-              <div className={styles.checkmark}>✓</div>
+              <div className={styles.checkmark}><Check size={16} /></div>
               <h2 className={styles.cardTitle} style={{ marginBottom: "8px" }}>
                 Password reset!
               </h2>

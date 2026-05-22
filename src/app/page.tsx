@@ -2,6 +2,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/home.module.css";
+import { Search, Star, TrendingDown } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -80,12 +81,12 @@ export default function Home() {
             <p>Average creator uses 7+ separate apps just to publish one video. Context-switching kills momentum.</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemIcon}>📉</div>
+            <div className={styles.problemIcon}><TrendingDown size={16} /></div>
             <h3>Inconsistent output</h3>
             <p>Manual workflows break down. You miss posting days, lose subscribers, and momentum disappears.</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemIcon}>🔍</div>
+            <div className={styles.problemIcon}><Search size={16} /></div>
             <h3>No topic strategy</h3>
             <p>Guessing video ideas instead of using data. Competitors find viral topics while you post blindly.</p>
           </div>
@@ -310,7 +311,7 @@ export default function Home() {
         </div>
         <div className={styles.testimonialsGrid}>
           <div className={styles.testiCard}>
-            <div className={styles.testiStars}>★★★★★</div>
+            <div className={styles.testiStars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
             <p className={styles.testiText}>
               &quot;I was using 8 different tools before this. Now I run my entire 3-channel operation from one dashboard. The topic finder alone is worth the subscription.&quot;
             </p>
@@ -323,7 +324,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.testiCard}>
-            <div className={styles.testiStars}>★★★★★</div>
+            <div className={styles.testiStars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
             <p className={styles.testiText}>
               &quot;The Shorts Repurposer literally doubled my channel growth. Each long video now gives me 5 shorts automatically. I can&apos;t believe I was doing this manually before.&quot;
             </p>
@@ -336,7 +337,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.testiCard}>
-            <div className={styles.testiStars}>★★★★★</div>
+            <div className={styles.testiStars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
             <p className={styles.testiText}>
               &quot;We manage 12 client channels at my agency. AutoTubeOS cut our production time by 60%. The team collaboration feature is exactly what we needed.&quot;
             </p>

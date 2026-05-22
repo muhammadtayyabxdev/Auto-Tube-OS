@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/affiliate-dashboard.module.css';
+import { Check, Smartphone } from 'lucide-react';
 
 export default function AffiliateDashboard() {
   const [period, setPeriod] = useState<string>('30d');
@@ -118,7 +119,7 @@ export default function AffiliateDashboard() {
             <div style={{ fontSize: '12px', color: 'var(--muted)', whiteSpace: 'nowrap' }}>Your Link</div>
             <div className={styles.linkVal}>https://autotubeos.com/?ref=ahmed_k_2024</div>
             <button className={styles.linkBtn} onClick={handleCopyLink}>
-              {copied ? '✓ Copied!' : 'Copy Link'}
+              {copied ? '<Check size={16} /> Copied!' : 'Copy Link'}
             </button>
             <div
               className={styles.linkQr}
@@ -126,7 +127,7 @@ export default function AffiliateDashboard() {
               onClick={() => setQrOpen(!qrOpen)}
               style={{ position: 'relative' }}
             >
-              📱
+              <Smartphone size={16} />
               {qrOpen && (
                 <div
                   style={{

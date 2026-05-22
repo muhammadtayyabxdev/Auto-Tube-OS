@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/comparison.module.css";
+import { BarChart3, Bot, Check, DollarSign, RefreshCw, Rocket, Trophy, X } from 'lucide-react';
 
 export default function Comparison() {
   const [activeTab, setActiveTab] = useState<"tubebuddy" | "vidiq" | "all">("tubebuddy");
@@ -55,7 +56,7 @@ export default function Comparison() {
                 <div className={styles.vcTool}>AutoTubeOS</div>
                 <div className={styles.vcScore}>9.2</div>
                 <div className={styles.vcLabel}>Overall Score</div>
-                <div className={styles.winnerBadge}>🏆 Winner</div>
+                <div className={styles.winnerBadge}><Trophy size={14} /> Winner</div>
               </div>
               <div className={styles.verdictCard}>
                 <div className={styles.vcTool}>TubeBuddy</div>
@@ -83,33 +84,33 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>AI Script Generator</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Topic / Idea Finder</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
                   <td className={styles.cPartial}>Basic</td>
                 </tr>
                 <tr>
                   <td>Retention Optimizer</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Thumbnail Idea Engine</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
                   <td className={styles.cPartial}>A/B test only</td>
                 </tr>
                 <tr>
                   <td>Shorts Repurposer</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Script formats (8+)</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -117,13 +118,13 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Keyword Research</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
                 <tr>
                   <td>Tag Suggestions</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
                 <tr>
                   <td>Competitor Analysis</td>
@@ -132,8 +133,8 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>RPM Estimation</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Trending Topics</td>
@@ -146,23 +147,23 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Content Calendar</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Team Collaboration</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (Agency)</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (Agency)</td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>AI Agents / Automation</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (Beta)</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (Beta)</td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Bulk Processing</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -170,8 +171,8 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Free Plan</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (generous)</td>
-                  <td className={styles.cYes}>✓ (limited)</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (generous)</td>
+                  <td className={styles.cYes}><Check size={16} /> (limited)</td>
                 </tr>
                 <tr>
                   <td>Starting Price</td>
@@ -220,7 +221,7 @@ export default function Comparison() {
               >
                 <div className={styles.painHeader}>
                   <div className={styles.painLogo} style={{ background: "var(--red-bg)" }}>
-                    🚀
+                    <Rocket size={16} />
                   </div>
                   <div className={styles.painName} style={{ color: "var(--green)" }}>
                     AutoTubeOS Wins
@@ -228,22 +229,22 @@ export default function Comparison() {
                 </div>
                 <div className={styles.painList}>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Full AI script generation — 8 formats, hooks included
+                    <Check size={16} /> Full AI script generation — 8 formats, hooks included
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Viral topic finder with RPM and competition scoring
+                    <Check size={16} /> Viral topic finder with RPM and competition scoring
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Automated Shorts from every long video
+                    <Check size={16} /> Automated Shorts from every long video
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Content calendar with team task management
+                    <Check size={16} /> Content calendar with team task management
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ AI Agents that run your workflow automatically
+                    <Check size={16} /> AI Agents that run your workflow automatically
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Full workspace — not just a browser extension
+                    <Check size={16} /> Full workspace — not just a browser extension
                   </div>
                 </div>
               </div>
@@ -267,7 +268,7 @@ export default function Comparison() {
                 <div className={styles.vcTool}>AutoTubeOS</div>
                 <div className={styles.vcScore}>9.2</div>
                 <div className={styles.vcLabel}>Overall Score</div>
-                <div className={styles.winnerBadge}>🏆 Winner</div>
+                <div className={styles.winnerBadge}><Trophy size={14} /> Winner</div>
               </div>
               <div className={styles.verdictCard}>
                 <div className={styles.vcTool}>VidIQ</div>
@@ -295,28 +296,28 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>AI Script Generator</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
                   <td className={styles.cPartial}>Basic AI</td>
                 </tr>
                 <tr>
                   <td>Topic / Idea Finder</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
                 <tr>
                   <td>Retention Optimizer</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Shorts Repurposer</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Script Formats (8+)</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -324,8 +325,8 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Keyword Research</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
                 <tr>
                   <td>Competitor Analysis</td>
@@ -335,17 +336,17 @@ export default function Comparison() {
                 <tr>
                   <td>Trending Topics</td>
                   <td className={`${styles.us} ${styles.cBest}`}>Real-time AI</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
                 <tr>
                   <td>RPM Estimation</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Thumbnail A/B Testing</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (concepts)</td>
-                  <td className={styles.cYes}>✓ (real)</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (concepts)</td>
+                  <td className={styles.cYes}><Check size={16} /> (real)</td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -353,18 +354,18 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Content Calendar</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
                   <td className={styles.cPartial}>Basic</td>
                 </tr>
                 <tr>
                   <td>Team Collaboration</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (Agency)</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (Agency)</td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>AI Agents</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (Beta)</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (Beta)</td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -396,7 +397,7 @@ export default function Comparison() {
             <div className={styles.painGrid}>
               <div className={styles.painCard}>
                 <div className={styles.painHeader}>
-                  <div className={styles.painLogo}>📊</div>
+                  <div className={styles.painLogo}><BarChart3 size={16} /></div>
                   <div className={styles.painName}>VidIQ Limitations</div>
                 </div>
                 <div className={styles.painList}>
@@ -417,7 +418,7 @@ export default function Comparison() {
               >
                 <div className={styles.painHeader}>
                   <div className={styles.painLogo} style={{ background: "var(--red-bg)" }}>
-                    🚀
+                    <Rocket size={16} />
                   </div>
                   <div className={styles.painName} style={{ color: "var(--green)" }}>
                     AutoTubeOS Wins
@@ -425,22 +426,22 @@ export default function Comparison() {
                 </div>
                 <div className={styles.painList}>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Full AI script generator with 8 formats and retention scoring
+                    <Check size={16} /> Full AI script generator with 8 formats and retention scoring
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Automated Shorts workflow from any long video
+                    <Check size={16} /> Automated Shorts workflow from any long video
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Team collaboration built-in for Agency users
+                    <Check size={16} /> Team collaboration built-in for Agency users
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ AI Agents that automate your weekly content pipeline
+                    <Check size={16} /> AI Agents that automate your weekly content pipeline
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ $29/mo Pro — 40% cheaper than VidIQ Pro
+                    <Check size={16} /> $29/mo Pro — 40% cheaper than VidIQ Pro
                   </div>
                   <div className={styles.painItem} style={{ color: "var(--text)" }}>
-                    ✓ Helps you create, not just analyze
+                    <Check size={16} /> Helps you create, not just analyze
                   </div>
                 </div>
               </div>
@@ -462,7 +463,7 @@ export default function Comparison() {
                 <div className={styles.vcTool}>AutoTubeOS</div>
                 <div className={styles.vcScore}>9.2</div>
                 <div className={styles.vcLabel}>Overall</div>
-                <div className={styles.winnerBadge}>🏆 Best Overall</div>
+                <div className={styles.winnerBadge}><Trophy size={14} /> Best Overall</div>
               </div>
               <div className={styles.verdictCard}>
                 <div className={styles.vcTool}>VidIQ</div>
@@ -498,33 +499,33 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>AI Script Generator</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (8 formats)</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (8 formats)</td>
                   <td className={styles.cPartial}>Basic</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Topic Finder</td>
                   <td className={`${styles.us} ${styles.cBest}`}>AI-powered</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                   <td className={styles.cPartial}>Basic</td>
                 </tr>
                 <tr>
                   <td>Retention Optimizer</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Shorts Repurposer</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Thumbnail Engine</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -532,9 +533,9 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Keyword Research</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
                 <tr>
                   <td>Competitor Analysis</td>
@@ -544,9 +545,9 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>RPM Estimation</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cNo}>✕</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -554,21 +555,21 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Content Calendar</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ Full</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> Full</td>
                   <td className={styles.cPartial}>Basic</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>Team Collaboration</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (Agency)</td>
-                  <td className={styles.cNo}>✕</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (Agency)</td>
+                  <td className={styles.cNo}><X size={18} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
                 <tr>
                   <td>AI Agents</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓ (Beta)</td>
-                  <td className={styles.cNo}>✕</td>
-                  <td className={styles.cNo}>✕</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /> (Beta)</td>
+                  <td className={styles.cNo}><X size={18} /></td>
+                  <td className={styles.cNo}><X size={18} /></td>
                 </tr>
 
                 <tr className={styles.groupRow}>
@@ -576,9 +577,9 @@ export default function Comparison() {
                 </tr>
                 <tr>
                   <td>Free Plan</td>
-                  <td className={`${styles.us} ${styles.cYes}`}>✓</td>
-                  <td className={styles.cYes}>✓</td>
-                  <td className={styles.cYes}>✓</td>
+                  <td className={`${styles.us} ${styles.cYes}`}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
+                  <td className={styles.cYes}><Check size={16} /></td>
                 </tr>
                 <tr>
                   <td>Pro Price</td>
@@ -607,21 +608,21 @@ export default function Comparison() {
         </div>
         <div className={styles.whyGrid}>
           <div className={styles.whyCard}>
-            <div className={styles.whyIcon}>🔄</div>
+            <div className={styles.whyIcon}><RefreshCw size={16} /></div>
             <h3 className={styles.whyTitle}>Workflow, not just tools</h3>
             <p className={styles.whyDesc}>
               TubeBuddy and VidIQ optimize individual steps. AutoTubeOS connects the entire pipeline from idea to upload.
             </p>
           </div>
           <div className={styles.whyCard}>
-            <div className={styles.whyIcon}>🤖</div>
+            <div className={styles.whyIcon}><Bot size={16} /></div>
             <h3 className={styles.whyTitle}>Real AI, not just data</h3>
             <p className={styles.whyDesc}>
               Others show you data. AutoTubeOS uses AI to generate scripts, optimize retention, and find viral ideas automatically.
             </p>
           </div>
           <div className={styles.whyCard}>
-            <div className={styles.whyIcon}>💰</div>
+            <div className={styles.whyIcon}><DollarSign size={16} /></div>
             <h3 className={styles.whyTitle}>Replace 7 tools for $29</h3>
             <p className={styles.whyDesc}>
               ChatGPT + TubeBuddy + Canva + Notion + ElevenLabs = $100+/mo. AutoTubeOS replaces them all for $29.

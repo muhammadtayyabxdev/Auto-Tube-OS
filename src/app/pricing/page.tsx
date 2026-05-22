@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/pricing.module.css";
+import { Check, Globe, Lock, Star, X, Zap } from 'lucide-react';
 
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -69,23 +70,23 @@ export default function Pricing() {
           <div className={styles.featLabel}>What&apos;s included</div>
           <div className={styles.feats}>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>5 topic ideas / month</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>3 scripts / month</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>1 channel workspace</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Basic topic finder</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Community access</div>
             </div>
             <div className={`${styles.featRow} ${styles.excluded}`}>
@@ -109,7 +110,7 @@ export default function Pricing() {
 
         {/* PRO */}
         <div className={`${styles.planCard} ${styles.featured}`}>
-          <div className={styles.popularBadge}>⭐ Most Popular</div>
+          <div className={styles.popularBadge}><Star size={14} /> Most Popular</div>
           <div className={styles.planTier}>Pro</div>
           <div className={styles.planPrice}>
             <sup>$</sup>
@@ -125,39 +126,39 @@ export default function Pricing() {
           <div className={styles.featLabel}>Everything in Free, plus</div>
           <div className={styles.feats}>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Unlimited topic ideas</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Unlimited scripts</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>3 channel workspaces</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Shorts Repurposer <span style={{ fontSize: "11px", color: "var(--muted)" }}>(10/mo)</span></div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Competitor Intelligence</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Retention Optimizer</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Content Calendar</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Thumbnail Idea Engine</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.r}`}>✓</div>
+              <div className={`${styles.check} ${styles.r}`}><Check size={16} /></div>
               <div>Priority support</div>
             </div>
             <div className={`${styles.featRow} ${styles.excluded}`}>
@@ -187,39 +188,39 @@ export default function Pricing() {
           <div className={styles.featLabel}>Everything in Pro, plus</div>
           <div className={styles.feats}>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Unlimited channels</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Unlimited Shorts repurposing</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Team collaboration <span style={{ fontSize: "11px", color: "var(--muted)" }}>(10 seats)</span></div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Client approval workflows</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>White-label reports</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Custom AI prompt presets</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>Dedicated onboarding call</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>SLA & priority uptime</div>
             </div>
             <div className={`${styles.featRow} ${styles.included}`}>
-              <div className={`${styles.check} ${styles.y}`}>✓</div>
+              <div className={`${styles.check} ${styles.y}`}><Check size={16} /></div>
               <div>API access <span style={{ fontSize: "11px", color: "var(--muted)" }}>(coming soon)</span></div>
             </div>
           </div>
@@ -255,34 +256,34 @@ export default function Pricing() {
             </thead>
             <tbody>
               <tr className={styles.tGroup}><td colSpan={4}>Content Creation</td></tr>
-              <tr><td className={styles.tHighlight}>Topic Finder</td><td>5 / mo</td><td className={styles.checkR}>Unlimited</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>Script Generator</td><td>3 / mo</td><td className={styles.checkR}>Unlimited</td><td className={styles.checkY}>✓</td></tr>
+              <tr><td className={styles.tHighlight}>Topic Finder</td><td>5 / mo</td><td className={styles.checkR}>Unlimited</td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>Script Generator</td><td>3 / mo</td><td className={styles.checkR}>Unlimited</td><td className={styles.checkY}><Check size={16} /></td></tr>
               <tr><td className={styles.tHighlight}>Script Formats</td><td>2 formats</td><td>12 formats</td><td>12 formats</td></tr>
-              <tr><td className={styles.tHighlight}>Thumbnail Idea Engine</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>Retention Optimizer</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
+              <tr><td className={styles.tHighlight}>Thumbnail Idea Engine</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>Retention Optimizer</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
 
               <tr className={styles.tGroup}><td colSpan={4}>Growth & SEO</td></tr>
-              <tr><td className={styles.tHighlight}>Competitor Intelligence</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>SEO Optimizer</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>Trending Topic Alerts</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
+              <tr><td className={styles.tHighlight}>Competitor Intelligence</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>SEO Optimizer</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>Trending Topic Alerts</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
 
               <tr className={styles.tGroup}><td colSpan={4}>Repurposing</td></tr>
-              <tr><td className={styles.tHighlight}>Shorts Repurposer</td><td className={styles.checkN}>✕</td><td>10 / mo</td><td className={styles.checkR}>Unlimited</td></tr>
-              <tr><td className={styles.tHighlight}>Auto Clip Detection</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>Multi-platform Export</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
+              <tr><td className={styles.tHighlight}>Shorts Repurposer</td><td className={styles.checkN}><X size={18} /></td><td>10 / mo</td><td className={styles.checkR}>Unlimited</td></tr>
+              <tr><td className={styles.tHighlight}>Auto Clip Detection</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>Multi-platform Export</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
 
               <tr className={styles.tGroup}><td colSpan={4}>Workflow & Team</td></tr>
               <tr><td className={styles.tHighlight}>Channel Workspaces</td><td>1</td><td>3</td><td className={styles.checkR}>Unlimited</td></tr>
-              <tr><td className={styles.tHighlight}>Content Calendar</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>Team Seats</td><td className={styles.checkN}>✕</td><td className={styles.checkN}>✕</td><td>10 seats</td></tr>
-              <tr><td className={styles.tHighlight}>Client Approval Flow</td><td className={styles.checkN}>✕</td><td className={styles.checkN}>✕</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>White-label Reports</td><td className={styles.checkN}>✕</td><td className={styles.checkN}>✕</td><td className={styles.checkY}>✓</td></tr>
+              <tr><td className={styles.tHighlight}>Content Calendar</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>Team Seats</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkN}><X size={18} /></td><td>10 seats</td></tr>
+              <tr><td className={styles.tHighlight}>Client Approval Flow</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>White-label Reports</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
 
               <tr className={styles.tGroup}><td colSpan={4}>Support</td></tr>
-              <tr><td className={styles.tHighlight}>Community Access</td><td className={styles.checkY}>✓</td><td className={styles.checkY}>✓</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>Priority Support</td><td className={styles.checkN}>✕</td><td className={styles.checkR}>✓</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>Dedicated Onboarding</td><td className={styles.checkN}>✕</td><td className={styles.checkN}>✕</td><td className={styles.checkY}>✓</td></tr>
-              <tr><td className={styles.tHighlight}>API Access</td><td className={styles.checkN}>✕</td><td className={styles.checkN}>✕</td><td>Coming soon</td></tr>
+              <tr><td className={styles.tHighlight}>Community Access</td><td className={styles.checkY}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>Priority Support</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkR}><Check size={16} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>Dedicated Onboarding</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkY}><Check size={16} /></td></tr>
+              <tr><td className={styles.tHighlight}>API Access</td><td className={styles.checkN}><X size={18} /></td><td className={styles.checkN}><X size={18} /></td><td>Coming soon</td></tr>
             </tbody>
           </table>
         </div>
@@ -370,10 +371,10 @@ export default function Pricing() {
           </Link>
         </div>
         <div className={styles.trustRow}>
-          <div className={styles.trustItem}>🔒 No credit card</div>
-          <div className={styles.trustItem}>✓ Cancel anytime</div>
-          <div className={styles.trustItem}>⚡ 14-day free trial</div>
-          <div className={styles.trustItem}>🌍 Works for any niche</div>
+          <div className={styles.trustItem}><Lock size={20} /> No credit card</div>
+          <div className={styles.trustItem}><Check size={16} /> Cancel anytime</div>
+          <div className={styles.trustItem}><Zap size={16} /> 14-day free trial</div>
+          <div className={styles.trustItem}><Globe size={16} /> Works for any niche</div>
         </div>
       </div>
 

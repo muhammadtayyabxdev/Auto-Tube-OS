@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/affiliate.module.css';
+import { BarChart3, Check, DollarSign, FileText, Gem, Image, Link2, Megaphone, Palette, Rocket, Star, Video } from 'lucide-react';
 
 export default function Affiliate() {
   // Calculator state variables
@@ -96,7 +97,7 @@ export default function Affiliate() {
       {/* CALCULATOR */}
       <div style={{ padding: '0 6%', position: 'relative', zIndex: 1 }}>
         <div className={styles.calcCard}>
-          <div className={styles.calcTitle}>💰 Estimate Your Monthly Earnings</div>
+          <div className={styles.calcTitle}><DollarSign size={16} /> Estimate Your Monthly Earnings</div>
           <div className={styles.calcRow}>
             <div className={styles.calcItem}>
               <div className={styles.calcLabel}>Referrals / Month</div>
@@ -162,25 +163,25 @@ export default function Affiliate() {
         <div className={styles.stepsRow}>
           <div className={styles.stepCard}>
             <div className={styles.stepNum}>1</div>
-            <div className={styles.stepIcon}>📝</div>
+            <div className={styles.stepIcon}><FileText size={16} /></div>
             <div className={styles.stepName}>Apply</div>
             <div className={styles.stepDesc}>Fill out the form below. Instant approval for creators with any audience size.</div>
           </div>
           <div className={styles.stepCard}>
             <div className={styles.stepNum}>2</div>
-            <div className={styles.stepIcon}>🔗</div>
+            <div className={styles.stepIcon}><Link2 size={16} /></div>
             <div className={styles.stepName}>Get Your Link</div>
             <div className={styles.stepDesc}>Access your unique affiliate link and marketing assets from your dashboard.</div>
           </div>
           <div className={styles.stepCard}>
             <div className={styles.stepNum}>3</div>
-            <div className={styles.stepIcon}>📣</div>
+            <div className={styles.stepIcon}><Megaphone size={16} /></div>
             <div className={styles.stepName}>Share</div>
             <div className={styles.stepDesc}>Share on YouTube, Twitter, newsletters, Discord, or anywhere your audience hangs out.</div>
           </div>
           <div className={styles.stepCard}>
             <div className={styles.stepNum}>4</div>
-            <div className={styles.stepIcon}>💸</div>
+            <div className={styles.stepIcon}><DollarSign size={16} /></div>
             <div className={styles.stepName}>Get Paid</div>
             <div className={styles.stepDesc}>Earn 30% recurring every month. Paid on the 1st via PayPal, Wise, or bank transfer.</div>
           </div>
@@ -207,8 +208,8 @@ export default function Affiliate() {
             </div>
           </div>
           <div className={`${styles.tierCard} ${styles.featured}`}>
-            <div className={styles.tierBadge}>⭐ Most Affiliates</div>
-            <div className={styles.tierIcon}>🚀</div>
+            <div className={styles.tierBadge}><Star size={14} /> Most Affiliates</div>
+            <div className={styles.tierIcon}><Rocket size={16} /></div>
             <div className={styles.tierName}>Growth</div>
             <div className={styles.tierReq}>11–50 active referrals</div>
             <div className={styles.tierPct} style={{ color: 'var(--purple)' }}>35%</div>
@@ -221,7 +222,7 @@ export default function Affiliate() {
             </div>
           </div>
           <div className={styles.tierCard}>
-            <div className={styles.tierIcon}>💎</div>
+            <div className={styles.tierIcon}><Gem size={16} /></div>
             <div className={styles.tierName}>Elite</div>
             <div className={styles.tierReq}>50+ active referrals</div>
             <div className={styles.tierPct}>40%</div>
@@ -245,19 +246,19 @@ export default function Affiliate() {
         </div>
         <div className={styles.assetsGrid}>
           <div className={styles.assetCard}>
-            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a0f20,#131830)' }}>🖼️</div>
+            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a0f20,#131830)' }}><Image size={16} /></div>
             <div className={styles.assetName}>YouTube Thumbnails</div>
             <div className={styles.assetDesc}>Ready-made thumbnails for review videos, comparison videos, and tutorials.</div>
             <button className={styles.assetBtn}>Download Pack</button>
           </div>
           <div className={styles.assetCard}>
-            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0f1a0a,#131a10)' }}>📹</div>
+            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0f1a0a,#131a10)' }}><Video size={16} /></div>
             <div className={styles.assetName}>Demo Videos</div>
             <div className={styles.assetDesc}>30s and 2-minute demo clips you can embed in your content.</div>
             <button className={styles.assetBtn}>Download Videos</button>
           </div>
           <div className={styles.assetCard}>
-            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#1a0a0a,#1f1010)' }}>📝</div>
+            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#1a0a0a,#1f1010)' }}><FileText size={16} /></div>
             <div className={styles.assetName}>Email Swipe Copy</div>
             <div className={styles.assetDesc}>3 proven email sequences for newsletter affiliates. Copy and send.</div>
             <button className={styles.assetBtn}>Download Copy</button>
@@ -269,13 +270,13 @@ export default function Affiliate() {
             <button className={styles.assetBtn}>Download Threads</button>
           </div>
           <div className={styles.assetCard}>
-            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a1520,#0f1a28)' }}>🎨</div>
+            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a1520,#0f1a28)' }}><Palette size={16} /></div>
             <div className={styles.assetName}>Banner Ads</div>
             <div className={styles.assetDesc}>Web banners in all standard sizes for blog/website placement.</div>
             <button className={styles.assetBtn}>Download Banners</button>
           </div>
           <div className={styles.assetCard}>
-            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a1a10,#0f2015)' }}>📊</div>
+            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a1a10,#0f2015)' }}><BarChart3 size={16} /></div>
             <div className={styles.assetName}>Case Study PDF</div>
             <div className={styles.assetDesc}>A shareable PDF showing real creator results with AutoTubeOS.</div>
             <button className={styles.assetBtn}>Download PDF</button>
@@ -353,7 +354,7 @@ export default function Affiliate() {
               className={styles.formSubmitBtn}
               style={submitted ? { backgroundColor: 'var(--green)' } : {}}
             >
-              {submitted ? '✓ Application submitted!' : "Apply Now — It's Free →"}
+              {submitted ? '<Check size={16} /> Application submitted!' : "Apply Now — It's Free →"}
             </button>
           </form>
           <p style={{ fontSize: '11px', color: 'var(--muted2)', textAlign: 'center', marginTop: '12px' }}>

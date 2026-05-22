@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/email-verify.module.css";
+import { Check, Lightbulb, Mail } from 'lucide-react';
 
 export default function EmailVerify() {
   const router = useRouter();
@@ -77,7 +78,7 @@ export default function EmailVerify() {
                   <circle className={styles.ringBg} cx="40" cy="40" r="34" />
                   <circle className={styles.ringFill} cx="40" cy="40" r="34" />
                 </svg>
-                <div className={styles.ringText}>📧</div>
+                <div className={styles.ringText}><Mail size={16} /></div>
               </div>
               <h2 className={styles.cardTitle}>Verify your email</h2>
               <p className={styles.cardSub}>
@@ -131,7 +132,7 @@ export default function EmailVerify() {
                   color: "var(--muted)",
                 }}
               >
-                💡 Check your spam folder. Link/code expires in 24 hours.
+                <Lightbulb size={16} /> Check your spam folder. Link/code expires in 24 hours.
               </div>
             </form>
           </div>
@@ -139,7 +140,7 @@ export default function EmailVerify() {
           /* VERIFIED */
           <div className={styles.card}>
             <div className={styles.cardBody} style={{ padding: "40px 32px", textAlign: "center" }}>
-              <div className={styles.checkmark}>✓</div>
+              <div className={styles.checkmark}><Check size={16} /></div>
               <h2 style={{ fontFamily: "var(--fh)", fontSize: "1.4rem", fontWeight: 800, marginBottom: "8px" }}>
                 Email verified! 🎉
               </h2>
@@ -168,9 +169,9 @@ export default function EmailVerify() {
                     gap: "6px",
                   }}
                 >
-                  <div>✓ 14-day free trial started</div>
-                  <div>✓ Workspace created</div>
-                  <div>✓ Welcome email sent</div>
+                  <div><Check size={16} /> 14-day free trial started</div>
+                  <div><Check size={16} /> Workspace created</div>
+                  <div><Check size={16} /> Welcome email sent</div>
                 </div>
               </div>
               <button

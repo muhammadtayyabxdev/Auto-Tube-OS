@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/dashboard.module.css';
+import { ArrowDown, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Globe, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Upload, Zap } from 'lucide-react';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -39,10 +40,10 @@ function DashboardContent() {
 
   // 1. HOME VIEW STATE
   const [pipelineItems, setPipelineItems] = useState([
-    { id: 1, title: 'AI Side Hustles That Pay $500/Day', meta: 'Due in 2 days · Script done', status: 'In Review', statusClass: styles.sReview, thumb: '💰' },
-    { id: 2, title: 'Why 99% of People Stay Broke Forever', meta: 'Due tomorrow · Editing', status: 'Ready', statusClass: styles.sReady, thumb: '🧠' },
-    { id: 3, title: 'I Invested $10K in Index Funds for 1 Year', meta: 'Due in 5 days · Writing', status: 'Scripting', statusClass: styles.sScript, thumb: '📈' },
-    { id: 4, title: '10 Money Mistakes Rich People Never Make', meta: 'Idea stage · Not started', status: 'Idea', statusClass: styles.sIdea, thumb: '💡' }
+    { id: 1, title: 'AI Side Hustles That Pay $500/Day', meta: 'Due in 2 days · Script done', status: 'In Review', statusClass: styles.sReview, thumb: '<DollarSign size={14} />' },
+    { id: 2, title: 'Why 99% of People Stay Broke Forever', meta: 'Due tomorrow · Editing', status: 'Ready', statusClass: styles.sReady, thumb: '<Brain size={14} />' },
+    { id: 3, title: 'I Invested $10K in Index Funds for 1 Year', meta: 'Due in 5 days · Writing', status: 'Scripting', statusClass: styles.sScript, thumb: '<TrendingUp size={14} />' },
+    { id: 4, title: '10 Money Mistakes Rich People Never Make', meta: 'Idea stage · Not started', status: 'Idea', statusClass: styles.sIdea, thumb: '<Lightbulb size={14} />' }
   ]);
 
   // 2. TOPIC FINDER STATE
@@ -51,12 +52,12 @@ function DashboardContent() {
   const [period, setPeriod] = useState<string>('This Week');
   const [isSearchingTopics, setIsSearchingTopics] = useState<boolean>(false);
   const [topicList, setTopicList] = useState([
-    { id: 1, title: '"AI Side Hustles That Actually Pay $500/Day in 2026"', score: 9.4, badge: '🔥 HOT PICK', badgeClass: styles.scoreHot, views: '2.1M', rpm: '$18', comp: 'Low', isTop: true },
-    { id: 2, title: '"Why 99% of People Stay Broke (And How to Escape)"', score: 8.8, badge: '🔥 TRENDING', badgeClass: styles.scoreHot, views: '1.7M', rpm: '$22', comp: 'Medium', isTop: false },
-    { id: 3, title: '"I Tested Every AI Investing Tool for 30 Days — Here\'s What Happened"', score: 8.1, badge: '⚡ RISING', badgeClass: styles.scoreWarm, views: '980K', rpm: '$15', comp: 'Low', isTop: false },
-    { id: 4, title: '"The $0 Budget Strategy That Made Me $100K"', score: 7.9, badge: '⚡ RISING', badgeClass: styles.scoreWarm, views: '850K', rpm: '$20', comp: 'Low', isTop: false },
-    { id: 5, title: '"10 Money Mistakes That Are Keeping You Poor"', score: 7.2, badge: '📊 STEADY', badgeClass: styles.scoreOk, views: '620K', rpm: '$19', comp: 'High', isTop: false },
-    { id: 6, title: '"How to Save $1,000 in 30 Days on Any Income"', score: 6.8, badge: '📊 STEADY', badgeClass: styles.scoreOk, views: '510K', rpm: '$17', comp: 'Medium', isTop: false }
+    { id: 1, title: '"AI Side Hustles That Actually Pay $500/Day in 2026"', score: 9.4, badge: '<Flame size={14} /> HOT PICK', badgeClass: styles.scoreHot, views: '2.1M', rpm: '$18', comp: 'Low', isTop: true },
+    { id: 2, title: '"Why 99% of People Stay Broke (And How to Escape)"', score: 8.8, badge: '<Flame size={14} /> TRENDING', badgeClass: styles.scoreHot, views: '1.7M', rpm: '$22', comp: 'Medium', isTop: false },
+    { id: 3, title: '"I Tested Every AI Investing Tool for 30 Days — Here\'s What Happened"', score: 8.1, badge: '<Zap size={14} /> RISING', badgeClass: styles.scoreWarm, views: '980K', rpm: '$15', comp: 'Low', isTop: false },
+    { id: 4, title: '"The $0 Budget Strategy That Made Me $100K"', score: 7.9, badge: '<Zap size={14} /> RISING', badgeClass: styles.scoreWarm, views: '850K', rpm: '$20', comp: 'Low', isTop: false },
+    { id: 5, title: '"10 Money Mistakes That Are Keeping You Poor"', score: 7.2, badge: '<BarChart3 size={14} /> STEADY', badgeClass: styles.scoreOk, views: '620K', rpm: '$19', comp: 'High', isTop: false },
+    { id: 6, title: '"How to Save $1,000 in 30 Days on Any Income"', score: 6.8, badge: '<BarChart3 size={14} /> STEADY', badgeClass: styles.scoreOk, views: '510K', rpm: '$17', comp: 'Medium', isTop: false }
   ]);
 
   const handleSearchTopics = () => {
@@ -77,11 +78,11 @@ function DashboardContent() {
   const [isProcessingShorts, setIsProcessingShorts] = useState<boolean>(false);
   const [shortsProgress, setShortsProgress] = useState<number>(100);
   const [shortsClips, setShortsClips] = useState([
-    { id: 1, title: 'Hook: "What if I told you people are making $500/day with AI…"', meta: '0:00 – 0:38 · Perfect hook · High energy', score: 9.6, thumb: '🔥' },
-    { id: 2, title: 'AI Faceless YouTube breakdown — numbers revealed', meta: '2:14 – 2:58 · Surprising stat · Strong CTA', score: 8.9, thumb: '💡' },
-    { id: 3, title: '"This one tool replaced my $3K/mo freelancer"', meta: '5:40 – 6:22 · Value bomb · Shareable', score: 8.7, thumb: '💰' },
-    { id: 4, title: 'AI writing hustle — $500 to $2K/month breakdown', meta: '7:05 – 7:50 · Actionable · Beginner-friendly', score: 8.2, thumb: '🤖' },
-    { id: 5, title: 'The #1 mistake people make with AI side hustles', meta: '9:30 – 10:08 · Contrarian · High shares', score: 7.9, thumb: '📱' }
+    { id: 1, title: 'Hook: "What if I told you people are making $500/day with AI…"', meta: '0:00 – 0:38 · Perfect hook · High energy', score: 9.6, thumb: '<Flame size={14} />' },
+    { id: 2, title: 'AI Faceless YouTube breakdown — numbers revealed', meta: '2:14 – 2:58 · Surprising stat · Strong CTA', score: 8.9, thumb: '<Lightbulb size={14} />' },
+    { id: 3, title: '"This one tool replaced my $3K/mo freelancer"', meta: '5:40 – 6:22 · Value bomb · Shareable', score: 8.7, thumb: '<DollarSign size={14} />' },
+    { id: 4, title: 'AI writing hustle — $500 to $2K/month breakdown', meta: '7:05 – 7:50 · Actionable · Beginner-friendly', score: 8.2, thumb: '<Bot size={14} />' },
+    { id: 5, title: 'The #1 mistake people make with AI side hustles', meta: '9:30 – 10:08 · Contrarian · High shares', score: 7.9, thumb: '<Smartphone size={14} />' }
   ]);
 
   const handleUploadClick = () => {
@@ -115,15 +116,15 @@ function DashboardContent() {
   // 4. CALENDAR STATE
   const [calendarEvents, setCalendarEvents] = useState<Record<number, { title: string; class: string }[]>>({
     1: [{ title: 'Script: AI Tools', class: styles.evBlue }],
-    3: [{ title: '📤 Upload: AI Side Hustles', class: styles.evRed }],
-    5: [{ title: '✅ Edit due: Stay Broke', class: styles.evGreen }],
+    3: [{ title: '<Upload size={16} /> Upload: AI Side Hustles', class: styles.evRed }],
+    5: [{ title: '<Check size={16} /> Edit due: Stay Broke', class: styles.evGreen }],
     10: [
-      { title: '📤 Upload: Stay Broke', class: styles.evRed },
+      { title: '<Upload size={16} /> Upload: Stay Broke', class: styles.evRed },
       { title: 'Script: Investing', class: styles.evBlue }
     ],
-    16: [{ title: '✅ Thumbnail review', class: styles.evGreen }],
-    21: [{ title: '📤 Upload: $10K Investing', class: styles.evRed }],
-    28: [{ title: '📤 Upload: Money Mistakes', class: styles.evRed }]
+    16: [{ title: '<Check size={16} /> Thumbnail review', class: styles.evGreen }],
+    21: [{ title: '<Upload size={16} /> Upload: $10K Investing', class: styles.evRed }],
+    28: [{ title: '<Upload size={16} /> Upload: Money Mistakes', class: styles.evRed }]
   });
 
   const handleAddEvent = (day: number) => {
@@ -135,10 +136,10 @@ function DashboardContent() {
       let finalTitle = title;
       if (type === 'upload') {
         evClass = styles.evRed;
-        finalTitle = '📤 Upload: ' + title;
+        finalTitle = '<Upload size={16} /> Upload: ' + title;
       } else if (type === 'review') {
         evClass = styles.evGreen;
-        finalTitle = '✅ ' + title;
+        finalTitle = '<Check size={16} /> ' + title;
       } else {
         finalTitle = 'Script: ' + title;
       }
@@ -183,10 +184,10 @@ function DashboardContent() {
 
   const viewActionLabels: Record<string, string> = {
     home: '+ New Video',
-    topics: '🔍 Find Topics',
-    shorts: '⬇️ Export All',
+    topics: '<Search size={16} /> Find Topics',
+    shorts: '<ArrowDown size={16} /> Export All',
     calendar: '+ Schedule',
-    analytics: '📊 Export'
+    analytics: '<BarChart3 size={16} /> Export'
   };
 
   return (
@@ -201,12 +202,12 @@ function DashboardContent() {
           <div className={styles.tbTitle}>{viewTitles[currentView] || 'Dashboard'}</div>
           
           <div className={styles.tbSearch} onClick={() => triggerToast('Search indexing database... Please type in sections.')}>
-            <span>🔍</span>
+            <span><Search size={16} /></span>
             <span style={{ color: 'var(--muted2)' }}>Search anything…</span>
             <kbd>⌘K</kbd>
           </div>
 
-          <div className={`${styles.tbIconBtn} ${styles.notifDot}`} onClick={() => triggerToast('No new notifications!')}>🔔</div>
+          <div className={`${styles.tbIconBtn} ${styles.notifDot}`} onClick={() => triggerToast('No new notifications!')}><Bell size={16} /></div>
           
           <button className={styles.tbBtn} onClick={handleTopbarAction}>
             {viewActionLabels[currentView] || '+ New'}
@@ -236,7 +237,7 @@ function DashboardContent() {
                 gap: '8px'
               }}
             >
-              {toastType === 'error' ? '✗' : '✓'} {toastMessage}
+              {toastType === 'error' ? '✗' : '<Check size={16} />'} {toastMessage}
             </div>
           )}
 
@@ -323,28 +324,28 @@ function DashboardContent() {
             <div style={{ marginBottom: '10px', fontSize: '11px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Quick Actions</div>
             <div className={styles.qaGrid}>
               <div className={styles.qaBtn} onClick={() => handleViewChange('topics')}>
-                <div className={styles.qaIcon} style={{ background: 'var(--red-bg)' }}>🔥</div>
+                <div className={styles.qaIcon} style={{ background: 'var(--red-bg)' }}><Flame size={16} /></div>
                 <div>
                   <div className={styles.qaLabel}>Find Viral Topics</div>
                   <div className={styles.qaSub}>AI-ranked ideas for your niche</div>
                 </div>
               </div>
               <div className={styles.qaBtn} onClick={() => router.push('/script-generator')}>
-                <div className={styles.qaIcon} style={{ background: 'var(--blue-bg)' }}>✍️</div>
+                <div className={styles.qaIcon} style={{ background: 'var(--blue-bg)' }}><PenTool size={16} /></div>
                 <div>
                   <div className={styles.qaLabel}>Write a Script</div>
                   <div className={styles.qaSub}>12 formats, hooks included</div>
                 </div>
               </div>
               <div className={styles.qaBtn} onClick={() => handleViewChange('shorts')}>
-                <div className={styles.qaIcon} style={{ background: 'var(--green-bg)' }}>⚡</div>
+                <div className={styles.qaIcon} style={{ background: 'var(--green-bg)' }}><Zap size={16} /></div>
                 <div>
                   <div className={styles.qaLabel}>Repurpose to Shorts</div>
                   <div className={styles.qaSub}>Find best moments automatically</div>
                 </div>
               </div>
               <div className={styles.qaBtn} onClick={() => handleViewChange('analytics')}>
-                <div className={styles.qaIcon} style={{ background: 'var(--amber-bg)' }}>📊</div>
+                <div className={styles.qaIcon} style={{ background: 'var(--amber-bg)' }}><BarChart3 size={16} /></div>
                 <div>
                   <div className={styles.qaLabel}>View Analytics</div>
                   <div className={styles.qaSub}>Deep channel performance stats</div>
@@ -364,7 +365,7 @@ function DashboardContent() {
               />
               <select className={styles.selectInput} value={market} onChange={(e) => setMarket(e.target.value)}>
                 <option value="🇺🇸 US Market">🇺🇸 US Market</option>
-                <option value="🌍 Global">🌍 Global</option>
+                <option value="<Globe size={16} /> Global"><Globe size={16} /> Global</option>
                 <option value="🇬🇧 UK Market">🇬🇧 UK Market</option>
               </select>
               <select className={styles.selectInput} value={period} onChange={(e) => setPeriod(e.target.value)}>
@@ -373,14 +374,14 @@ function DashboardContent() {
                 <option value="Trending Now">Trending Now</option>
               </select>
               <button className={styles.tbBtn} onClick={handleSearchTopics} disabled={isSearchingTopics}>
-                {isSearchingTopics ? 'Searching...' : '🔍 Find Topics'}
+                {isSearchingTopics ? 'Searching...' : '<Search size={16} /> Find Topics'}
               </button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <div style={{ fontSize: '12px', color: 'var(--muted)' }}>Showing <b style={{ color: 'var(--text)' }}>8 ideas</b> ranked by viral potential</div>
               <div style={{ display: 'flex', gap: '8px' }}>
-                <div style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--red-bg)', border: '1px solid var(--red-border)', color: 'var(--red)', fontSize: '11px', cursor: 'pointer' }} onClick={() => triggerToast('Filtering all hot topics')}>🔥 All</div>
+                <div style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--red-bg)', border: '1px solid var(--red-border)', color: 'var(--red)', fontSize: '11px', cursor: 'pointer' }} onClick={() => triggerToast('Filtering all hot topics')}><Flame size={16} /> All</div>
                 <div style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--s3)', border: '1px solid var(--border)', color: 'var(--muted)', fontSize: '11px', cursor: 'pointer' }} onClick={() => triggerToast('Filtered by high RPM')}>High RPM</div>
                 <div style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--s3)', border: '1px solid var(--border)', color: 'var(--muted)', fontSize: '11px', cursor: 'pointer' }} onClick={() => triggerToast('Filtered by low competition')}>Low Comp.</div>
               </div>
@@ -401,7 +402,7 @@ function DashboardContent() {
                   </div>
                   <div className={styles.topicActions}>
                     <button className={styles.tAction} onClick={() => triggerToast('Topic ideas saved to clipboard!')}>Save</button>
-                    <button className={`${styles.tAction} ${styles.primary}`} onClick={() => handleWriteScriptRedirect(topic.title)}>✍️ Write Script</button>
+                    <button className={`${styles.tAction} ${styles.primary}`} onClick={() => handleWriteScriptRedirect(topic.title)}><PenTool size={16} /> Write Script</button>
                   </div>
                 </div>
               ))}
@@ -413,7 +414,7 @@ function DashboardContent() {
             <div className={styles.shortsLayout}>
               <div>
                 <div className={styles.uploadZone} style={{ marginBottom: '16px' }} onClick={handleUploadClick}>
-                  <div className={styles.uploadIcon}>🎬</div>
+                  <div className={styles.uploadIcon}><Play size={16} /></div>
                   <div className={styles.uploadTitle}>Drop your video here</div>
                   <div className={styles.uploadSub}>MP4, MOV up to 4GB · or paste YouTube URL</div>
                   
@@ -434,16 +435,16 @@ function DashboardContent() {
                   <div className={styles.cardHeader}>
                     <div className={styles.cardTitle}>Processing: {youtubeUrl ? 'Custom YouTube stream' : 'AI Side Hustles'}</div>
                     <span style={{ fontSize: '11px', color: isProcessingShorts ? 'var(--amber)' : 'var(--green)' }}>
-                      {isProcessingShorts ? `Processing ${shortsProgress}%` : '✓ Complete'}
+                      {isProcessingShorts ? `Processing ${shortsProgress}%` : '<Check size={16} /> Complete'}
                     </span>
                   </div>
                   <div style={{ height: '6px', background: 'var(--s4)', borderRadius: '3px', overflow: 'hidden', marginBottom: '14px' }}>
                     <div style={{ width: `${shortsProgress}%`, height: '100%', background: isProcessingShorts ? 'var(--amber)' : 'var(--green)', borderRadius: '3px', transition: 'width 0.3s ease' }}></div>
                   </div>
                   <div style={{ display: 'flex', gap: '16px', fontSize: '12px', color: 'var(--muted)' }}>
-                    <span>⏱ 11m 42s original</span>
-                    <span>⚡ 5 clips found</span>
-                    <span>📱 Ready to export</span>
+                    <span><Clock size={16} /> 11m 42s original</span>
+                    <span><Zap size={16} /> 5 clips found</span>
+                    <span><Smartphone size={16} /> Ready to export</span>
                   </div>
                 </div>
               </div>
@@ -451,7 +452,7 @@ function DashboardContent() {
               <div>
                 <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{ fontSize: '12px', color: 'var(--muted)' }}>5 best moments detected · click to preview</div>
-                  <button className={styles.tbBtn} style={{ fontSize: '11px', padding: '6px 12px' }} onClick={handleExportAllShorts}>⬇️ Export All</button>
+                  <button className={styles.tbBtn} style={{ fontSize: '11px', padding: '6px 12px' }} onClick={handleExportAllShorts}><ArrowDown size={16} /> Export All</button>
                 </div>
                 <div className={styles.shortsClips}>
                   {shortsClips.map((clip) => (
@@ -572,25 +573,25 @@ function DashboardContent() {
             <div style={{ marginBottom: '12px', fontFamily: 'var(--fh)', fontSize: '0.88rem', fontWeight: 700 }}>Top Performing Videos</div>
             <div className={styles.channelList}>
               <div className={styles.chRow}>
-                <div className={styles.chAv}>💰</div>
+                <div className={styles.chAv}><DollarSign size={16} /></div>
                 <div className={styles.chName}>AI Side Hustles That Pay $500/Day</div>
                 <div className={styles.chSubs}>342K views · $1,240</div>
                 <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 38%</div>
               </div>
               <div className={styles.chRow}>
-                <div className={styles.chAv}>🧠</div>
+                <div className={styles.chAv}><Brain size={16} /></div>
                 <div className={styles.chName}>Why 99% of People Stay Broke Forever</div>
                 <div className={styles.chSubs}>218K views · $890</div>
                 <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 22%</div>
               </div>
               <div className={styles.chRow}>
-                <div className={styles.chAv}>📈</div>
+                <div className={styles.chAv}><TrendingUp size={16} /></div>
                 <div className={styles.chName}>I Invested $10K for 1 Year — Results</div>
                 <div className={styles.chSubs}>187K views · $740</div>
                 <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 14%</div>
               </div>
               <div className={styles.chRow}>
-                <div className={styles.chAv}>💡</div>
+                <div className={styles.chAv}><Lightbulb size={16} /></div>
                 <div className={styles.chName}>10 Money Mistakes Rich People Never Make</div>
                 <div className={styles.chSubs}>143K views · $580</div>
                 <div className={`${styles.chTrend} ${styles.chDn}`}>↓ 3%</div>

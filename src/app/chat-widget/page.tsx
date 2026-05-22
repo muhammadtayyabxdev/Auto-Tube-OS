@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from '@/styles/chat-widget.module.css';
+import { BookOpen, Bot, Check, CreditCard, Key, Mail, MessageCircle, Phone, Rocket, Search, Wrench, X, Zap } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -17,12 +18,12 @@ interface HelpArticle {
 }
 
 const INITIAL_ARTICLES: HelpArticle[] = [
-  { icon: '🚀', title: 'Getting started with AutoTubeOS', readTime: '5 min read' },
-  { icon: '🔑', title: 'How to add your Groq or Gemini API key', readTime: '2 min read' },
+  { icon: '<Rocket size={16} />', title: 'Getting started with AutoTubeOS', readTime: '5 min read' },
+  { icon: '<Key size={14} />', title: 'How to add your Groq or Gemini API key', readTime: '2 min read' },
   { icon: '📺', title: 'Connecting your YouTube channel', readTime: '3 min read' },
-  { icon: '💳', title: 'Billing, plans, and upgrades', readTime: '4 min read' },
-  { icon: '⚡', title: 'Using the Shorts Repurposer', readTime: '3 min read' },
-  { icon: '🤖', title: 'Setting up AI Agents (Beta)', readTime: '6 min read' },
+  { icon: '<CreditCard size={16} />', title: 'Billing, plans, and upgrades', readTime: '4 min read' },
+  { icon: '<Zap size={16} />', title: 'Using the Shorts Repurposer', readTime: '3 min read' },
+  { icon: '<Bot size={16} />', title: 'Setting up AI Agents (Beta)', readTime: '6 min read' },
   { icon: '🆕', title: 'v2.4.0 — AI Agents + Shorts 3.0', readTime: 'May 14, 2026' },
   { icon: '🆕', title: 'v2.3.0 — Team Collaboration', readTime: 'Apr 8, 2026' }
 ];
@@ -206,7 +207,7 @@ export default function ChatWidgetDemo() {
           <div className={styles.chatHeader}>
             <div className={styles.chTop}>
               <div className={styles.chBrand}>AutoTubeOS Support</div>
-              <button className={styles.chClose} onClick={toggleWidget}>✕</button>
+              <button className={styles.chClose} onClick={toggleWidget}><X size={18} /></button>
             </div>
             <div className={styles.chAgents}>
               <div className={styles.agentAv}>AK</div>
@@ -228,19 +229,19 @@ export default function ChatWidgetDemo() {
               className={`${styles.cTab} ${activeTab === 'chat' ? styles.on : ''}`}
               onClick={() => handleTabClick('chat')}
             >
-              💬 Chat
+              <MessageCircle size={16} /> Chat
             </div>
             <div 
               className={`${styles.cTab} ${activeTab === 'help' ? styles.on : ''}`}
               onClick={() => handleTabClick('help')}
             >
-              📖 Help
+              <BookOpen size={16} /> Help
             </div>
             <div 
               className={`${styles.cTab} ${activeTab === 'contact' ? styles.on : ''}`}
               onClick={() => handleTabClick('contact')}
             >
-              📞 Contact
+              <Phone size={16} /> Contact
             </div>
           </div>
 
@@ -279,10 +280,10 @@ export default function ChatWidgetDemo() {
             {/* QUICK REPLIES */}
             {showQuickReplies && (
               <div className={styles.quickReplies}>
-                <div className={styles.qrBtn} onClick={() => handleQuickReply('💳 Pricing question')}>💳 Pricing</div>
-                <div className={styles.qrBtn} onClick={() => handleQuickReply('🔧 Technical issue')}>🔧 Tech issue</div>
-                <div className={styles.qrBtn} onClick={() => handleQuickReply('🚀 How to get started?')}>🚀 Get started</div>
-                <div className={styles.qrBtn} onClick={() => handleQuickReply('🤖 AI API question')}>🤖 AI question</div>
+                <div className={styles.qrBtn} onClick={() => handleQuickReply('<CreditCard size={16} /> Pricing question')}><CreditCard size={16} /> Pricing</div>
+                <div className={styles.qrBtn} onClick={() => handleQuickReply('<Wrench size={16} /> Technical issue')}><Wrench size={16} /> Tech issue</div>
+                <div className={styles.qrBtn} onClick={() => handleQuickReply('<Rocket size={16} /> How to get started?')}><Rocket size={16} /> Get started</div>
+                <div className={styles.qrBtn} onClick={() => handleQuickReply('<Bot size={16} /> AI API question')}><Bot size={16} /> AI question</div>
               </div>
             )}
 
@@ -302,7 +303,7 @@ export default function ChatWidgetDemo() {
             <div className={styles.satBar}>
               {rated ? (
                 <div style={{ fontSize: '12px', color: 'var(--green)', padding: '4px 0' }}>
-                  ✓ Thanks for your feedback!
+                  <Check size={16} /> Thanks for your feedback!
                 </div>
               ) : (
                 <>
@@ -323,7 +324,7 @@ export default function ChatWidgetDemo() {
             <div className={styles.helpViewInner}>
               <input 
                 className={styles.helpSearch} 
-                placeholder="🔍 Search help articles…"
+                placeholder="<Search size={16} /> Search help articles…"
                 value={helpSearch}
                 onChange={(e) => setHelpSearch(e.target.value)}
               />
@@ -353,15 +354,15 @@ export default function ChatWidgetDemo() {
                 Choose how you want to reach us. We're a real team — no bots, no ticket queues.
               </div>
               <div className={styles.contactOption} onClick={() => setActiveTab('chat')}>
-                <div className={styles.coIcon} style={{ background: 'var(--red-bg)' }}>💬</div>
+                <div className={styles.coIcon} style={{ background: 'var(--red-bg)' }}><MessageCircle size={16} /></div>
                 <div>
                   <div className={styles.coName}>Live Chat</div>
-                  <div className={styles.coSub}>⚡ Usually reply in 2 minutes</div>
+                  <div className={styles.coSub}><Zap size={16} /> Usually reply in 2 minutes</div>
                 </div>
                 <div className={styles.coArrow}>›</div>
               </div>
               <div className={styles.contactOption} onClick={() => alert('Mail hello@autotubeos.com triggered!')}>
-                <div className={styles.coIcon} style={{ background: 'var(--s4)' }}>📧</div>
+                <div className={styles.coIcon} style={{ background: 'var(--s4)' }}><Mail size={16} /></div>
                 <div>
                   <div className={styles.coName}>Email</div>
                   <div className={styles.coSub}>hello@autotubeos.com · Reply in 2h</div>
@@ -377,7 +378,7 @@ export default function ChatWidgetDemo() {
                 <div className={styles.coArrow}>›</div>
               </div>
               <div className={styles.contactOption} onClick={() => alert('Discord Link clicked!')}>
-                <div className={styles.coIcon} style={{ background: 'rgba(88, 101, 242, 0.1)' }}>💬</div>
+                <div className={styles.coIcon} style={{ background: 'rgba(88, 101, 242, 0.1)' }}><MessageCircle size={16} /></div>
                 <div>
                   <div className={styles.coName}>Discord Community</div>
                   <div className={styles.coSub}>1,200+ creators · Very active</div>
@@ -399,7 +400,7 @@ export default function ChatWidgetDemo() {
           className={`${styles.chatLauncher} ${isOpen ? styles.openLauncher : ''}`} 
           onClick={toggleWidget}
         >
-          <span>{isOpen ? '✕' : '💬'}</span>
+          <span>{isOpen ? '<X size={18} />' : '<MessageCircle size={16} />'}</span>
           {hasBadge && <div className={styles.notifBadge}>1</div>}
         </button>
 

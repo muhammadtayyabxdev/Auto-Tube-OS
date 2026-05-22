@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import styles from '@/styles/mobile.module.css';
+import { BarChart3, Bell, CalendarDays, ClipboardList, Flame, LayoutDashboard, PenTool, Play, RefreshCw, Sparkles, Zap } from 'lucide-react';
 
 export default function MobilePromo() {
   const [activeTab, setActiveTab] = useState<'home' | 'ideas' | 'scripts' | 'stats' | 'profile'>('home');
@@ -66,7 +67,7 @@ export default function MobilePromo() {
                 </div>
               </a>
               <a href="#" className={styles.storeBtn} onClick={(e) => { e.preventDefault(); alert('Android App download link triggered! Available on Google Play Store Beta.'); }}>
-                <span className={styles.storeIcon}>▶</span>
+                <span className={styles.storeIcon}><Play size={16} /></span>
                 <div>
                   <div className={styles.storeSub}>Get it on</div>
                   <div className={styles.storeName}>Google Play</div>
@@ -87,7 +88,7 @@ export default function MobilePromo() {
               <div className={styles.phoneScreen}>
                 <div className={styles.sTopbar}>
                   <div className={styles.sLogo}>AutoTube<span>OS</span></div>
-                  <div className={styles.sNotif} onClick={() => alert('Notifications clicked!')}>🔔</div>
+                  <div className={styles.sNotif} onClick={() => alert('Notifications clicked!')}><Bell size={16} /></div>
                 </div>
 
                 <div className={styles.sGreet}>
@@ -117,19 +118,19 @@ export default function MobilePromo() {
                 <div className={styles.sSectionTitle}>Quick Actions</div>
                 <div className={styles.sQuick}>
                   <div className={styles.sQbtn} onClick={() => alert('Opening mobile Topic Finder...')}>
-                    <div className={styles.sQbtnIcon}>🔥</div>
+                    <div className={styles.sQbtnIcon}><Flame size={16} /></div>
                     <div className={styles.sQbtnLbl}>Topic Finder</div>
                   </div>
                   <div className={styles.sQbtn} onClick={() => alert('Opening Mobile Script Generator...')}>
-                    <div className={styles.sQbtnIcon}>✍️</div>
+                    <div className={styles.sQbtnIcon}><PenTool size={16} /></div>
                     <div className={styles.sQbtnLbl}>New Script</div>
                   </div>
                   <div className={styles.sQbtn} onClick={() => alert('Opening Shorts Repurposer...')}>
-                    <div className={styles.sQbtnIcon}>⚡</div>
+                    <div className={styles.sQbtnIcon}><Zap size={16} /></div>
                     <div className={styles.sQbtnLbl}>Shorts</div>
                   </div>
                   <div className={styles.sQbtn} onClick={() => alert('Opening Content Calendar...')}>
-                    <div className={styles.sQbtnIcon}>📅</div>
+                    <div className={styles.sQbtnIcon}><CalendarDays size={16} /></div>
                     <div className={styles.sQbtnLbl}>Calendar</div>
                   </div>
                 </div>
@@ -155,16 +156,16 @@ export default function MobilePromo() {
                 <div style={{ height: '10px' }}></div>
                 <div className={styles.sBottomNav}>
                   <div className={`${styles.sNavItem} ${activeTab === 'home' ? styles.on : ''}`} onClick={() => setActiveTab('home')}>
-                    <div className={styles.sNavIcon}>⊞</div>Home
+                    <div className={styles.sNavIcon}><LayoutDashboard size={16} /></div>Home
                   </div>
                   <div className={`${styles.sNavItem} ${activeTab === 'ideas' ? styles.on : ''}`} onClick={() => { setActiveTab('ideas'); alert('Feature available in downloaded app!'); }}>
-                    <div className={styles.sNavIcon}>🔥</div>Ideas
+                    <div className={styles.sNavIcon}><Flame size={16} /></div>Ideas
                   </div>
                   <div className={`${styles.sNavItem} ${activeTab === 'scripts' ? styles.on : ''}`} onClick={() => { setActiveTab('scripts'); alert('Feature available in downloaded app!'); }}>
-                    <div className={styles.sNavIcon}>✍️</div>Scripts
+                    <div className={styles.sNavIcon}><PenTool size={16} /></div>Scripts
                   </div>
                   <div className={`${styles.sNavItem} ${activeTab === 'stats' ? styles.on : ''}`} onClick={() => { setActiveTab('stats'); alert('Feature available in downloaded app!'); }}>
-                    <div className={styles.sNavIcon}>📊</div>Stats
+                    <div className={styles.sNavIcon}><BarChart3 size={16} /></div>Stats
                   </div>
                 </div>
               </div>
@@ -187,14 +188,14 @@ export default function MobilePromo() {
                     {scriptTopic}
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '10px' }}>
-                    <div style={{ background: 'var(--red-bg)', border: '1px solid var(--red-border)', borderRadius: '7px', padding: '6px', textAlign: 'center', fontSize: '9px', color: 'var(--red)', fontWeight: 600 }}>📋 Listicle</div>
-                    <div style={{ background: 'var(--s3)', border: '1px solid var(--border)', borderRadius: '7px', padding: '6px', textAlign: 'center', fontSize: '9px', color: 'var(--muted)' }}>🎬 Doc</div>
+                    <div style={{ background: 'var(--red-bg)', border: '1px solid var(--red-border)', borderRadius: '7px', padding: '6px', textAlign: 'center', fontSize: '9px', color: 'var(--red)', fontWeight: 600 }}><ClipboardList size={16} /> Listicle</div>
+                    <div style={{ background: 'var(--s3)', border: '1px solid var(--border)', borderRadius: '7px', padding: '6px', textAlign: 'center', fontSize: '9px', color: 'var(--muted)' }}><Play size={16} /> Doc</div>
                   </div>
                   <div 
                     style={{ background: generating ? 'var(--s4)' : 'var(--red)', borderRadius: '8px', padding: '9px', textAlign: 'center', fontSize: '10px', fontWeight: 700, color: '#fff', marginBottom: '10px', cursor: 'pointer', transition: 'all 0.2s' }}
                     onClick={handleGenerateScript}
                   >
-                    {generating ? '✨ Generating...' : '✨ Generate Script'}
+                    {generating ? '<Sparkles size={16} /> Generating...' : '<Sparkles size={16} /> Generate Script'}
                   </div>
                   <div style={{ background: 'var(--s2)', borderRadius: '8px', padding: '8px 10px' }}>
                     <div style={{ fontSize: '8px', color: 'var(--red)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '5px' }}>🎣 Hook</div>
@@ -206,16 +207,16 @@ export default function MobilePromo() {
                 <div style={{ height: '60px' }}></div>
                 <div className={styles.sBottomNav}>
                   <div className={styles.sNavItem}>
-                    <div className={styles.sNavIcon}>⊞</div>Home
+                    <div className={styles.sNavIcon}><LayoutDashboard size={16} /></div>Home
                   </div>
                   <div className={styles.sNavItem}>
-                    <div className={styles.sNavIcon}>🔥</div>Ideas
+                    <div className={styles.sNavIcon}><Flame size={16} /></div>Ideas
                   </div>
                   <div className={`${styles.sNavItem} ${styles.on}`}>
-                    <div className={styles.sNavIcon}>✍️</div>Scripts
+                    <div className={styles.sNavIcon}><PenTool size={16} /></div>Scripts
                   </div>
                   <div className={styles.sNavItem}>
-                    <div className={styles.sNavIcon}>📊</div>Stats
+                    <div className={styles.sNavIcon}><BarChart3 size={16} /></div>Stats
                   </div>
                 </div>
               </div>
@@ -232,42 +233,42 @@ export default function MobilePromo() {
         </div>
         <div className={styles.featList}>
           <div className={styles.featItem}>
-            <div className={styles.featIcon}>🔥</div>
+            <div className={styles.featIcon}><Flame size={16} /></div>
             <div>
               <div className={styles.featTitle}>Topic Finder on Mobile</div>
               <div className={styles.featDesc}>Get viral topic ideas while commuting, at the gym, or anywhere. One tap to save ideas to your pipeline.</div>
             </div>
           </div>
           <div className={styles.featItem}>
-            <div className={styles.featIcon}>✍️</div>
+            <div className={styles.featIcon}><PenTool size={16} /></div>
             <div>
               <div className={styles.featTitle}>Script Generator</div>
               <div className={styles.featDesc}>Generate full scripts on your phone. Edit, copy, and send to your team with one tap.</div>
             </div>
           </div>
           <div className={styles.featItem}>
-            <div className={styles.featIcon}>🔔</div>
+            <div className={styles.featIcon}><Bell size={16} /></div>
             <div>
               <div className={styles.featTitle}>Smart Notifications</div>
               <div className={styles.featDesc}>Get alerted when a video is ready for review, a team task is overdue, or a trend spikes in your niche.</div>
             </div>
           </div>
           <div className={styles.featItem}>
-            <div className={styles.featIcon}>📊</div>
+            <div className={styles.featIcon}><BarChart3 size={16} /></div>
             <div>
               <div className={styles.featTitle}>Live Analytics</div>
               <div className={styles.featDesc}>Watch your view count, subscriber growth, and revenue update in real time from your lock screen widget.</div>
             </div>
           </div>
           <div className={styles.featItem}>
-            <div className={styles.featIcon}>📅</div>
+            <div className={styles.featIcon}><CalendarDays size={16} /></div>
             <div>
               <div className={styles.featTitle}>Calendar Management</div>
               <div className={styles.featDesc}>Approve, reschedule, or reassign content calendar items on the go. Full drag-and-drop on mobile.</div>
             </div>
           </div>
           <div className={styles.featItem}>
-            <div className={styles.featIcon}>🔄</div>
+            <div className={styles.featIcon}><RefreshCw size={16} /></div>
             <div>
               <div className={styles.featTitle}>Syncs Instantly</div>
               <div className={styles.featDesc}>Everything you do on mobile syncs instantly to your desktop dashboard and vice versa. Always in sync.</div>
@@ -289,7 +290,7 @@ export default function MobilePromo() {
             </div>
           </a>
           <a href="#" className={styles.storeBtn} onClick={(e) => { e.preventDefault(); alert('Google Play Store triggered!'); }} style={{ padding: '12px 22px' }}>
-            <span style={{ fontSize: '1.8rem' }}>▶</span>
+            <span style={{ fontSize: '1.8rem' }}><Play size={16} /></span>
             <div>
               <div style={{ fontSize: '11px', color: 'var(--muted)' }}>Get it on</div>
               <div style={{ fontFamily: 'var(--fh)', fontSize: '1rem', fontWeight: 700 }}>Google Play</div>

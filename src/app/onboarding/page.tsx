@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/onboarding.module.css";
+import { BarChart3, Bot, Brain, Building, Check, Clock, DollarSign, Dumbbell, Flame, Globe, Handshake, Lightbulb, Lock, Mail, Palette, PenTool, Play, RefreshCw, Rocket, Smartphone, Sparkles, Target, TrendingUp, Zap } from 'lucide-react';
 
 interface NicheItem {
   name: string;
@@ -43,7 +44,7 @@ export default function Onboarding() {
   const [ideaConfirmed, setIdeaConfirmed] = useState(false);
 
   const hints = [
-    "Takes about 2 minutes ⏱",
+    "Takes about 2 minutes <Clock size={16} />",
     "Choose the one that fits best",
     "Pick as many as you like",
     "You can skip and connect later",
@@ -52,27 +53,27 @@ export default function Onboarding() {
   ];
 
   const niches: NicheItem[] = [
-    { name: "Finance", icon: "💰", desc: "Money, investing, wealth" },
-    { name: "AI & Tech", icon: "🤖", desc: "Tools, reviews, tutorials" },
-    { name: "Health", icon: "💪", desc: "Fitness, nutrition, wellness" },
-    { name: "Self Improvement", icon: "🧠", desc: "Habits, mindset, productivity" },
+    { name: "Finance", icon: "<DollarSign size={16} />", desc: "Money, investing, wealth" },
+    { name: "AI & Tech", icon: "<Bot size={16} />", desc: "Tools, reviews, tutorials" },
+    { name: "Health", icon: "<Dumbbell size={16} />", desc: "Fitness, nutrition, wellness" },
+    { name: "Self Improvement", icon: "<Brain size={16} />", desc: "Habits, mindset, productivity" },
     { name: "Gaming", icon: "🎮", desc: "Reviews, walkthroughs" },
-    { name: "Business", icon: "🏢", desc: "Startups, entrepreneurship" },
+    { name: "Business", icon: "<Building size={16} />", desc: "Startups, entrepreneurship" },
     { name: "Travel", icon: "✈️", desc: "Destinations, tips, vlogs" },
-    { name: "Creative", icon: "🎨", desc: "Design, art, storytelling" },
-    { name: "Other", icon: "✨", desc: "Something else entirely" },
+    { name: "Creative", icon: "<Palette size={16} />", desc: "Design, art, storytelling" },
+    { name: "Other", icon: "<Sparkles size={16} />", desc: "Something else entirely" },
   ];
 
   const goalOptions = [
-    "💰 Make money from ads",
-    "📈 Grow subscribers fast",
-    "⚡ Publish more consistently",
-    "🤖 Automate my workflow",
-    "📱 Repurpose to Shorts",
-    "🏢 Run a YouTube agency",
-    "🌍 Build a personal brand",
+    "<DollarSign size={16} /> Make money from ads",
+    "<TrendingUp size={16} /> Grow subscribers fast",
+    "<Zap size={16} /> Publish more consistently",
+    "<Bot size={16} /> Automate my workflow",
+    "<Smartphone size={16} /> Repurpose to Shorts",
+    "<Building size={16} /> Run a YouTube agency",
+    "<Globe size={16} /> Build a personal brand",
     "🛒 Sell products / courses",
-    "🤝 Get brand sponsorships",
+    "<Handshake size={16} /> Get brand sponsorships",
   ];
 
   const go = (n: number) => {
@@ -141,7 +142,7 @@ export default function Onboarding() {
             </div>
           </div>
           <div className={`${styles.stepItem} ${cur === 6 ? styles.active : ""}`}>
-            <div className={styles.stepDot}>🚀</div>
+            <div className={styles.stepDot}><Rocket size={16} /></div>
             <div>
               <div className={styles.stepName}>Launch Dashboard</div>
               <div className={styles.stepSub}>You&apos;re all set</div>
@@ -234,7 +235,7 @@ export default function Onboarding() {
                 marginTop: "4px",
               }}
             >
-              <span style={{ fontSize: "16px" }}>🔒</span>
+              <span style={{ fontSize: "16px" }}><Lock size={16} /></span>
               <span style={{ fontSize: "12px", color: "var(--muted)" }}>
                 Your data is encrypted and never shared with third parties.
               </span>
@@ -332,39 +333,39 @@ export default function Onboarding() {
               className={`${styles.connectCard} ${conn.youtube ? styles.on : ""}`}
               onClick={() => toggleConn("youtube")}
             >
-              <div className={styles.connIcon}>▶️</div>
+              <div className={styles.connIcon}><Play size={16} /></div>
               <div>
                 <div className={styles.connName}>YouTube Channel</div>
                 <div className={styles.connSub}>Sync analytics, subscribers & video data</div>
               </div>
               <div className={`${styles.connStatus} ${conn.youtube ? styles.csOn : styles.csOff}`}>
-                {conn.youtube ? "✓ Connected" : "Connect"}
+                {conn.youtube ? "<Check size={16} /> Connected" : "Connect"}
               </div>
             </div>
             <div
               className={`${styles.connectCard} ${conn.ga ? styles.on : ""}`}
               onClick={() => toggleConn("ga")}
             >
-              <div className={styles.connIcon}>📊</div>
+              <div className={styles.connIcon}><BarChart3 size={16} /></div>
               <div>
                 <div className={styles.connName}>Google Analytics</div>
                 <div className={styles.connSub}>Track traffic from YouTube to your website</div>
               </div>
               <div className={`${styles.connStatus} ${conn.ga ? styles.csOn : styles.csOff}`}>
-                {conn.ga ? "✓ Connected" : "Connect"}
+                {conn.ga ? "<Check size={16} /> Connected" : "Connect"}
               </div>
             </div>
             <div
               className={`${styles.connectCard} ${conn.newsletter ? styles.on : ""}`}
               onClick={() => toggleConn("newsletter")}
             >
-              <div className={styles.connIcon}>📧</div>
+              <div className={styles.connIcon}><Mail size={16} /></div>
               <div>
                 <div className={styles.connName}>Newsletter (Beehiiv / Mailchimp)</div>
                 <div className={styles.connSub}>Convert views to email subscribers</div>
               </div>
               <div className={`${styles.connStatus} ${conn.newsletter ? styles.csOn : styles.csOff}`}>
-                {conn.newsletter ? "✓ Connected" : "Connect"}
+                {conn.newsletter ? "<Check size={16} /> Connected" : "Connect"}
               </div>
             </div>
             <div
@@ -381,7 +382,7 @@ export default function Onboarding() {
                 alignItems: "flex-start",
               }}
             >
-              <span>💡</span>
+              <span><Lightbulb size={16} /></span>
               <span>
                 You can connect these later from Settings. We only read your data — we never post anything on your behalf.
               </span>
@@ -398,7 +399,7 @@ export default function Onboarding() {
             </h2>
             <p className={styles.sSub}>Based on your niche and goals. You can swap it anytime inside the Topic Finder.</p>
             <div className={styles.ideaCard}>
-              <div className={styles.ideaTag}>🔥 Top Pick · {niche} Niche · Low Competition</div>
+              <div className={styles.ideaTag}><Flame size={14} /> Top Pick · {niche} Niche · Low Competition</div>
               <h3 className={styles.ideaTitle}>&quot;AI Side Hustles That Actually Pay $500 a Day in 2026&quot;</h3>
               <div className={styles.ideaStats}>
                 <div className={styles.ist}>
@@ -420,14 +421,14 @@ export default function Onboarding() {
                   className={`${styles.ib} ${styles.ibOut}`}
                   onClick={() => alert("Finding other viral ideas...")}
                 >
-                  🔄 Different Idea
+                  <RefreshCw size={16} /> Different Idea
                 </button>
                 <button
                   type="button"
                   className={`${styles.ib} ${styles.ibRed}`}
                   onClick={() => setIdeaConfirmed(true)}
                 >
-                  {ideaConfirmed ? "✓ Confirmed" : "✍️ Write Script Now"}
+                  {ideaConfirmed ? "<Check size={16} /> Confirmed" : "<PenTool size={16} /> Write Script Now"}
                 </button>
               </div>
             </div>
@@ -436,26 +437,26 @@ export default function Onboarding() {
             </div>
             <div className={styles.checklist}>
               <div className={styles.ci}>
-                <div className={`${styles.ciBox} ${styles.done}`}>✓</div>
+                <div className={`${styles.ciBox} ${styles.done}`}><Check size={16} /></div>
                 <div className={`${styles.ciText} ${styles.done}`}>Profile created</div>
               </div>
               <div className={styles.ci}>
-                <div className={`${styles.ciBox} ${styles.done}`}>✓</div>
+                <div className={`${styles.ciBox} ${styles.done}`}><Check size={16} /></div>
                 <div className={`${styles.ciText} ${styles.done}`}>{niche} niche configured</div>
               </div>
               <div className={styles.ci}>
-                <div className={`${styles.ciBox} ${styles.done}`}>✓</div>
+                <div className={`${styles.ciBox} ${styles.done}`}><Check size={16} /></div>
                 <div className={`${styles.ciText} ${styles.done}`}>
                   {conn.youtube ? "YouTube channel connected" : "Setup custom goals completed"}
                 </div>
               </div>
               <div className={styles.ci}>
-                <div className={`${styles.ciBox} ${styles.done}`}>✓</div>
+                <div className={`${styles.ciBox} ${styles.done}`}><Check size={16} /></div>
                 <div className={`${styles.ciText} ${styles.done}`}>AI tuned to your goals</div>
               </div>
               <div className={styles.ci}>
                 <div className={`${styles.ciBox} ${ideaConfirmed ? styles.done : styles.pend}`}>
-                  {ideaConfirmed ? "✓" : ""}
+                  {ideaConfirmed ? "<Check size={16} />" : ""}
                 </div>
                 <div className={`${styles.ciText} ${ideaConfirmed ? styles.done : ""}`}>
                   First video topic confirmed
@@ -466,14 +467,14 @@ export default function Onboarding() {
 
           {/* S6: SUCCESS */}
           <div className={`${styles.screen} ${styles.success} ${cur === 6 ? styles.active : ""}`}>
-            <div className={styles.confetti}>🎉 🚀 ✨ 🎯 🔥</div>
+            <div className={styles.confetti}>🎉 <Rocket size={16} /> <Sparkles size={16} /> <Target size={16} /> <Flame size={16} /></div>
             <div className={styles.sLabel} style={{ textAlign: "center" }}>
               You&apos;re all set!
             </div>
             <h2 className={styles.sTitle} style={{ textAlign: "center", fontSize: "2.2rem" }}>
               Welcome to
               <br />
-              AutoTubeOS 🎬
+              AutoTubeOS <Play size={16} />
             </h2>
             <p className={styles.sSub} style={{ textAlign: "center", maxWidth: "420px", margin: "10px auto 24px" }}>
               Your AI-powered YouTube workspace is live. Here&apos;s what&apos;s waiting for you inside:
@@ -533,7 +534,7 @@ export default function Onboarding() {
             </button>
             <div className={styles.hint}>{hints[cur - 1] || ""}</div>
             <button className={styles.nextBtn} onClick={() => go(cur + 1)}>
-              {cur === total - 1 ? "Finish Setup 🚀" : "Continue"} <span>→</span>
+              {cur === total - 1 ? "Finish Setup <Rocket size={16} />" : "Continue"} <span>→</span>
             </button>
           </div>
         )}

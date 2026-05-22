@@ -2,6 +2,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/about.module.css";
+import { Brain, Globe, Search, Target, TrendingUp, Zap } from 'lucide-react';
 
 export default function About() {
   return (
@@ -86,42 +87,42 @@ export default function About() {
         </div>
         <div className={styles.valuesGrid}>
           <div className={styles.valCard}>
-            <div className={styles.valIcon}>🎯</div>
+            <div className={styles.valIcon}><Target size={16} /></div>
             <div className={styles.valTitle}>Creators First, Always</div>
             <p className={styles.valDesc}>
               Every feature we build starts with a real creator problem. We don&apos;t add features to look impressive — we add them to save you time.
             </p>
           </div>
           <div className={styles.valCard}>
-            <div className={styles.valIcon}>⚡</div>
+            <div className={styles.valIcon}><Zap size={16} /></div>
             <div className={styles.valTitle}>Speed Is a Feature</div>
             <p className={styles.valDesc}>
               A 10-minute workflow that replaces 2 hours is the product. We obsess over every second of friction in the creator workflow.
             </p>
           </div>
           <div className={styles.valCard}>
-            <div className={styles.valIcon}>🔍</div>
+            <div className={styles.valIcon}><Search size={16} /></div>
             <div className={styles.valTitle}>Radical Transparency</div>
             <p className={styles.valDesc}>
               No dark patterns, no fake scarcity, no hidden costs. We build the tool we&apos;d want to use and charge what it&apos;s actually worth.
             </p>
           </div>
           <div className={styles.valCard}>
-            <div className={styles.valIcon}>🌍</div>
+            <div className={styles.valIcon}><Globe size={16} /></div>
             <div className={styles.valTitle}>Global by Default</div>
             <p className={styles.valDesc}>
               We&apos;re based in Pakistan, with users in 40+ countries. We build for the global creator, not just Silicon Valley&apos;s definition of one.
             </p>
           </div>
           <div className={styles.valCard}>
-            <div className={styles.valIcon}>🧠</div>
+            <div className={styles.valIcon}><Brain size={16} /></div>
             <div className={styles.valTitle}>AI as a Tool, Not a Replacement</div>
             <p className={styles.valDesc}>
               AI handles the repetitive work so your creativity and judgment — the things that actually make channels succeed — can shine.
             </p>
           </div>
           <div className={styles.valCard}>
-            <div className={styles.valIcon}>📈</div>
+            <div className={styles.valIcon}><TrendingUp size={16} /></div>
             <div className={styles.valTitle}>Sustainable Growth</div>
             <p className={styles.valDesc}>
               We&apos;re bootstrapped by choice. We grow at the pace our product deserves, not the pace investors demand.
@@ -248,7 +249,7 @@ export default function About() {
           <div className={styles.invChip}>🇮🇳 India</div>
           <div className={styles.invChip}>🇧🇷 Brazil</div>
           <div className={styles.invChip}>🇩🇪 Germany</div>
-          <div className={styles.invChip}>🌍 40+ countries</div>
+          <div className={styles.invChip}><Globe size={16} /> 40+ countries</div>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/usecases.module.css';
+import { BarChart3, Bot, Building, CalendarDays, Check, Clock, DollarSign, Flame, PenTool, Play, Smartphone, Sparkles, Target, Zap } from 'lucide-react';
 
 type UseCaseId = 'all' | 'faceless' | 'agency' | 'beginners' | 'shorts' | 'finance';
 
@@ -17,12 +18,12 @@ export default function UseCasesPage() {
   const [activeTab, setActiveTab] = useState<UseCaseId>('all');
 
   const tabs: UseCaseTab[] = [
-    { id: 'all', label: '🎯 All Use Cases' },
+    { id: 'all', label: '<Target size={16} /> All Use Cases' },
     { id: 'faceless', label: '🎭 Faceless Creators' },
-    { id: 'agency', label: '🏢 YouTube Agencies' },
+    { id: 'agency', label: '<Building size={16} /> YouTube Agencies' },
     { id: 'beginners', label: '🌱 Beginners' },
-    { id: 'shorts', label: '⚡ Shorts Creators' },
-    { id: 'finance', label: '💰 Finance Channels' },
+    { id: 'shorts', label: '<Zap size={16} /> Shorts Creators' },
+    { id: 'finance', label: '<DollarSign size={16} /> Finance Channels' },
   ];
 
   const handleTabChange = (id: UseCaseId) => {
@@ -100,7 +101,7 @@ export default function UseCasesPage() {
               <div className={styles.uccLink}>See how it works →</div>
             </div>
             <div className={styles.uccCard} onClick={() => handleTabChange('agency')}>
-              <div className={styles.uccIcon}>🏢</div>
+              <div className={styles.uccIcon}><Building size={16} /></div>
               <div className={styles.uccTitle}>YouTube Automation Agencies</div>
               <div className={styles.uccDesc}>
                 Manage 5–50 channels with one team. Client approval workflows, white-label reports, and bulk
@@ -118,7 +119,7 @@ export default function UseCasesPage() {
               <div className={styles.uccLink}>See how it works →</div>
             </div>
             <div className={styles.uccCard} onClick={() => handleTabChange('shorts')}>
-              <div className={styles.uccIcon}>⚡</div>
+              <div className={styles.uccIcon}><Zap size={16} /></div>
               <div className={styles.uccTitle}>Shorts-First Creators</div>
               <div className={styles.uccDesc}>
                 Automatically turn every long video into 5 viral Shorts. Post daily without creating daily — the
@@ -214,36 +215,36 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.pwCard} style={{ borderColor: 'var(--green-border)' }}>
               <div className={styles.pwTitle} style={{ color: 'var(--green)' }}>
-                ✨ After AutoTubeOS
+                <Sparkles size={16} /> After AutoTubeOS
               </div>
               <div className={styles.pwList}>
                 <div className={styles.pwItem} style={{ color: 'var(--text)' }}>
                   <span className={styles.pwIcon} style={{ color: 'var(--green)' }}>
-                    ✓
+                    <Check size={16} />
                   </span>
                   Viral topic in 30 seconds — scored by views and RPM
                 </div>
                 <div className={styles.pwItem} style={{ color: 'var(--text)' }}>
                   <span className={styles.pwIcon} style={{ color: 'var(--green)' }}>
-                    ✓
+                    <Check size={16} />
                   </span>
                   Full script generated in 60 seconds — just edit and go
                 </div>
                 <div className={styles.pwItem} style={{ color: 'var(--text)' }}>
                   <span className={styles.pwIcon} style={{ color: 'var(--green)' }}>
-                    ✓
+                    <Check size={16} />
                   </span>
                   One workspace replaces all 7 tools
                 </div>
                 <div className={styles.pwItem} style={{ color: 'var(--text)' }}>
                   <span className={styles.pwIcon} style={{ color: 'var(--green)' }}>
-                    ✓
+                    <Check size={16} />
                   </span>
                   Content calendar keeps uploads consistent automatically
                 </div>
                 <div className={styles.pwItem} style={{ color: 'var(--text)' }}>
                   <span className={styles.pwIcon} style={{ color: 'var(--green)' }}>
-                    ✓
+                    <Check size={16} />
                   </span>
                   5 Shorts generated from every long video automatically
                 </div>
@@ -257,7 +258,7 @@ export default function UseCasesPage() {
           <div className={styles.featUsed}>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--red-bg)' }}>
-                🔥
+                <Flame size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Topic Finder</div>
@@ -268,7 +269,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--blue-bg)' }}>
-                ✍️
+                <PenTool size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Script Generator</div>
@@ -279,7 +280,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--green-bg)' }}>
-                ⚡
+                <Zap size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Shorts Repurposer</div>
@@ -288,7 +289,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--purple-bg)' }}>
-                🤖
+                <Bot size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>AI Agents</div>
@@ -299,7 +300,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--amber-bg)' }}>
-                📊
+                <BarChart3 size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Retention Optimizer</div>
@@ -310,7 +311,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--s4)' }}>
-                📅
+                <CalendarDays size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Content Calendar</div>
@@ -784,7 +785,7 @@ export default function UseCasesPage() {
           <div className={styles.featUsed}>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--red-bg)' }}>
-                🎬
+                <Play size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Upload or paste URL</div>
@@ -795,7 +796,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--amber-bg)' }}>
-                🎯
+                <Target size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>AI detects best moments</div>
@@ -817,7 +818,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--blue-bg)' }}>
-                📱
+                <Smartphone size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Multi-platform scripts</div>
@@ -828,7 +829,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--purple-bg)' }}>
-                📅
+                <CalendarDays size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Auto-scheduled to calendar</div>
@@ -839,7 +840,7 @@ export default function UseCasesPage() {
             </div>
             <div className={styles.fuCard}>
               <div className={styles.fuIcon} style={{ background: 'var(--s4)' }}>
-                ⏱️
+                <Clock size={16} />
               </div>
               <div>
                 <div className={styles.fuTitle}>Timestamps for editor</div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/auth.module.css";
+import { Eye, Star } from 'lucide-react';
 
 export default function Auth() {
   const router = useRouter();
@@ -83,7 +84,7 @@ export default function Auth() {
         </div>
         <div className={styles.leftBottom}>
           <div className={styles.testi}>
-            <div className={styles.stars}>★★★★★</div>
+            <div className={styles.stars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
             <p className={styles.testiText}>
               &quot;I run 3 channels and AutoTubeOS replaced every other tool in my stack. The script generator alone saves me 4 hours a week.&quot;
             </p>
@@ -163,7 +164,7 @@ export default function Auth() {
                   className={styles.inpIcon}
                   onClick={() => setShowSignInPw(!showSignInPw)}
                 >
-                  {showSignInPw ? "🙈" : "👁"}
+                  {showSignInPw ? "🙈" : "<Eye size={16} />"}
                 </span>
               </div>
             </div>
@@ -227,7 +228,7 @@ export default function Auth() {
                   className={styles.inpIcon}
                   onClick={() => setShowSignUpPw(!showSignUpPw)}
                 >
-                  {showSignUpPw ? "🙈" : "👁"}
+                  {showSignUpPw ? "🙈" : "<Eye size={16} />"}
                 </span>
               </div>
               {password && (

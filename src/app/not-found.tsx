@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import styles from '@/styles/not-found.module.css';
+import { CreditCard, Flame, PenTool, Phone, Search } from 'lucide-react';
 
 interface Particle {
   id: number;
@@ -109,7 +110,7 @@ export default function NotFound() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button type="submit" className={styles.searchBtn}>
-              🔍
+              <Search size={16} />
             </button>
           </form>
 
@@ -124,16 +125,16 @@ export default function NotFound() {
 
           <div className={styles.quickLinks}>
             <Link href="/dashboard?tab=topics" className={styles.ql}>
-              <span className={styles.qlIcon}>🔥</span> Topic Finder
+              <span className={styles.qlIcon}><Flame size={16} /></span> Topic Finder
             </Link>
             <Link href="/script-generator" className={styles.ql}>
-              <span className={styles.qlIcon}>✍️</span> Script Generator
+              <span className={styles.qlIcon}><PenTool size={16} /></span> Script Generator
             </Link>
             <Link href="/pricing" className={styles.ql}>
-              <span className={styles.qlIcon}>💳</span> Pricing
+              <span className={styles.qlIcon}><CreditCard size={16} /></span> Pricing
             </Link>
             <Link href="/contact" className={styles.ql}>
-              <span className={styles.qlIcon}>📞</span> Contact
+              <span className={styles.qlIcon}><Phone size={16} /></span> Contact
             </Link>
           </div>
         </div>

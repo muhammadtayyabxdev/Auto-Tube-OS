@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/legal.module.css';
+import { AlertTriangle, BookOpen, CalendarDays, Check, KeyRound, RefreshCw } from 'lucide-react';
 
 type DocType = 'terms' | 'privacy';
 
@@ -189,13 +190,13 @@ export default function LegalPage() {
               <h1 className={styles.docTitle}>Terms of Service</h1>
               <div className={styles.docMeta}>
                 <div className={styles.metaItem}>
-                  📅 <b>Effective:</b> May 1, 2026
+                  <CalendarDays size={16} /> <b>Effective:</b> May 1, 2026
                 </div>
                 <div className={styles.metaItem}>
-                  🔄 <b>Last updated:</b> May 1, 2026
+                  <RefreshCw size={16} /> <b>Last updated:</b> May 1, 2026
                 </div>
                 <div className={styles.metaItem}>
-                  📖 <b>Reading time:</b> ~8 minutes
+                  <BookOpen size={16} /> <b>Reading time:</b> ~8 minutes
                 </div>
               </div>
             </div>
@@ -204,19 +205,19 @@ export default function LegalPage() {
               <div className={styles.sbTitle}>🧾 Plain English Summary</div>
               <div className={styles.sbItems}>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> You own everything you create using AutoTubeOS.
+                  <span className={styles.sbIcon}><Check size={16} /></span> You own everything you create using AutoTubeOS.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> We don't sell your data. Ever.
+                  <span className={styles.sbIcon}><Check size={16} /></span> We don't sell your data. Ever.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> You can cancel anytime with no penalty.
+                  <span className={styles.sbIcon}><Check size={16} /></span> You can cancel anytime with no penalty.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> AI-generated content belongs to you, not us.
+                  <span className={styles.sbIcon}><Check size={16} /></span> AI-generated content belongs to you, not us.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>⚠️</span> Don't use the platform to create spam or misleading content.
+                  <span className={styles.sbIcon}><AlertTriangle size={16} /></span> Don't use the platform to create spam or misleading content.
                 </div>
               </div>
             </div>
@@ -435,34 +436,34 @@ export default function LegalPage() {
               <h1 className={styles.docTitle}>Privacy Policy</h1>
               <div className={styles.docMeta}>
                 <div className={styles.metaItem}>
-                  📅 <b>Effective:</b> May 1, 2026
+                  <CalendarDays size={16} /> <b>Effective:</b> May 1, 2026
                 </div>
                 <div className={styles.metaItem}>
-                  🔄 <b>Last updated:</b> May 1, 2026
+                  <RefreshCw size={16} /> <b>Last updated:</b> May 1, 2026
                 </div>
                 <div className={styles.metaItem}>
-                  📖 <b>Reading time:</b> ~6 minutes
+                  <BookOpen size={16} /> <b>Reading time:</b> ~6 minutes
                 </div>
               </div>
             </div>
 
             <div className={styles.summaryBox}>
-              <div className={styles.sbTitle}>🔐 Privacy at a Glance</div>
+              <div className={styles.sbTitle}><KeyRound size={16} /> Privacy at a Glance</div>
               <div className={styles.sbItems}>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> We never sell your personal data to third parties.
+                  <span className={styles.sbIcon}><Check size={16} /></span> We never sell your personal data to third parties.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> Your YouTube data is only used to power your workspace — never shared.
+                  <span className={styles.sbIcon}><Check size={16} /></span> Your YouTube data is only used to power your workspace — never shared.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> You can request deletion of all your data at any time.
+                  <span className={styles.sbIcon}><Check size={16} /></span> You can request deletion of all your data at any time.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>✅</span> We use industry-standard encryption for all data at rest and in transit.
+                  <span className={styles.sbIcon}><Check size={16} /></span> We use industry-standard encryption for all data at rest and in transit.
                 </div>
                 <div className={styles.sbItem}>
-                  <span className={styles.sbIcon}>⚠️</span> We use cookies and analytics to improve the product experience.
+                  <span className={styles.sbIcon}><AlertTriangle size={16} /></span> We use cookies and analytics to improve the product experience.
                 </div>
               </div>
             </div>

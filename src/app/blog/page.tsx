@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import styles from '@/styles/blog.module.css';
+import { BarChart3, Bot, Brain, CalendarDays, Check, ClipboardList, DollarSign, Flame, Lightbulb, Link2, MailOpen, Rocket, Star, Tag, TrendingUp, Wrench, Zap } from 'lucide-react';
 
 interface Post {
   id: string;
@@ -30,7 +31,7 @@ const MOCK_POSTS: Post[] = [
     id: 'complete-youtube-automation',
     title: 'The Complete YouTube Automation OS: How to Build a Channel That Runs Without You',
     excerpt: "Most creators think YouTube automation is about AI tools. It's not. It's about building a system — a repeatable workflow where every step from idea to upload is defined, delegated, or automated. Here's exactly how to do it in 2026.",
-    emoji: '🧠',
+    emoji: '<Brain size={16} />',
     category: 'strategy',
     categoryLabel: 'Strategy',
     tagClass: styles.tagStrategy,
@@ -63,7 +64,7 @@ const MOCK_POSTS: Post[] = [
       </ul>
 
       <div class="${styles.aCallout}">
-        <div class="${styles.aCalloutLabel}">💡 Pro Tip</div>
+        <div class="${styles.aCalloutLabel}"><Lightbulb size={16} /> Pro Tip</div>
         The best video ideas aren't the ones you think of — they're the ones your audience is already searching for. Build a system that listens before you create.
       </div>
 
@@ -96,7 +97,7 @@ const MOCK_POSTS: Post[] = [
     id: '7-viral-video-frameworks',
     title: '7 Viral Video Frameworks That Work in Any Niche',
     excerpt: "These aren't just hooks — they're full structural blueprints. Use any one of them and your retention will measurably improve.",
-    emoji: '🔥',
+    emoji: '<Flame size={16} />',
     category: 'growth',
     categoryLabel: 'Growth',
     tagClass: styles.tagGrowth,
@@ -118,7 +119,7 @@ const MOCK_POSTS: Post[] = [
       <p>Human beings are naturally curious about outcomes but terrified of committing their own time. When you act as the lab rat, viewers will sit through the entire video to see if the experiment succeeded.</p>
       
       <div class="${styles.aCallout}">
-        <div class="${styles.aCalloutLabel}">📈 Pro Tip</div>
+        <div class="${styles.aCalloutLabel}"><TrendingUp size={16} /> Pro Tip</div>
         Always start your experiments with a high stakes warning: outline what you could lose (money, time, reputation) to maximize engagement immediately.
       </div>
       
@@ -130,7 +131,7 @@ const MOCK_POSTS: Post[] = [
     id: 'high-rpm-niches-2026',
     title: 'High RPM Niches in 2026: Where the Real Ad Money Is',
     excerpt: "Finance isn't the only niche with $20+ RPM anymore. Here are 11 underserved niches with top-tier ad rates and almost no faceless competition.",
-    emoji: '💰',
+    emoji: '<DollarSign size={16} />',
     category: 'monetize',
     categoryLabel: 'Monetize',
     tagClass: styles.tagMonetize,
@@ -162,7 +163,7 @@ const MOCK_POSTS: Post[] = [
     id: 'claude-vs-chatgpt-scripts',
     title: 'Claude vs ChatGPT for YouTube Scripts: An Honest Comparison',
     excerpt: "We ran 200 scripts through both models. The results were surprisingly clear — but not in the direction most people expect.",
-    emoji: '🤖',
+    emoji: '<Bot size={16} />',
     category: 'ai',
     categoryLabel: 'AI Tools',
     tagClass: styles.tagAi,
@@ -188,7 +189,7 @@ const MOCK_POSTS: Post[] = [
     id: 'turn-1-video-into-5-shorts',
     title: 'How to Turn 1 Long Video Into 5 Viral Shorts (Without Watching It)',
     excerpt: "The exact AI-powered process we use to identify the best clips, rewrite hooks for Shorts format, and schedule them on autopilot.",
-    emoji: '⚡',
+    emoji: '<Zap size={16} />',
     category: 'shorts',
     categoryLabel: 'Shorts',
     tagClass: styles.tagShorts,
@@ -214,7 +215,7 @@ const MOCK_POSTS: Post[] = [
     id: 'tech-stack-5k-channel',
     title: 'The Exact Tech Stack for a $5K/Month Faceless Channel',
     excerpt: "Voiceovers, thumbnails, scripts, editing, scheduling — here's every tool we use, what we pay, and what we'd replace first.",
-    emoji: '📊',
+    emoji: '<BarChart3 size={16} />',
     category: 'tools',
     categoryLabel: 'Tools',
     tagClass: styles.tagTools,
@@ -241,7 +242,7 @@ const MOCK_POSTS: Post[] = [
     id: '90-day-content-calendar',
     title: 'The 90-Day Content Calendar That Grew a Channel to 100K',
     excerpt: "We're publishing the exact calendar — every topic, format, upload date, and thumbnail strategy — that took a brand-new finance channel to 100K in 3 months.",
-    emoji: '📅',
+    emoji: '<CalendarDays size={16} />',
     category: 'strategy',
     categoryLabel: 'Strategy',
     tagClass: styles.tagStrategy,
@@ -376,37 +377,37 @@ export default function Blog() {
               className={`${styles.category} ${activeCategory === 'strategy' ? styles.activeCategory : ''}`} 
               onClick={() => handleCategoryClick('strategy')}
             >
-              📋 Strategy
+              <ClipboardList size={16} /> Strategy
             </div>
             <div 
               className={`${styles.category} ${activeCategory === 'growth' ? styles.activeCategory : ''}`} 
               onClick={() => handleCategoryClick('growth')}
             >
-              📈 Growth
+              <TrendingUp size={16} /> Growth
             </div>
             <div 
               className={`${styles.category} ${activeCategory === 'ai' ? styles.activeCategory : ''}`} 
               onClick={() => handleCategoryClick('ai')}
             >
-              🤖 AI Tools
+              <Bot size={16} /> AI Tools
             </div>
             <div 
               className={`${styles.category} ${activeCategory === 'tools' ? styles.activeCategory : ''}`} 
               onClick={() => handleCategoryClick('tools')}
             >
-              🔧 Tools
+              <Wrench size={16} /> Tools
             </div>
             <div 
               className={`${styles.category} ${activeCategory === 'monetize' ? styles.activeCategory : ''}`} 
               onClick={() => handleCategoryClick('monetize')}
             >
-              💰 Monetize
+              <DollarSign size={16} /> Monetize
             </div>
             <div 
               className={`${styles.category} ${activeCategory === 'shorts' ? styles.activeCategory : ''}`} 
               onClick={() => handleCategoryClick('shorts')}
             >
-              ⚡ Shorts
+              <Zap size={16} /> Shorts
             </div>
           </div>
         </div>
@@ -432,7 +433,7 @@ export default function Blog() {
                     {featuredPost.categoryLabel}
                   </div>
                   <div className={styles.fcDate}>{featuredPost.date}</div>
-                  <div className={styles.fcFeaturedBadge}>⭐ Editor's Pick</div>
+                  <div className={styles.fcFeaturedBadge}><Star size={20} /> Editor's Pick</div>
                 </div>
                 <div className={styles.fcTitle}>{featuredPost.title}</div>
                 <div className={styles.fcExcerpt}>{featuredPost.excerpt}</div>
@@ -491,14 +492,14 @@ export default function Blog() {
         {/* SIDEBAR */}
         <div className={styles.sidebar}>
           <div className={styles.nlCard}>
-            <div className={styles.nlIcon}>📬</div>
+            <div className={styles.nlIcon}><MailOpen size={16} /></div>
             <div className={styles.nlTitle}>The Creator OS Weekly</div>
             <div className={styles.nlSub}>
               One email. Top YouTube automation strategy, AI tools, and growth tactics. Every Tuesday.
             </div>
             {emailSubscribed ? (
               <div style={{ color: 'var(--green)', fontSize: '13px', padding: '10px 0', fontWeight: 500 }}>
-                ✓ Success! Check your inbox to confirm subscription.
+                <Check size={16} /> Success! Check your inbox to confirm subscription.
               </div>
             ) : (
               <form onSubmit={handleSubscribe}>
@@ -517,7 +518,7 @@ export default function Blog() {
           </div>
 
           <div className={styles.sbCard}>
-            <div className={styles.sbTitle}>🔥 Most Popular</div>
+            <div className={styles.sbTitle}><Flame size={16} /> Most Popular</div>
             <div className={styles.popularList}>
               {MOCK_POSTS.slice(0, 5).map((post, idx) => (
                 <div key={post.id} className={styles.popItem} onClick={() => openArticle(post)}>
@@ -532,7 +533,7 @@ export default function Blog() {
           </div>
 
           <div className={styles.sbCard}>
-            <div className={styles.sbTitle}>🏷️ Browse Topics</div>
+            <div className={styles.sbTitle}><Tag size={16} /> Browse Topics</div>
             <div className={styles.topicCloud}>
               {[
                 'Faceless YouTube', 'RPM', 'AI Scripts', 'Retention', 'YouTube Shorts',
@@ -547,7 +548,7 @@ export default function Blog() {
           </div>
 
           <div className={styles.toolsBanner}>
-            <div className={styles.tbEmoji}>🚀</div>
+            <div className={styles.tbEmoji}><Rocket size={16} /></div>
             <div className={styles.tbTitle}>Try AutoTubeOS Free</div>
             <div className={styles.tbSub}>
               Put everything you read here into action — inside one AI-powered workspace.
@@ -596,7 +597,7 @@ export default function Blog() {
                 </div>
               </div>
               <div className={styles.aShare}>
-                <div className={styles.shareBtn} title="Share" onClick={() => alert('Link copied to clipboard!')}>🔗</div>
+                <div className={styles.shareBtn} title="Share" onClick={() => alert('Link copied to clipboard!')}><Link2 size={16} /></div>
                 <div className={styles.shareBtn} title="Twitter" onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedPost.title)}`)}>🐦</div>
                 <div className={styles.shareBtn} title="Save" onClick={() => alert('Article saved!')}>🔖</div>
               </div>

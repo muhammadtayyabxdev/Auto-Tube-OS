@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/cookie.module.css';
+import { Check, Lightbulb, X } from 'lucide-react';
 
 export default function CookieBannerPage() {
   const [toastMessage, setToastMessage] = useState<string>('');
@@ -81,7 +82,7 @@ export default function CookieBannerPage() {
               onClick={() => setStandardOpacity(standardOpacity === 1 ? 0.3 : 1)}
               title="Toggle banner opacity"
             >
-              ✕
+              <X size={18} />
             </button>
           </div>
         </div>
@@ -103,7 +104,7 @@ export default function CookieBannerPage() {
                 onClick={() => setDetailedOpacity(detailedOpacity === 1 ? 0.3 : 1)}
                 title="Toggle banner opacity"
               >
-                ✕
+                <X size={18} />
               </button>
             </div>
             
@@ -236,11 +237,11 @@ export default function CookieBannerPage() {
                 onClick={() => setFixedVisible(false)}
                 title="Hide Banner"
               >
-                ✕
+                <X size={18} />
               </button>
             </div>
             <div style={{ marginTop: '10px', fontSize: '11px', color: 'var(--muted2)' }}>
-              💡 In production, this variant sits fixed at the bottom of the viewport.
+              <Lightbulb size={16} /> In production, this variant sits fixed at the bottom of the viewport.
             </div>
           </div>
         )}
@@ -250,7 +251,7 @@ export default function CookieBannerPage() {
 
       {/* TOAST SYSTEM */}
       <div className={`${styles.toast} ${toastVisible ? styles.show : ''}`}>
-        ✓ {toastMessage}
+        <Check size={16} /> {toastMessage}
       </div>
     </>
   );

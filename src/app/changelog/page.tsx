@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import styles from '@/styles/changelog.module.css';
+import { AlertTriangle, BarChart3, Bot, CalendarDays, Check, Globe, MailOpen, Palette, Search, Users, Zap } from 'lucide-react';
 
 interface ChangeItem {
   icon: string;
@@ -33,7 +34,7 @@ const RELEASES: Release[] = [
     date: 'May 14, 2026',
     summary: 'Our biggest release yet. AI Agents can now run your entire content pipeline — from finding topics to scheduling uploads — autonomously. Plus a completely rebuilt Shorts Repurposer with 3× better clip detection.',
     isHero: true,
-    heroEmoji: '🤖',
+    heroEmoji: '<Bot size={28} />',
     badges: [
       { text: 'Major Release', class: styles.badgeMajor },
       { text: 'New', class: styles.badgeNew },
@@ -41,7 +42,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '🤖',
+        icon: '<Bot size={16} />',
         title: 'AI Agents (Beta)',
         desc: 'Set up a fully autonomous content pipeline. Define your niche, schedule, and style — AI handles topic finding, scripting, and calendar scheduling automatically every week.',
         type: 'new',
@@ -49,7 +50,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeNew
       },
       {
-        icon: '⚡',
+        icon: '<Zap size={16} />',
         title: 'Shorts Repurposer 3.0',
         desc: 'Completely rebuilt clip detection model. 3× more accurate, supports longer videos (up to 4 hours), and now generates platform-specific hooks for YouTube Shorts, TikTok, and Instagram Reels.',
         type: 'improved',
@@ -57,7 +58,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '🔍',
+        icon: '<Search size={16} />',
         title: 'Competitor Intelligence 2.0',
         desc: 'Now analyzes thumbnail styles, color palettes, and title formulas from competitor channels — not just view counts and posting frequency.',
         type: 'improved',
@@ -65,7 +66,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '🌍',
+        icon: '<Globe size={16} />',
         title: 'Multi-language Script Support',
         desc: 'Script Generator now supports 12 languages including Urdu, Hindi, Arabic, Spanish, and Portuguese. Niche detection works for non-English markets too.',
         type: 'new',
@@ -87,7 +88,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '👥',
+        icon: '<Users size={16} />',
         title: 'Team Collaboration (Agency)',
         desc: 'Invite editors, scriptwriters, and thumbnail designers. Assign tasks, set deadlines, and track approval status — all inside AutoTubeOS.',
         type: 'new',
@@ -95,7 +96,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeNew
       },
       {
-        icon: '📅',
+        icon: '<CalendarDays size={16} />',
         title: 'Drag-and-Drop Calendar',
         desc: 'Redesigned Content Calendar with drag-and-drop rescheduling, color coding by channel, and a new "Week" view alongside the existing Month view.',
         type: 'improved',
@@ -132,7 +133,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '📊',
+        icon: '<BarChart3 size={16} />',
         title: 'Retention Optimizer',
         desc: 'Paste your script and get a retention score (0–100) with specific feedback on hook strength, pacing issues, and drop-off risk points. Backed by analysis of 50K+ high-retention videos.',
         type: 'new',
@@ -140,7 +141,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeNew
       },
       {
-        icon: '🔎',
+        icon: '<Search size={16} />',
         title: 'SEO Generator 2.0',
         desc: 'Now generates 5 title variations with predicted CTR, optimized descriptions with timestamps, and a ranked tag list. All based on real search volume data.',
         type: 'improved',
@@ -161,7 +162,7 @@ const RELEASES: Release[] = [
     ],
     changes: [
       {
-        icon: '⚡',
+        icon: '<Zap size={16} />',
         title: '4× Faster Dashboard',
         desc: 'Rebuilt on Next.js 15 with server components. Dashboard loads in under 400ms. All AI requests now stream in real time.',
         type: 'improved',
@@ -169,7 +170,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '🎨',
+        icon: '<Palette size={16} />',
         title: 'New Design System',
         desc: 'Completely redesigned UI with Poppins font, improved dark mode, and a consistent component library across all pages.',
         type: 'improved',
@@ -177,7 +178,7 @@ const RELEASES: Release[] = [
         typeClass: styles.badgeImproved
       },
       {
-        icon: '⚠️',
+        icon: '<AlertTriangle size={16} />',
         title: 'Breaking: YouTube & Google integrations require re-auth',
         desc: 'Due to OAuth scope changes, all users must re-connect their YouTube and Google Analytics accounts. Your data is preserved — just visit Settings → Integrations.',
         type: 'breaking',
@@ -281,11 +282,11 @@ export default function Changelog() {
           </div>
 
           <div className={styles.subBanner}>
-            <div className={styles.subTitle}>📬 Get Update Emails</div>
+            <div className={styles.subTitle}><MailOpen size={16} /> Get Update Emails</div>
             <div className={styles.subDesc}>Be first to know when we ship new features.</div>
             {subscribed ? (
               <div style={{ color: 'var(--green)', fontSize: '11px', marginTop: '5px', fontWeight: 500 }}>
-                ✓ Subscribed successfully!
+                <Check size={16} /> Subscribed successfully!
               </div>
             ) : (
               <form onSubmit={handleSubscribeSubmit}>
