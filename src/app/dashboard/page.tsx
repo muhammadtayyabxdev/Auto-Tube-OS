@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/dashboard.module.css';
-import { ArrowDown, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Globe, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Upload, Zap } from 'lucide-react';
+import { ArrowDown, BarChart3, Bell, Brain, Clock, DollarSign, Flame, Globe, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Zap } from 'lucide-react';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -39,7 +39,7 @@ function DashboardContent() {
   };
 
   // 1. HOME VIEW STATE
-  const [pipelineItems, setPipelineItems] = useState([
+  const [pipelineItems] = useState([
     { id: 1, title: 'AI Side Hustles That Pay $500/Day', meta: 'Due in 2 days · Script done', status: 'In Review', statusClass: styles.sReview, thumb: '<DollarSign size={14} />' },
     { id: 2, title: 'Why 99% of People Stay Broke Forever', meta: 'Due tomorrow · Editing', status: 'Ready', statusClass: styles.sReady, thumb: '<Brain size={14} />' },
     { id: 3, title: 'I Invested $10K in Index Funds for 1 Year', meta: 'Due in 5 days · Writing', status: 'Scripting', statusClass: styles.sScript, thumb: '<TrendingUp size={14} />' },
@@ -51,7 +51,7 @@ function DashboardContent() {
   const [market, setMarket] = useState<string>('🇺🇸 US Market');
   const [period, setPeriod] = useState<string>('This Week');
   const [isSearchingTopics, setIsSearchingTopics] = useState<boolean>(false);
-  const [topicList, setTopicList] = useState([
+  const [topicList] = useState([
     { id: 1, title: '"AI Side Hustles That Actually Pay $500/Day in 2026"', score: 9.4, badge: '<Flame size={14} /> HOT PICK', badgeClass: styles.scoreHot, views: '2.1M', rpm: '$18', comp: 'Low', isTop: true },
     { id: 2, title: '"Why 99% of People Stay Broke (And How to Escape)"', score: 8.8, badge: '<Flame size={14} /> TRENDING', badgeClass: styles.scoreHot, views: '1.7M', rpm: '$22', comp: 'Medium', isTop: false },
     { id: 3, title: '"I Tested Every AI Investing Tool for 30 Days — Here\'s What Happened"', score: 8.1, badge: '<Zap size={14} /> RISING', badgeClass: styles.scoreWarm, views: '980K', rpm: '$15', comp: 'Low', isTop: false },
@@ -77,7 +77,7 @@ function DashboardContent() {
   const [youtubeUrl, setYoutubeUrl] = useState<string>('');
   const [isProcessingShorts, setIsProcessingShorts] = useState<boolean>(false);
   const [shortsProgress, setShortsProgress] = useState<number>(100);
-  const [shortsClips, setShortsClips] = useState([
+  const [shortsClips] = useState([
     { id: 1, title: 'Hook: "What if I told you people are making $500/day with AI…"', meta: '0:00 – 0:38 · Perfect hook · High energy', score: 9.6, thumb: '<Flame size={14} />' },
     { id: 2, title: 'AI Faceless YouTube breakdown — numbers revealed', meta: '2:14 – 2:58 · Surprising stat · Strong CTA', score: 8.9, thumb: '<Lightbulb size={14} />' },
     { id: 3, title: '"This one tool replaced my $3K/mo freelancer"', meta: '5:40 – 6:22 · Value bomb · Shareable', score: 8.7, thumb: '<DollarSign size={14} />' },

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/auth.module.css";
-import { Eye, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 export default function Auth() {
   const router = useRouter();

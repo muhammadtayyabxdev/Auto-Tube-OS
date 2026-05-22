@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/usecases.module.css';
-import { BarChart3, Bot, Building, CalendarDays, Check, Clock, DollarSign, Flame, PenTool, Play, Smartphone, Sparkles, Target, Zap } from 'lucide-react';
+import { BarChart3, Bot, Building, CalendarDays, Check, Clock, Flame, PenTool, Play, Smartphone, Sparkles, Target, Zap } from 'lucide-react';
 
 type UseCaseId = 'all' | 'faceless' | 'agency' | 'beginners' | 'shorts' | 'finance';
 

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/emails.module.css';
-import { AlertTriangle, Check, Clock, Lightbulb, Play } from 'lucide-react';
+import { Check, Lightbulb } from 'lucide-react';
 
 interface EmailTemplate {
   id: string;

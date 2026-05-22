@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/settings.module.css';
-import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Check, ClipboardList, CreditCard, DollarSign, Globe, Link2, Lock, Mail, Play, Rocket, Shield, User, Users, Zap } from 'lucide-react';
+import { AlertTriangle, ArrowDown, Bell, Bot, Check, ClipboardList, CreditCard, DollarSign, Globe, Link2, Lock, Play, Rocket, Shield, User, Users, Zap } from 'lucide-react';
 
 function SettingsContent() {
   const searchParams = useSearchParams();

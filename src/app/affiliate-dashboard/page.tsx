@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/affiliate-dashboard.module.css';
-import { Check, Smartphone } from 'lucide-react';
+import { Smartphone } from 'lucide-react';
 
 export default function AffiliateDashboard() {
   const [period, setPeriod] = useState<string>('30d');

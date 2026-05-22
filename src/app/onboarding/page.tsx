@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/onboarding.module.css";
-import { BarChart3, Bot, Brain, Building, Check, Clock, DollarSign, Dumbbell, Flame, Globe, Handshake, Lightbulb, Lock, Mail, Palette, PenTool, Play, RefreshCw, Rocket, Smartphone, Sparkles, Target, TrendingUp, Zap } from 'lucide-react';
+import { BarChart3, Check, Flame, Lightbulb, Lock, Mail, Play, RefreshCw, Rocket, Sparkles, Target } from 'lucide-react';
 
 interface NicheItem {
   name: string;

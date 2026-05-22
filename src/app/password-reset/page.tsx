@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/password-reset.module.css";
-import { Check, Eye, Key, Lock, Mail, X } from 'lucide-react';
+import { Check, Key, Lock, Mail } from 'lucide-react';
 
 export default function PasswordReset() {
   const router = useRouter();

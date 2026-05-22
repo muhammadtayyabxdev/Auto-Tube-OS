@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from '@/styles/chat-widget.module.css';
-import { BookOpen, Bot, Check, CreditCard, Key, Mail, MessageCircle, Phone, Rocket, Search, Wrench, X, Zap } from 'lucide-react';
+import { BookOpen, Bot, Check, CreditCard, Mail, MessageCircle, Phone, Rocket, Wrench, X, Zap } from 'lucide-react';
 
 interface Message {
   id: string;

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/help.module.css';
-import { AlertTriangle, ArrowUp, BarChart3, Bell, Bot, CalendarDays, ClipboardList, Clock, CreditCard, DollarSign, Eye, FileText, Flame, Globe, Home, Info, Key, Lightbulb, Link2, Mail, MessageCircle, Palette, PenTool, Play, RefreshCw, Rocket, Search, Sparkles, Target, Users, Wrench, X, Zap } from 'lucide-react';
+import { BarChart3, Bell, CalendarDays, Clock, Eye, Flame, Info, Lightbulb, MessageCircle, Search, X } from 'lucide-react';
 
 interface Article {
   id: string;

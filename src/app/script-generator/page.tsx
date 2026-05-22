@@ -1,10 +1,10 @@
 'use client';
 
-import { Suspense, useState, useEffect, useRef } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { Suspense, useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from '@/styles/script-generator.module.css';
-import { AlertTriangle, ArrowDown, BookOpen, Bot, Brain, Check, ClipboardList, DollarSign, Eye, FileText, Flame, Link2, MessageCircle, PenTool, Pin, Play, Plus, RefreshCw, Settings, Sparkles, Target, Trash2, Zap } from 'lucide-react';
+import { AlertTriangle, ArrowDown, Bot, Brain, Check, ClipboardList, DollarSign, FileText, Link2, PenTool, Pin, Plus, RefreshCw, Settings, Sparkles, Target, Trash2, Zap } from 'lucide-react';
 
 interface SectionDef {
   key: string;
@@ -15,7 +15,6 @@ interface SectionDef {
 
 function ScriptGeneratorContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   // Pre-population of topic
   const [topic, setTopic] = useState<string>('');
@@ -197,10 +196,10 @@ function ScriptGeneratorContent() {
   };
 
   // MOCK WRITER (for quick preview/free testing if key is empty)
-  const simulateStreaming = (topicStr: string, formatStr: string, toneStr: string) => {
+  const simulateStreaming = () => {
     setIsStreamingCompleted(false);
     setShowOutput(true);
-    let fullText = `[HOOK]
+    const fullText = `[HOOK]
 What if I told you that right now, there are people making $500 a day — not with some complicated business, not with a college degree, not even showing their face — just using free AI tools you can start using on your laptop today? 
 [VISUAL CUE: Show montage of dynamic faceless channels with high subscriber numbers and revenue screenshots]
 
@@ -270,7 +269,7 @@ If this breakdown helped you see what is truly possible with AI automation in 20
       
       setTimeout(() => {
         setShowThinking(false);
-        simulateStreaming(topic, selectedFormat, selectedTone);
+        simulateStreaming();
       }, 1000);
       return;
     }
@@ -368,7 +367,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
       triggerToast(err.message || 'Something went wrong. Running simulation fallback...', 'error');
       setTimeout(() => {
         setShowThinking(false);
-        simulateStreaming(topic, selectedFormat, selectedTone);
+        simulateStreaming();
       }, 1200);
     }
   };
@@ -440,7 +439,6 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
     setIsGenerating(true);
     setTimeout(() => {
       const originalIntro = streamContent.split('[INTRO]')[1] || '';
-      const originalBody = streamContent.split('[INTRO]')[0]?.replace('[HOOK]', '') || '';
       
       const newHook = `[HOOK]\nWhat if I told you that your screen time is making massive corporations rich, while you stay completely broke? [VISUAL CUE: Zoom into a glowing digital phone screen showing ad dashboards] But wait, in the next 15 seconds, I'm going to show you how a select group of teenagers is flipping the script and extracting $500 a day in pure passive income using free AI models.\n`;
       

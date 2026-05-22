@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import styles from '@/styles/changelog.module.css';
-import { AlertTriangle, BarChart3, Bot, CalendarDays, Check, Globe, MailOpen, Palette, Search, Users, Zap } from 'lucide-react';
+import { Check, MailOpen } from 'lucide-react';
 
 interface ChangeItem {
   icon: string;

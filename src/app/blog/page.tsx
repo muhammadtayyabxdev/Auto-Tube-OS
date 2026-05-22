@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import styles from '@/styles/blog.module.css';
-import { BarChart3, Bot, Brain, CalendarDays, Check, ClipboardList, DollarSign, Flame, Lightbulb, Link2, MailOpen, Rocket, Star, Tag, TrendingUp, Wrench, Zap } from 'lucide-react';
+import { Bot, Check, ClipboardList, DollarSign, Flame, Link2, MailOpen, Rocket, Star, Tag, TrendingUp, Wrench, Zap } from 'lucide-react';
 
 interface Post {
   id: string;

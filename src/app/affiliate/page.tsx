@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/affiliate.module.css';
-import { BarChart3, Check, DollarSign, FileText, Gem, Image, Link2, Megaphone, Palette, Rocket, Star, Video } from 'lucide-react';
+import { BarChart3, DollarSign, FileText, Gem, Image as ImageIcon, Link2, Megaphone, Palette, Rocket, Star, Video } from 'lucide-react';
 
 export default function Affiliate() {
   // Calculator state variables
@@ -246,7 +245,7 @@ export default function Affiliate() {
         </div>
         <div className={styles.assetsGrid}>
           <div className={styles.assetCard}>
-            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a0f20,#131830)' }}><Image size={16} /></div>
+            <div className={styles.assetPreview} style={{ background: 'linear-gradient(135deg,#0a0f20,#131830)' }}><ImageIcon size={16} /></div>
             <div className={styles.assetName}>YouTube Thumbnails</div>
             <div className={styles.assetDesc}>Ready-made thumbnails for review videos, comparison videos, and tutorials.</div>
             <button className={styles.assetBtn}>Download Pack</button>

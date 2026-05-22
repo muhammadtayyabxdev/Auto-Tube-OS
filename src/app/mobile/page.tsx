@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Link from 'next/link';
 import styles from '@/styles/mobile.module.css';
-import { BarChart3, Bell, CalendarDays, ClipboardList, Flame, LayoutDashboard, PenTool, Play, RefreshCw, Sparkles, Zap } from 'lucide-react';
+import { BarChart3, Bell, CalendarDays, ClipboardList, Flame, LayoutDashboard, PenTool, Play, RefreshCw, Zap } from 'lucide-react';
 
 export default function MobilePromo() {
   const [activeTab, setActiveTab] = useState<'home' | 'ideas' | 'scripts' | 'stats' | 'profile'>('home');

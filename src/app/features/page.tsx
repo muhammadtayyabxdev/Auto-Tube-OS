@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/features.module.css';
-import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Brain, CalendarDays, Check, ClipboardList, Clock, DollarSign, Eye, FileText, Flame, Globe, Image, Lightbulb, MailOpen, MessageCircle, PenTool, Pin, Play, RefreshCw, Save, Search, Settings, Shuffle, Smartphone, Target, TrendingUp, Trophy, Upload, Users, Zap } from 'lucide-react';
+import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Brain, CalendarDays, Check, ClipboardList, Clock, DollarSign, Eye, FileText, Flame, Globe, Image as ImageIcon, Lightbulb, MailOpen, MessageCircle, PenTool, Pin, Play, RefreshCw, Save, Search, Settings, Shuffle, Smartphone, Target, TrendingUp, Trophy, Upload, Users, Zap } from 'lucide-react';
 
 type TabId = 'topic' | 'script' | 'shorts' | 'retention' | 'calendar' | 'competitor' | 'agents';
 
@@ -996,7 +996,7 @@ export default function FeaturesPage() {
               </div>
             </div>
             <div className={styles.fgCard}>
-              <div className={styles.fgIcon}><Image size={16} /></div>
+              <div className={styles.fgIcon}><ImageIcon size={16} /></div>
               <div className={styles.fgTitle}>Thumbnail Patterns</div>
               <div className={styles.fgDesc}>
                 AI analyzes colors, fonts, faces, and text overlays used in thumbnails.

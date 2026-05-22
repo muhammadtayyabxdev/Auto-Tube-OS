@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/press.module.css';
-import { ArrowDown, BarChart3, ClipboardList, FileText, Newspaper, Package, Palette, Phone, Play, Smartphone, TrendingUp } from 'lucide-react';
+import { ArrowDown, ClipboardList, FileText, Newspaper, Package, Phone } from 'lucide-react';
 
 interface BrandAsset {
   icon: string;
