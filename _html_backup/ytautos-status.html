@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoTubeOS — System Status</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,700,800,900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#07080c;--s1:#0d0f16;--s2:#12151e;--s3:#181c28;--s4:#1f2333;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--text:#eef0f6;--muted:rgba(238,240,246,0.45);--muted2:rgba(238,240,246,0.22);--red:#ff3d3d;--red-bg:rgba(255,61,61,0.1);--red-border:rgba(255,61,61,0.28);--green:#22c55e;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.28);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.08);--amber-border:rgba(245,158,11,0.28);--fh:'Cabinet Grotesk',sans-serif;--fb:'Geist',sans-serif;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px;overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(7,8,12,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+.logo{font-family:var(--fh);font-size:1.1rem;font-weight:800;text-decoration:none;color:var(--text);}
+.logo span{color:var(--red);}
+.hero{padding:100px 6% 40px;text-align:center;}
+.overall{display:inline-flex;align-items:center;gap:10px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:100px;padding:10px 24px;margin-bottom:20px;}
+.os-dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.4);}50%{box-shadow:0 0 0 8px rgba(34,197,94,0);}}
+.os-text{font-size:14px;font-weight:600;color:var(--green);}
+.h-title{font-family:var(--fh);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px;}
+.h-sub{font-size:14px;color:var(--muted);}
+.updated{font-size:12px;color:var(--muted2);margin-top:8px;}
+.section{padding:0 6% 40px;max-width:760px;margin:0 auto;}
+.svc-group{background:var(--s2);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.grp-title{padding:12px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);background:var(--s3);border-bottom:1px solid var(--border);}
+.svc-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);}
+.svc-row:last-child{border-bottom:none;}
+.svc-left{flex:1;}
+.svc-name{font-size:13px;font-weight:500;margin-bottom:2px;}
+.svc-uptime{font-size:11px;color:var(--muted2);}
+.svc-right{display:flex;align-items:center;gap:12px;}
+.ub-row{display:flex;gap:2px;}
+.ub{width:6px;height:20px;border-radius:2px;background:var(--green);}
+.ub.deg{background:var(--amber);}
+.ub.dn{background:var(--red);}
+.ub.empty{background:var(--s4);}
+.badge{font-size:11px;padding:4px 12px;border-radius:100px;font-weight:600;white-space:nowrap;}
+.b-op{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.b-deg{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.b-dn{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.inc-section{padding:0 6% 40px;max-width:760px;margin:0 auto;}
+.sec-title{font-family:var(--fh);font-size:1.1rem;font-weight:700;margin-bottom:16px;}
+.inc-card{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:10px;}
+.inc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap;}
+.inc-name{font-size:13px;font-weight:600;}
+.inc-resolved{font-size:11px;padding:3px 10px;border-radius:100px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.inc-investigating{font-size:11px;padding:3px 10px;border-radius:100px;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.tl{display:flex;flex-direction:column;gap:8px;}
+.tl-item{display:flex;gap:10px;font-size:12px;color:var(--muted);}
+.tl-time{color:var(--muted2);white-space:nowrap;min-width:100px;}
+.no-inc{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;}
+.sub-section{background:var(--s1);border-top:1px solid var(--border);padding:40px 6%;text-align:center;}
+.sub-title{font-size:14px;font-weight:600;margin-bottom:6px;}
+.sub-row{display:flex;gap:8px;max-width:380px;margin:16px auto 0;}
+.sub-inp{flex:1;background:var(--s2);border:1px solid var(--border2);border-radius:9px;padding:9px 12px;color:var(--text);font-family:var(--fb);font-size:13px;outline:none;}
+.sub-inp:focus{border-color:var(--red);}
+.sub-btn{background:var(--red);color:#fff;border:none;border-radius:9px;padding:9px 16px;font-family:var(--fb);font-size:13px;cursor:pointer;}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--s3);border:1px solid var(--green-border);border-radius:10px;padding:11px 18px;font-size:13px;color:var(--green);transform:translateY(60px);opacity:0;transition:all 0.3s;z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+footer{border-top:1px solid var(--border);padding:24px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.fl{font-family:var(--fh);font-weight:800;}.fl span{color:var(--red);}
+footer p{color:var(--muted2);font-size:12px;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--s4);border-radius:4px;}
+</style>
+</head>
+<body>
+<nav><a href="#" class="logo">AutoTube<span>OS</span></a></nav>
+<div class="hero">
+  <div class="overall"><div class="os-dot"></div><div class="os-text">All Systems Operational</div></div>
+  <div class="h-title">AutoTubeOS System Status</div>
+  <div class="h-sub">Real-time status for all AutoTubeOS services and infrastructure.</div>
+  <div class="updated">Last updated: May 20, 2026 at 14:32 PKT · Auto-refreshes every 60s</div>
+</div>
+
+<div class="section">
+  <div class="svc-group">
+    <div class="grp-title">Core Platform</div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Dashboard & App</div><div class="svc-uptime">99.98% uptime (90d)</div></div><div class="svc-right"><div class="ub-row" id="bars-dashboard"></div><span class="badge b-op">Operational</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Authentication</div><div class="svc-uptime">100% uptime (90d)</div></div><div class="svc-right"><div class="ub-row" id="bars-auth"></div><span class="badge b-op">Operational</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">API</div><div class="svc-uptime">99.95% uptime (90d)</div></div><div class="svc-right"><div class="ub-row" id="bars-api"></div><span class="badge b-op">Operational</span></div></div>
+  </div>
+  <div class="svc-group">
+    <div class="grp-title">AI Services</div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Script Generator</div><div class="svc-uptime">99.91% uptime (90d)</div></div><div class="svc-right"><div class="ub-row" id="bars-script"></div><span class="badge b-op">Operational</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Topic Finder</div><div class="svc-uptime">99.88% uptime (90d)</div></div><div class="svc-right"><div class="ub-row" id="bars-topic"></div><span class="badge b-op">Operational</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Shorts Repurposer</div><div class="svc-uptime">98.7% uptime (90d)</div></div><div class="svc-right"><div class="ub-row" id="bars-shorts"></div><span class="badge b-deg">Degraded Performance</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">AI Agents (Beta)</div><div class="svc-uptime">99.5% uptime (30d)</div></div><div class="svc-right"><div class="ub-row" id="bars-agents"></div><span class="badge b-op">Operational</span></div></div>
+  </div>
+  <div class="svc-group">
+    <div class="grp-title">Infrastructure</div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Database (PostgreSQL)</div></div><div class="svc-right"><span class="badge b-op">Operational</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">CDN (Cloudflare)</div></div><div class="svc-right"><span class="badge b-op">Operational</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Email Delivery (Postmark)</div></div><div class="svc-right"><span class="badge b-op">Operational</span></div></div>
+    <div class="svc-row"><div class="svc-left"><div class="svc-name">Payments (Stripe)</div></div><div class="svc-right"><span class="badge b-op">Operational</span></div></div>
+  </div>
+</div>
+
+<div class="inc-section">
+  <div class="sec-title">Recent Incidents</div>
+  <div class="inc-card">
+    <div class="inc-header"><div class="inc-name">🟡 Shorts Repurposer — Degraded Performance</div><span class="inc-investigating">Investigating</span></div>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-time">14:32 PKT</div><div>Issue identified — clip detection returning slower results. Engineers investigating.</div></div>
+      <div class="tl-item"><div class="tl-time">14:15 PKT</div><div>Increased error rates detected. Monitoring in progress.</div></div>
+    </div>
+  </div>
+  <div class="inc-card">
+    <div class="inc-header"><div class="inc-name">Elevated script generation latency</div><span class="inc-resolved">Resolved</span></div>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-time">May 18 · 11:02</div><div>Resolved — Groq API rate limits caused 3–5s delays. Fallback to Gemini activated and cleared.</div></div>
+      <div class="tl-item"><div class="tl-time">May 18 · 10:45</div><div>Users reporting slow script generation. Investigating API provider latency.</div></div>
+    </div>
+  </div>
+  <div class="no-inc" style="margin-top:12px;">
+    <div style="font-size:1.5rem;margin-bottom:8px;">✅</div>
+    <div style="font-size:13px;color:var(--muted);">No other incidents in the past 90 days.</div>
+  </div>
+</div>
+
+<div class="sub-section">
+  <div class="sub-title">📬 Get status notifications</div>
+  <div style="font-size:13px;color:var(--muted);">We'll email you when incidents are created, updated, or resolved.</div>
+  <div class="sub-row">
+    <input class="sub-inp" type="email" placeholder="you@example.com">
+    <button class="sub-btn" onclick="toast()">Subscribe</button>
+  </div>
+</div>
+
+<footer><div class="fl">AutoTube<span>OS</span></div><p>© 2026 AutoTubeOS.</p></footer>
+<div class="toast" id="t">✓ Subscribed to status updates!</div>
+
+<script>
+function makeBars(id,deg){
+  const el=document.getElementById(id);if(!el)return;
+  let h='';
+  for(let i=0;i<30;i++){const c=deg&&i===deg?'ub deg':'ub';h+=`<div class="${c}"></div>`;}
+  el.innerHTML=h;
+}
+makeBars('bars-dashboard',-1);makeBars('bars-auth',-1);makeBars('bars-api',-1);
+makeBars('bars-script',-1);makeBars('bars-topic',-1);makeBars('bars-shorts',28);makeBars('bars-agents',-1);
+function toast(){const t=document.getElementById('t');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+setInterval(()=>{document.querySelector('.updated').textContent='Last updated: just now · Auto-refreshes every 60s';},60000);
+</script>
+</body>
+</html>

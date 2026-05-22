@@ -1,0 +1,188 @@
+.hero {
+  padding: 110px 6% 60px;
+  position: relative;
+  overflow: hidden;
+}
+.gridBg {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 61, 61, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 61, 61, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 40% 0%, black, transparent);
+}
+.heroInner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.hLabel {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.hTitle {
+  font-family: var(--fh);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+.hSub {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 500px;
+  margin-bottom: 40px;
+}
+.pressGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.assetTitle {
+  font-family: var(--fh);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.assetCard {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color 0.18s;
+}
+.assetCard:hover {
+  border-color: var(--border2);
+}
+.acIcon {
+  width: 56px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.acName {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.acSub {
+  font-size: 10px;
+  color: var(--muted);
+}
+.dlBtn {
+  margin-left: auto;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 7px;
+  background: var(--s4);
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dlBtn:hover {
+  border-color: var(--border3);
+  color: var(--text);
+}
+.factSheet {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+}
+.fsTitle {
+  font-family: var(--fh);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.fsRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.fsRow:last-child {
+  border-bottom: none;
+}
+.fsLbl {
+  color: var(--muted);
+}
+.fsVal {
+  font-weight: 500;
+  text-align: right;
+}
+.pressContact {
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 16px;
+}
+.pcTitle {
+  font-family: var(--fh);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.pcSub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.coverageSection {
+  padding: 0 6% 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.covGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.covCard {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+.covPub {
+  font-size: 10px;
+  color: var(--muted2);
+  margin-bottom: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.covHeadline {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.covDate {
+  font-size: 10px;
+  color: var(--muted2);
+}
+
+@media(max-width: 760px) {
+  .pressGrid, .covGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,215 @@
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 61, 61, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 61, 61, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+.glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(255, 61, 61, 0.08), transparent 70%);
+  pointer-events: none;
+}
+.shell {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.topNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6%;
+  background: rgba(7, 8, 12, 0.85);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+.logo {
+  font-family: var(--fh);
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--text);
+}
+.logo span {
+  color: var(--red);
+}
+.card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.cardHeader {
+  padding: 32px 32px 24px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.cardTitle {
+  font-family: var(--fh);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.cardSub {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.cardBody {
+  padding: 24px 32px;
+}
+.inp {
+  width: 100%;
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-family: var(--fb);
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.inp:focus {
+  border-color: var(--red);
+}
+.submitBtn {
+  width: 100%;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-family: var(--fh);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.submitBtn:hover {
+  opacity: 0.87;
+}
+.submitBtn.green {
+  background: var(--green);
+}
+.otpRow {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.otpInp {
+  width: 48px;
+  height: 56px;
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  text-align: center;
+  font-family: var(--fh);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.otpInp:focus {
+  border-color: var(--red);
+}
+.resendRow {
+  text-align: center;
+  font-size: 10px;
+  color: var(--muted2);
+  margin-bottom: 16px;
+}
+.resendLink {
+  color: var(--red);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.checkmark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  border: 2px solid var(--green-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  margin: 0 auto 16px;
+  animation: pop 0.5s cubic-bezier(0.17, 0.89, 0.32, 1.28);
+  color: var(--green);
+}
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.ringWrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+}
+.ringSvg {
+  transform: rotate(-90deg);
+}
+.ringBg {
+  fill: none;
+  stroke: var(--s4);
+  stroke-width: 4;
+}
+.ringFill {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 4;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  stroke-linecap: round;
+  animation: ring 3s ease forwards;
+}
+@keyframes ring {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.ringText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+}

@@ -1,0 +1,473 @@
+.ucNav {
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  padding: 0 6%;
+  margin-top: 62px;
+  display: flex;
+  overflow-x: auto;
+}
+.ucNav::-webkit-scrollbar {
+  display: none;
+}
+.uctab {
+  padding: 16px 22px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.18s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.uctab:hover {
+  color: var(--text);
+}
+.uctab.on {
+  color: var(--text);
+  border-bottom-color: var(--red);
+}
+
+.ucview {
+  display: none;
+}
+.ucview.active {
+  display: block;
+  animation: fadeUp 0.3s ease;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ucHero {
+  padding: 80px 6% 60px;
+  position: relative;
+  overflow: hidden;
+}
+.gridBg {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 61, 61, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 61, 61, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 40% 0%, black, transparent);
+}
+.ucInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.uiLabel {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.uiTitle {
+  font-family: var(--fh);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin-bottom: 14px;
+}
+.uiSub {
+  font-size: 1rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.uiBtns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btnP {
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-family: var(--fb);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: opacity 0.2s;
+}
+.btnP:hover {
+  opacity: 0.87;
+}
+.btnG {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-family: var(--fb);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btnG:hover {
+  border-color: var(--border3);
+}
+
+.profileCard {
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 24px;
+}
+.pcAv {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.pcName {
+  font-family: var(--fh);
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.pcRole {
+  font-size: 9px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.pcStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.pcStat {
+  background: var(--s3);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.pcStatVal {
+  font-family: var(--fh);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--red);
+}
+.pcStatLbl {
+  font-size: 10px;
+  color: var(--muted2);
+  margin-top: 1px;
+}
+.pcQuote {
+  background: var(--s3);
+  border-left: 2px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.ucSection {
+  padding: 60px 6%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.secLbl {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.secTtl {
+  font-family: var(--fh);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin-bottom: 32px;
+}
+
+.pwinGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.pwCard {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+}
+.pwTitle {
+  font-family: var(--fh);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pwList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pwItem {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 8px 10px;
+  background: var(--s3);
+  border-radius: 7px;
+}
+.pwItem .pwIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.featUsed {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.fuCard {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.fuIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.fuTitle {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.fuDesc {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.workflow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.wfItem {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 16px;
+  padding-bottom: 24px;
+  position: relative;
+}
+.wfItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 29px;
+  top: 36px;
+  width: 1px;
+  height: calc(100% - 20px);
+  background: var(--border);
+}
+.wfNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid;
+}
+.wfContent {
+  padding-top: 4px;
+}
+.wfTitle {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.wfDesc {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.wfTag {
+  display: inline-block;
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.testiCard {
+  background: linear-gradient(135deg, var(--red-bg), var(--s2));
+  border: 1px solid var(--red-border);
+  border-radius: 16px;
+  padding: 28px;
+  margin: 40px 0;
+}
+.testiStars {
+  color: var(--red);
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.testiText {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  font-style: italic;
+  color: var(--muted);
+}
+.testiAuthor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.taAv {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.taName {
+  font-size: 13px;
+  font-weight: 600;
+}
+.taRole {
+  font-size: 9px;
+  color: var(--muted2);
+}
+
+.ucCta {
+  margin: 0 6% 60px;
+  background: linear-gradient(135deg, var(--red-bg), var(--s2));
+  border: 1px solid var(--red-border);
+  border-radius: 20px;
+  padding: 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ctaGlow {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(255, 61, 61, 0.1), transparent 70%);
+  pointer-events: none;
+}
+.ctaT {
+  font-family: var(--fh);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.ctaS {
+  color: var(--muted);
+  font-size: 13px;
+  max-width: 380px;
+  margin: 0 auto 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.ucCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.uccCard {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.uccCard:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+.uccIcon {
+  font-size: 2.5rem;
+  margin-bottom: 14px;
+}
+.uccTitle {
+  font-family: var(--fh);
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.uccDesc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.uccLink {
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 500;
+}
+
+@media (max-width: 860px) {
+  .ucInner, .pwinGrid {
+    grid-template-columns: 1fr;
+  }
+  .featUsed {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ucCardsGrid {
+    grid-template-columns: 1fr;
+  }
+}

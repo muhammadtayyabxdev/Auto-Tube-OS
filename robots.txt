@@ -1,0 +1,106 @@
+# ─────────────────────────────────────────────
+#  AutoTubeOS — robots.txt
+#  https://autotubeos.com/robots.txt
+#  Last updated: May 2026
+# ─────────────────────────────────────────────
+
+# Allow all well-behaved crawlers
+User-agent: *
+Allow: /
+
+# Block private/internal routes
+Disallow: /dashboard/
+Disallow: /app/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /affiliate/dashboard/
+Disallow: /settings/
+Disallow: /onboarding/
+Disallow: /auth/
+Disallow: /_next/
+Disallow: /static/private/
+
+# Block search/filter query strings that create duplicate content
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /*?page=
+Disallow: /*?ref=
+Disallow: /*?utm_
+
+# Allow important query params for tracking (Google, Meta ads etc)
+Allow: /*?utm_source=
+Allow: /*?utm_medium=
+Allow: /*?utm_campaign=
+
+# ── AI / LLM crawlers ──
+# We allow AI training crawlers but block them from private content
+User-agent: GPTBot
+Allow: /blog/
+Allow: /features/
+Allow: /about/
+Allow: /pricing/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /app/
+
+User-agent: ClaudeBot
+Allow: /blog/
+Allow: /features/
+Allow: /about/
+Allow: /pricing/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /app/
+
+User-agent: Google-Extended
+Allow: /blog/
+Allow: /features/
+Disallow: /dashboard/
+Disallow: /api/
+
+# ── Specific bot rules ──
+
+# Google
+User-agent: Googlebot
+Allow: /
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /app/
+
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /dashboard/
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /dashboard/
+Disallow: /api/
+
+# Block known scrapers / bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# ─────────────────────────────────────────────
+# Sitemap
+# ─────────────────────────────────────────────
+Sitemap: https://autotubeos.com/sitemap.xml
+Sitemap: https://autotubeos.com/sitemap-blog.xml
+Sitemap: https://autotubeos.com/sitemap-images.xml
+
+# ─────────────────────────────────────────────
+# Crawl delay (be nice to our servers)
+# ─────────────────────────────────────────────
+Crawl-delay: 2

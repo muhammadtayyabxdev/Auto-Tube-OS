@@ -1,26 +1,127 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* GLOBAL CSS FOR AUTOTUBE OS */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Typography */
+  --font-head: 'Poppins', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+
+  /* Common Color Palette */
+  --black: #060608;
+  --bg: #07080c;
+  --text: #eef0f6;
+  --muted: rgba(238,240,246,0.45);
+  --muted2: rgba(238,240,246,0.25);
+  
+  /* Accent Red */
+  --red: #ff3d3d;
+  --red-dim: rgba(255,61,61,0.1);
+  --red-bg: rgba(255,61,61,0.1);
+  --red-border: rgba(255,61,61,0.25);
+  --red-glow: rgba(255,61,61,0.25);
+
+  /* Dashboard Surfaces */
+  --s1: #0d0f16;
+  --s2: #12151e;
+  --s3: #181c28;
+  --s4: #1f2333;
+
+  /* Borders */
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --border3: rgba(255,255,255,0.2);
+
+  /* Semantic Colors */
+  --green: #22c55e;
+  --green-bg: rgba(34,197,94,0.1);
+  --green-border: rgba(34,197,94,0.28);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,0.1);
+  --blue: #3b82f6;
+  --blue-bg: rgba(59,130,246,0.1);
+  --blue-border: rgba(59,130,246,0.28);
+  --purple: #a855f7;
+  --purple-bg: rgba(168,85,247,0.08);
+
+  /* Sidebar settings */
+  --sidebar: 220px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px; /* Premium default text block size */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px; /* Clean, legible standard body copy alternative */
+  line-height: 1.5; /* Optimized breathing space for smaller font sizes */
+  letter-spacing: -0.01em; /* Premium visual tracking at 13px scale */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-head);
+  line-height: 1.25; /* Modern, tight vertical alignment for premium headings */
+  letter-spacing: -0.02em; /* Modern snug tracking for Poppins headings */
+}
+
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--s4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border3);
+}
+
+/* Animation presets */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes gridMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(56px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+@keyframes zeroSpin {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
 }

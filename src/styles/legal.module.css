@@ -1,0 +1,288 @@
+.shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  padding-top: 62px;
+}
+
+/* SIDEBAR */
+.docSidebar {
+  position: sticky;
+  top: 62px;
+  height: calc(100vh - 62px);
+  overflow-y: auto;
+  padding: 32px 20px;
+  border-right: 1px solid var(--border);
+  background: var(--s1);
+  display: flex;
+  flex-direction: column;
+}
+
+.tabSwitch {
+  display: flex;
+  gap: 6px;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 4px;
+  margin-bottom: 28px;
+}
+
+.tsBtn {
+  flex: 1;
+  text-align: center;
+  padding: 7px 4px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+
+.tsBtn.on {
+  background: var(--red);
+  color: #fff;
+}
+
+.tocLabel {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tocItem {
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+  text-align: left;
+  background: transparent;
+}
+
+.tocItem:hover {
+  color: var(--text);
+  background: var(--s3);
+}
+
+.tocItem.active {
+  color: var(--red);
+  background: var(--red-bg);
+  border-color: var(--red-border);
+}
+
+.tocItem.sub {
+  padding-left: 20px;
+  font-size: 10px;
+}
+
+.updated {
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 11px;
+  color: var(--muted2);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+}
+
+/* CONTENT */
+.docContent {
+  padding: 48px 6% 80px;
+  max-width: 780px;
+}
+
+.docView {
+  display: none;
+}
+
+.docView.active {
+  display: block;
+}
+
+.docHero {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.docLabel {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.docTitle {
+  font-family: var(--fh);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.docMeta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  font-size: 10px;
+  color: var(--muted2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.metaItem b {
+  color: var(--muted);
+}
+
+.summaryBox {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 36px;
+}
+
+.sbTitle {
+  font-family: var(--fh);
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sbItems {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sbItem {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sbIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.docSection {
+  margin-bottom: 40px;
+}
+
+.secAnchor {
+  display: block;
+  height: 80px;
+  margin-top: -80px;
+  visibility: hidden;
+}
+
+.secNum {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.secTitle {
+  font-family: var(--fh);
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.secBody {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.secBody p {
+  margin-bottom: 14px;
+}
+
+.secBody p:last-child {
+  margin-bottom: 0;
+}
+
+.secBody strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.secBody ul {
+  margin: 10px 0 14px 18px;
+}
+
+.secBody li {
+  margin-bottom: 6px;
+}
+
+.highlightBox {
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.highlightBox .hbLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin-bottom: 5px;
+}
+
+.infoBox {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .docSidebar {
+    display: none;
+  }
+  .docContent {
+    padding: 32px 5% 60px;
+  }
+}

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoTubeOS — Use Cases</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,700,800,900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07080c;--s1:#0d0f16;--s2:#12151e;--s3:#181c28;--s4:#1f2333;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--border3:rgba(255,255,255,0.18);
+  --text:#eef0f6;--muted:rgba(238,240,246,0.45);--muted2:rgba(238,240,246,0.22);
+  --red:#ff3d3d;--red-bg:rgba(255,61,61,0.1);--red-border:rgba(255,61,61,0.28);
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.28);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,0.08);--blue-border:rgba(59,130,246,0.28);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.08);
+  --purple:#a855f7;--purple-bg:rgba(168,85,247,0.08);--purple-border:rgba(168,85,247,0.28);
+  --fh:'Cabinet Grotesk',sans-serif;--fb:'Geist',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(7,8,12,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+.logo{font-family:var(--fh);font-size:1.1rem;font-weight:800;text-decoration:none;color:var(--text);}
+.logo span{color:var(--red);}
+.nav-cta{background:var(--red);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:var(--fb);font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;}
+
+/* USE CASE SWITCHER */
+.uc-nav{background:var(--s1);border-bottom:1px solid var(--border);padding:0 6%;margin-top:62px;display:flex;overflow-x:auto;}
+.uc-nav::-webkit-scrollbar{display:none;}
+.uctab{padding:16px 22px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.18s;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+.uctab:hover{color:var(--text);}
+.uctab.on{color:var(--text);border-bottom-color:var(--red);}
+
+.ucview{display:none;}
+.ucview.active{display:block;animation:fadeUp 0.3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* HERO */
+.uc-hero{padding:80px 6% 60px;position:relative;overflow:hidden;}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,61,61,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,61,61,0.03) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 40% 0%,black,transparent);}
+.uc-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.ui-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px;}
+.ui-title{font-family:var(--fh);font-size:clamp(2rem,4.5vw,3.4rem);font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-bottom:14px;}
+.ui-sub{font-size:1rem;color:var(--muted);font-weight:300;line-height:1.7;margin-bottom:24px;}
+.ui-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-p{color:#fff;border:none;border-radius:10px;padding:12px 24px;font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity 0.2s;}
+.btn-p:hover{opacity:0.87;}
+.btn-g{background:transparent;color:var(--text);border:1px solid var(--border2);border-radius:10px;padding:12px 24px;font-family:var(--fb);font-size:14px;cursor:pointer;transition:all 0.18s;}
+.btn-g:hover{border-color:var(--border3);}
+
+/* PROFILE CARD */
+.profile-card{background:var(--s2);border:1px solid var(--border2);border-radius:16px;padding:24px;}
+.pc-av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;margin-bottom:14px;}
+.pc-name{font-family:var(--fh);font-size:1rem;font-weight:800;margin-bottom:2px;}
+.pc-role{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.pc-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.pc-stat{background:var(--s3);border-radius:8px;padding:10px 12px;}
+.pc-stat-val{font-family:var(--fh);font-size:1.1rem;font-weight:800;color:var(--red);}
+.pc-stat-lbl{font-size:10px;color:var(--muted2);margin-top:1px;}
+.pc-quote{background:var(--s3);border-left:2px solid var(--red);border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.6;font-style:italic;}
+
+/* SECTIONS */
+.uc-section{padding:60px 6%;max-width:1100px;margin:0 auto;}
+.sec-lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.sec-ttl{font-family:var(--fh);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.8px;margin-bottom:32px;}
+
+/* PAIN vs WIN */
+.pwin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:48px;}
+.pw-card{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:22px;}
+.pw-title{font-family:var(--fh);font-size:0.95rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.pw-list{display:flex;flex-direction:column;gap:8px;}
+.pw-item{display:flex;gap:10px;font-size:13px;color:var(--muted);padding:8px 10px;background:var(--s3);border-radius:7px;}
+.pw-item .pw-icon{flex-shrink:0;margin-top:1px;}
+
+/* FEATURES USED */
+.feat-used{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.fu-card{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;gap:12px;align-items:flex-start;}
+.fu-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.fu-title{font-size:13px;font-weight:600;margin-bottom:3px;}
+.fu-desc{font-size:11px;color:var(--muted);line-height:1.4;}
+
+/* WORKFLOW */
+.workflow{display:flex;flex-direction:column;gap:0;}
+.wf-item{display:grid;grid-template-columns:60px 1fr;gap:16px;padding-bottom:24px;position:relative;}
+.wf-item:not(:last-child)::after{content:'';position:absolute;left:29px;top:36px;width:1px;height:calc(100% - 20px);background:var(--border);}
+.wf-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;border:1px solid;}
+.wf-content{padding-top:4px;}
+.wf-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.wf-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.wf-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;margin-top:6px;}
+
+/* TESTIMONIAL */
+.testi-card{background:linear-gradient(135deg,var(--red-bg),var(--s2));border:1px solid var(--red-border);border-radius:16px;padding:28px;margin:40px 0;}
+.testi-stars{color:var(--red);font-size:13px;margin-bottom:10px;}
+.testi-text{font-size:1rem;line-height:1.7;margin-bottom:16px;font-style:italic;color:var(--muted);}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.ta-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+.ta-name{font-size:14px;font-weight:600;}
+.ta-role{font-size:12px;color:var(--muted2);}
+
+/* CTA */
+.uc-cta{margin:0 6% 60px;background:linear-gradient(135deg,var(--red-bg),var(--s2));border:1px solid var(--red-border);border-radius:20px;padding:48px;text-align:center;position:relative;overflow:hidden;}
+.cta-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse,rgba(255,61,61,0.1),transparent 70%);pointer-events:none;}
+.cta-t{font-family:var(--fh);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.8px;margin-bottom:8px;position:relative;z-index:1;}
+.cta-s{color:var(--muted);font-size:14px;max-width:380px;margin:0 auto 22px;position:relative;z-index:1;}
+
+/* ALL USE CASES LANDING */
+.uc-cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:900px;margin:0 auto;}
+.ucc-card{background:var(--s2);border:1px solid var(--border);border-radius:16px;padding:28px;cursor:pointer;transition:all 0.2s;}
+.ucc-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.ucc-icon{font-size:2.5rem;margin-bottom:14px;}
+.ucc-title{font-family:var(--fh);font-size:1.1rem;font-weight:800;margin-bottom:8px;}
+.ucc-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+.ucc-link{font-size:13px;color:var(--red);font-weight:500;}
+
+footer{border-top:1px solid var(--border);padding:28px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.fl{font-family:var(--fh);font-weight:800;}
+.fl span{color:var(--red);}
+footer p{color:var(--muted2);font-size:12px;}
+.flk{display:flex;gap:1.5rem;}
+.flk a{color:var(--muted);font-size:13px;text-decoration:none;}
+
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--s4);border-radius:4px;}
+@media(max-width:860px){.uc-inner,.pwin-grid{grid-template-columns:1fr;}.feat-used{grid-template-columns:1fr 1fr;}.uc-cards-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav><a href="#" class="logo">AutoTube<span>OS</span></a><a href="#" class="nav-cta">Start Free Trial</a></nav>
+
+<div class="uc-nav">
+  <div class="uctab on" onclick="show('all',this)">🎯 All Use Cases</div>
+  <div class="uctab" onclick="show('faceless',this)">🎭 Faceless Creators</div>
+  <div class="uctab" onclick="show('agency',this)">🏢 YouTube Agencies</div>
+  <div class="uctab" onclick="show('beginners',this)">🌱 Beginners</div>
+  <div class="uctab" onclick="show('shorts',this)">⚡ Shorts Creators</div>
+  <div class="uctab" onclick="show('finance',this)">💰 Finance Channels</div>
+</div>
+
+<!-- ALL USE CASES -->
+<div class="ucview active" id="uv-all">
+  <div style="padding:80px 6% 60px;text-align:center;position:relative;overflow:hidden;">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;">
+      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:12px;">Use Cases</div>
+      <div style="font-family:var(--fh);font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:-1.5px;margin-bottom:12px;">Built for every<br>kind of creator.</div>
+      <div style="font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 48px;">Whether you're just starting or running a 12-channel agency, AutoTubeOS adapts to your workflow.</div>
+    </div>
+    <div class="uc-cards-grid">
+      <div class="ucc-card" onclick="show('faceless',document.querySelectorAll('.uctab')[1])">
+        <div class="ucc-icon">🎭</div>
+        <div class="ucc-title">Faceless YouTube Creators</div>
+        <div class="ucc-desc">AI handles everything from topic research to script generation. You focus on growth strategy — not content production.</div>
+        <div class="ucc-link">See how it works →</div>
+      </div>
+      <div class="ucc-card" onclick="show('agency',document.querySelectorAll('.uctab')[2])">
+        <div class="ucc-icon">🏢</div>
+        <div class="ucc-title">YouTube Automation Agencies</div>
+        <div class="ucc-desc">Manage 5–50 channels with one team. Client approval workflows, white-label reports, and bulk content generation.</div>
+        <div class="ucc-link">See how it works →</div>
+      </div>
+      <div class="ucc-card" onclick="show('beginners',document.querySelectorAll('.uctab')[3])">
+        <div class="ucc-icon">🌱</div>
+        <div class="ucc-title">Beginner Creators</div>
+        <div class="ucc-desc">No experience needed. AutoTubeOS guides you from zero to your first video with step-by-step AI assistance.</div>
+        <div class="ucc-link">See how it works →</div>
+      </div>
+      <div class="ucc-card" onclick="show('shorts',document.querySelectorAll('.uctab')[4])">
+        <div class="ucc-icon">⚡</div>
+        <div class="ucc-title">Shorts-First Creators</div>
+        <div class="ucc-desc">Automatically turn every long video into 5 viral Shorts. Post daily without creating daily — the smart way.</div>
+        <div class="ucc-link">See how it works →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FACELESS CREATORS -->
+<div class="ucview" id="uv-faceless">
+  <div class="uc-hero"><div class="grid-bg"></div>
+    <div class="uc-inner">
+      <div>
+        <div class="ui-label" style="color:var(--red);">Use Case — Faceless YouTube</div>
+        <div class="ui-title">The AI system for faceless creators who want to scale.</div>
+        <div class="ui-sub">No face. No studio. No burnout. AutoTubeOS handles the entire content pipeline so you can focus on scaling from 1 channel to 10.</div>
+        <div class="ui-btns"><a href="#" class="btn-p" style="background:var(--red);">Start Free →</a></div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-av" style="background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);">AK</div>
+        <div class="pc-name">Ahmed K.</div>
+        <div class="pc-role">Faceless Finance Creator · Lahore, Pakistan</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="pc-stat-val">241K</div><div class="pc-stat-lbl">Subscribers</div></div>
+          <div class="pc-stat"><div class="pc-stat-val">$3.8K</div><div class="pc-stat-lbl">Monthly revenue</div></div>
+          <div class="pc-stat"><div class="pc-stat-val">3</div><div class="pc-stat-lbl">Channels</div></div>
+          <div class="pc-stat"><div class="pc-stat-val">12</div><div class="pc-stat-lbl">Videos/month</div></div>
+        </div>
+        <div class="pc-quote">"AutoTubeOS cut my production time from 6 hours per video to 45 minutes. I publish 3x more now without working more hours."</div>
+      </div>
+    </div>
+  </div>
+  <div class="uc-section">
+    <div class="pwin-grid">
+      <div class="pw-card">
+        <div class="pw-title" style="color:var(--red);">😤 Before AutoTubeOS</div>
+        <div class="pw-list">
+          <div class="pw-item"><span class="pw-icon">✗</span>Spending 3+ hours finding video ideas manually</div>
+          <div class="pw-item"><span class="pw-icon">✗</span>Writing scripts from scratch took 4–5 hours</div>
+          <div class="pw-item"><span class="pw-icon">✗</span>Juggling ChatGPT, Canva, Notion, TubeBuddy separately</div>
+          <div class="pw-item"><span class="pw-icon">✗</span>Missing upload days due to workflow chaos</div>
+          <div class="pw-item"><span class="pw-icon">✗</span>Manually creating Shorts — or not at all</div>
+        </div>
+      </div>
+      <div class="pw-card" style="border-color:var(--green-border);">
+        <div class="pw-title" style="color:var(--green);">✨ After AutoTubeOS</div>
+        <div class="pw-list">
+          <div class="pw-item" style="color:var(--text);"><span class="pw-icon" style="color:var(--green);">✓</span>Viral topic in 30 seconds — scored by views and RPM</div>
+          <div class="pw-item" style="color:var(--text);"><span class="pw-icon" style="color:var(--green);">✓</span>Full script generated in 60 seconds — just edit and go</div>
+          <div class="pw-item" style="color:var(--text);"><span class="pw-icon" style="color:var(--green);">✓</span>One workspace replaces all 7 tools</div>
+          <div class="pw-item" style="color:var(--text);"><span class="pw-icon" style="color:var(--green);">✓</span>Content calendar keeps uploads consistent automatically</div>
+          <div class="pw-item" style="color:var(--text);"><span class="pw-icon" style="color:var(--green);">✓</span>5 Shorts generated from every long video automatically</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-lbl" style="color:var(--red);">Features You'll Use Most</div>
+    <div class="sec-ttl">Built for faceless creators</div>
+    <div class="feat-used">
+      <div class="fu-card"><div class="fu-icon" style="background:var(--red-bg);">🔥</div><div><div class="fu-title">Topic Finder</div><div class="fu-desc">AI finds viral ideas for your niche daily — no manual research needed.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--blue-bg);">✍️</div><div><div class="fu-title">Script Generator</div><div class="fu-desc">8 formats. Hooks included. Ready to hand off to your voiceover artist.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--green-bg);">⚡</div><div><div class="fu-title">Shorts Repurposer</div><div class="fu-desc">Turn 1 long video into 5 Shorts scripts automatically.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--purple-bg);">🤖</div><div><div class="fu-title">AI Agents</div><div class="fu-desc">Set up once. Agent finds topics, scripts, and schedules every week.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--amber-bg);">📊</div><div><div class="fu-title">Retention Optimizer</div><div class="fu-desc">Score your script before recording. Fix weak hooks before upload.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--s4);">📅</div><div><div class="fu-title">Content Calendar</div><div class="fu-desc">Never miss an upload day. Automated reminders and scheduling.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENCY -->
+<div class="ucview" id="uv-agency">
+  <div class="uc-hero"><div class="grid-bg"></div>
+    <div class="uc-inner">
+      <div>
+        <div class="ui-label" style="color:var(--blue);">Use Case — YouTube Agency</div>
+        <div class="ui-title">Run 12 channels with a team of 3.</div>
+        <div class="ui-sub">Client approval workflows, multi-channel calendars, white-label reports, and bulk content generation. AutoTubeOS is the operating system for YouTube automation agencies.</div>
+        <div class="ui-btns"><a href="#" class="btn-p" style="background:var(--blue);">See Agency Plan →</a></div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-av" style="background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--blue);">JL</div>
+        <div class="pc-name">James L.</div>
+        <div class="pc-role">YouTube Automation Agency · London, UK</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--blue);">12</div><div class="pc-stat-lbl">Client channels</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--blue);">3</div><div class="pc-stat-lbl">Team members</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--blue);">48</div><div class="pc-stat-lbl">Videos/month</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--blue);">60%</div><div class="pc-stat-lbl">Time saved</div></div>
+        </div>
+        <div class="pc-quote" style="border-left-color:var(--blue);">"We manage 12 client channels with 3 people. AutoTubeOS cut our production time by 60%. The approval workflow feature is exactly what we needed."</div>
+      </div>
+    </div>
+  </div>
+  <div class="uc-section">
+    <div class="sec-lbl" style="color:var(--blue);">Agency Workflow</div>
+    <div class="sec-ttl">From client brief to published video</div>
+    <div class="workflow">
+      <div class="wf-item">
+        <div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);">01</div></div>
+        <div class="wf-content"><div class="wf-title">Client onboarding — niche & style defined</div><div class="wf-desc">Create a workspace per client with their niche, target market, and content style rules set once.</div><span class="wf-tag" style="background:var(--blue-bg);color:var(--blue);">Workspace Setup</span></div>
+      </div>
+      <div class="wf-item">
+        <div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);">02</div></div>
+        <div class="wf-content"><div class="wf-title">AI finds topics every Monday</div><div class="wf-desc">Topic Finder automatically surfaces 8+ ranked ideas. Your team picks and assigns the best one.</div><span class="wf-tag" style="background:var(--red-bg);color:var(--red);">Topic Finder</span></div>
+      </div>
+      <div class="wf-item">
+        <div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);">03</div></div>
+        <div class="wf-content"><div class="wf-title">Script generated → assigned to editor</div><div class="wf-desc">AI generates script. Team member gets notified to review and send to voiceover artist.</div><span class="wf-tag" style="background:var(--blue-bg);color:var(--blue);">Script Gen + Task Assignment</span></div>
+      </div>
+      <div class="wf-item">
+        <div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);">04</div></div>
+        <div class="wf-content"><div class="wf-title">Client approves via approval flow</div><div class="wf-desc">Client reviews the script and thumbnail concept before production starts. No back-and-forth emails.</div><span class="wf-tag" style="background:var(--green-bg);color:var(--green);">Client Approval Flow</span></div>
+      </div>
+      <div class="wf-item">
+        <div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);">05</div></div>
+        <div class="wf-content"><div class="wf-title">Upload scheduled + Shorts auto-generated</div><div class="wf-desc">Video scheduled on calendar. AI repurposes into 5 Shorts automatically for extra reach.</div><span class="wf-tag" style="background:var(--purple-bg);color:var(--purple);">Calendar + Shorts</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BEGINNERS -->
+<div class="ucview" id="uv-beginners">
+  <div class="uc-hero"><div class="grid-bg"></div>
+    <div class="uc-inner">
+      <div>
+        <div class="ui-label" style="color:var(--green);">Use Case — Beginners</div>
+        <div class="ui-title">From zero to first video in one afternoon.</div>
+        <div class="ui-sub">No experience needed. AutoTubeOS guides you step by step — from picking a niche to having your first script ready to record. No YouTube knowledge required.</div>
+        <div class="ui-btns"><a href="#" class="btn-p" style="background:var(--green);">Start for Free →</a></div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-av" style="background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);">MZ</div>
+        <div class="pc-name">Mariam Z.</div>
+        <div class="pc-role">Started 3 months ago · AI Tools Niche</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--green);">4.2K</div><div class="pc-stat-lbl">Subscribers</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--green);">$180</div><div class="pc-stat-lbl">First month revenue</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--green);">8</div><div class="pc-stat-lbl">Videos published</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--green);">0</div><div class="pc-stat-lbl">Prior experience</div></div>
+        </div>
+        <div class="pc-quote" style="border-left-color:var(--green);">"I had zero YouTube experience. AutoTubeOS gave me my first viral idea and wrote the script. I just recorded the voiceover and uploaded. That easy."</div>
+      </div>
+    </div>
+  </div>
+  <div class="uc-section">
+    <div class="sec-lbl" style="color:var(--green);">Your First Week</div>
+    <div class="sec-ttl">From account to first video in 5 steps</div>
+    <div class="workflow">
+      <div class="wf-item"><div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--green-bg);border-color:var(--green-border);color:var(--green);">1</div></div><div class="wf-content"><div class="wf-title">Create account + pick your niche</div><div class="wf-desc">Onboarding takes 5 minutes. Pick a niche — or let AI suggest one based on your interests.</div><span class="wf-tag" style="background:var(--green-bg);color:var(--green);">Day 1</span></div></div>
+      <div class="wf-item"><div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--green-bg);border-color:var(--green-border);color:var(--green);">2</div></div><div class="wf-content"><div class="wf-title">Find your first viral idea</div><div class="wf-desc">Open Topic Finder, enter your niche, pick the idea with the highest score. Done in 3 minutes.</div><span class="wf-tag" style="background:var(--green-bg);color:var(--green);">Day 1</span></div></div>
+      <div class="wf-item"><div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--green-bg);border-color:var(--green-border);color:var(--green);">3</div></div><div class="wf-content"><div class="wf-title">Generate your script</div><div class="wf-desc">Hit "Write Script." AI writes the full script — hook, intro, main points, CTA. Edit what you like, leave the rest.</div><span class="wf-tag" style="background:var(--green-bg);color:var(--green);">Day 1–2</span></div></div>
+      <div class="wf-item"><div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--green-bg);border-color:var(--green-border);color:var(--green);">4</div></div><div class="wf-content"><div class="wf-title">Record + edit</div><div class="wf-desc">Record your voiceover (or use ElevenLabs), add stock footage in CapCut, add thumbnail from Canva.</div><span class="wf-tag" style="background:var(--green-bg);color:var(--green);">Day 3–5</span></div></div>
+      <div class="wf-item"><div style="display:flex;flex-direction:column;align-items:center;"><div class="wf-num" style="background:var(--green-bg);border-color:var(--green-border);color:var(--green);">5</div></div><div class="wf-content"><div class="wf-title">Upload + schedule next video</div><div class="wf-desc">Upload to YouTube. Go back to AutoTubeOS, find your next idea, and repeat. You now have a system.</div><span class="wf-tag" style="background:var(--green-bg);color:var(--green);">Day 7</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHORTS -->
+<div class="ucview" id="uv-shorts">
+  <div class="uc-hero"><div class="grid-bg"></div>
+    <div class="uc-inner">
+      <div>
+        <div class="ui-label" style="color:var(--amber);">Use Case — Shorts Creators</div>
+        <div class="ui-title">Post daily without creating daily.</div>
+        <div class="ui-sub">Every long video has 5 Shorts hiding inside it. AutoTubeOS finds them, rewrites the hooks, and delivers ready-to-post scripts. Multiply your output without multiplying your work.</div>
+        <div class="ui-btns"><a href="#" class="btn-p" style="background:var(--amber);color:#000;">Try Shorts Repurposer →</a></div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-av" style="background:var(--amber-bg);border:1px solid rgba(245,158,11,0.28);color:var(--amber);">SR</div>
+        <div class="pc-name">Sara R.</div>
+        <div class="pc-role">Finance Shorts Creator · 180K Subscribers</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--amber);">5</div><div class="pc-stat-lbl">Shorts per long video</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--amber);">2×</div><div class="pc-stat-lbl">Growth since using</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--amber);">20+</div><div class="pc-stat-lbl">Shorts per month</div></div>
+          <div class="pc-stat"><div class="pc-stat-val" style="color:var(--amber);">0</div><div class="pc-stat-lbl">Extra hours spent</div></div>
+        </div>
+        <div class="pc-quote" style="border-left-color:var(--amber);">"The Shorts Repurposer literally doubled my channel growth. Each long video gives me 5 Shorts automatically. I can't believe I was doing this manually before."</div>
+      </div>
+    </div>
+  </div>
+  <div class="uc-section">
+    <div class="sec-lbl" style="color:var(--amber);">How It Works</div>
+    <div class="sec-ttl">From one upload to 6 pieces of content</div>
+    <div class="feat-used">
+      <div class="fu-card"><div class="fu-icon" style="background:var(--red-bg);">🎬</div><div><div class="fu-title">Upload or paste URL</div><div class="fu-desc">Drop your video file or paste a YouTube link. Works up to 4 hours long.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--amber-bg);">🎯</div><div><div class="fu-title">AI detects best moments</div><div class="fu-desc">5 clips ranked by virality score — the most emotional, surprising, or hook-worthy moments.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--green-bg);">🪝</div><div><div class="fu-title">Hooks rewritten for Shorts</div><div class="fu-desc">Each clip gets a Shorts-optimized hook that stops the scroll in the first 2 seconds.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--blue-bg);">📱</div><div><div class="fu-title">Multi-platform scripts</div><div class="fu-desc">Scripts formatted for YouTube Shorts, TikTok, and Instagram Reels — all at once.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--purple-bg);">📅</div><div><div class="fu-title">Auto-scheduled to calendar</div><div class="fu-desc">5 Shorts spread across the week automatically so your calendar stays full.</div></div></div>
+      <div class="fu-card"><div class="fu-icon" style="background:var(--s4);">⏱️</div><div><div class="fu-title">Timestamps for editor</div><div class="fu-desc">Exact start/end timestamps for each clip sent to your editor automatically.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FINANCE -->
+<div class="ucview" id="uv-finance">
+  <div class="uc-hero"><div class="grid-bg"></div>
+    <div class="uc-inner">
+      <div>
+        <div class="ui-label" style="color:var(--red);">Use Case — Finance Channels</div>
+        <div class="ui-title">The highest-RPM niche, fully automated.</div>
+        <div class="ui-sub">Finance channels earn $15–$25 RPM. AutoTubeOS finds the viral finance topics, writes the data-driven scripts, and keeps your upload schedule consistent. Maximum revenue, minimum effort.</div>
+        <div class="ui-btns"><a href="#" class="btn-p" style="background:var(--red);">Start Your Finance Channel →</a></div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-av" style="background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);">AK</div>
+        <div class="pc-name">Finance Channel · Anonymous</div>
+        <div class="pc-role">Faceless Finance · Started Jan 2026</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="pc-stat-val">100K</div><div class="pc-stat-lbl">In 4 months</div></div>
+          <div class="pc-stat"><div class="pc-stat-val">$22</div><div class="pc-stat-lbl">Avg RPM</div></div>
+          <div class="pc-stat"><div class="pc-stat-val">$4.2K</div><div class="pc-stat-lbl">Month 4 revenue</div></div>
+          <div class="pc-stat"><div class="pc-stat-val">16</div><div class="pc-stat-lbl">Videos/month</div></div>
+        </div>
+        <div class="pc-quote">"Finance niche is gold — but only if you can publish consistently. AutoTubeOS is the reason I hit 100K in 4 months. The topic scorer knew what would go viral before I did."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="uc-cta">
+  <div class="cta-glow"></div>
+  <div class="cta-t">Find your use case. Start for free.</div>
+  <div class="cta-s">14-day free trial. No credit card. Cancel anytime.</div>
+  <a href="#" class="btn-p" style="background:var(--red);font-size:15px;padding:13px 32px;position:relative;z-index:1;">Start Free Trial →</a>
+</div>
+
+<footer><div class="fl">AutoTube<span>OS</span></div><p>© 2026 AutoTubeOS.</p><div class="flk"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div></footer>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.ucview').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.uctab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('uv-'+id).classList.add('active');
+  if(btn){btn.classList.add('on');}
+  window.scrollTo({top:62,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
