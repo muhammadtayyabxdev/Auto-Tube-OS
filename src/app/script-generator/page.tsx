@@ -816,10 +816,10 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
               {/* Meta indicators */}
               <div className={styles.scriptMeta}>
                 <div className={styles.smItem}>
-                  <ClipboardList size={14} /> <span className={`${styles.smBadge} ${styles.badgeFormat}`}>{selectedFormat}</span>
+                  <span className={`${styles.smBadge} ${styles.badgeFormat}`}><ClipboardList size={12} /> {selectedFormat}</span>
                 </div>
                 <div className={styles.smItem}>
-                  <Smile size={14} /> <span className={`${styles.smBadge} ${styles.badgeTone}`}>{selectedTone}</span>
+                  <span className={`${styles.smBadge} ${styles.badgeTone}`}><Smile size={12} /> {selectedTone}</span>
                 </div>
                 <div className={styles.smItem} style={{ marginLeft: 'auto', color: 'var(--muted2)' }}>
                   {currentProvider === 'groq' ? (

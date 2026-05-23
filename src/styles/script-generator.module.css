@@ -667,6 +667,9 @@
   border-radius: 100px;
   font-size: 9px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .badgeFormat {
@@ -778,6 +781,10 @@
   border-radius: 5px;
   background: var(--s4);
   color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .retTag.good {
@@ -814,6 +821,10 @@
   letter-spacing: 1px;
   padding: 2px 8px;
   border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .tagHook {
