@@ -154,9 +154,9 @@ function ScriptGeneratorContent() {
   const parseTextIntoSections = (text: string) => {
     const sectionDefs: SectionDef[] = [
       { key: '[HOOK]', label: 'Hook', tag: styles.tagHook, time: '0–15s' },
-      { key: '[INTRO]', label: '<Pin size={14} /> Intro', tag: styles.tagIntro, time: '15–45s' },
-      { key: '[MAIN CONTENT]', label: '<ClipboardList size={14} /> Main Content', tag: styles.tagMain, time: '45s–End' },
-      { key: '[CTA]', label: '<Target size={14} /> Call to Action', tag: styles.tagCta, time: 'Final 20s' }
+      { key: '[INTRO]', label: 'Intro', tag: styles.tagIntro, time: '15–45s' },
+      { key: '[MAIN CONTENT]', label: 'Main Content', tag: styles.tagMain, time: '45s–End' },
+      { key: '[CTA]', label: 'Call to Action', tag: styles.tagCta, time: 'Final 20s' }
     ];
 
     const parts: Record<string, string> = {};

@@ -3,7 +3,17 @@
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/emails.module.css';
-import { Check, Lightbulb } from 'lucide-react';
+import { Check, Lightbulb, Clock, Play } from 'lucide-react';
+
+const renderSubjectText = (subject: string) => {
+  if (subject.startsWith('<Clock size={16} />')) {
+    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><Clock size={16} /> {subject.replace('<Clock size={16} /> ', '')}</span>;
+  }
+  if (subject.startsWith('<Play size={16} />')) {
+    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><Play size={16} /> {subject.replace('<Play size={16} /> ', '')}</span>;
+  }
+  return subject;
+};
 
 interface EmailTemplate {
   id: string;
@@ -610,7 +620,7 @@ export default function CreatorEmails() {
                       <b>From:</b> {activeTemplate.from}
                     </div>
                     <div className={styles.emailField} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginTop: '4px' }}>
-                      <b>Subject:</b> {activeTemplate.subject}
+                      <b>Subject:</b> {renderSubjectText(activeTemplate.subject)}
                     </div>
                   </div>
                   <div className={styles.emailDevice}>

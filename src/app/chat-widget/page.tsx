@@ -18,6 +18,22 @@ const Twitter = ({ size = 16, className = "" }: { size?: number; className?: str
   </svg>
 );
 
+const renderMessageText = (text: string) => {
+  if (text.startsWith('<CreditCard size={16} />')) {
+    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><CreditCard size={16} /> {text.replace('<CreditCard size={16} /> ', '')}</span>;
+  }
+  if (text.startsWith('<Wrench size={16} />')) {
+    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><Wrench size={16} /> {text.replace('<Wrench size={16} /> ', '')}</span>;
+  }
+  if (text.startsWith('<Rocket size={16} />')) {
+    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><Rocket size={16} /> {text.replace('<Rocket size={16} /> ', '')}</span>;
+  }
+  if (text.startsWith('<Bot size={16} />')) {
+    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><Bot size={16} /> {text.replace('<Bot size={16} /> ', '')}</span>;
+  }
+  return text;
+};
+
 interface Message {
   id: string;
   text: string;
@@ -267,7 +283,7 @@ export default function ChatWidgetDemo() {
                   {msg.sender === 'support' && <div className={`${styles.msgAv} ${styles.support}`}>AK</div>}
                   <div>
                     <div className={`${styles.msgBubble} ${msg.sender === 'support' ? styles.supportBubble : ''}`}>
-                      {msg.text}
+                      {renderMessageText(msg.text)}
                     </div>
                     <div className={styles.msgTime}>{msg.time}</div>
                   </div>

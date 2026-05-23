@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/dashboard.module.css';
-import { ArrowDown, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Globe, Landmark, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, XCircle, Zap } from 'lucide-react';
+import { ArrowDown, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Globe, Landmark, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Upload, XCircle, Zap } from 'lucide-react';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -114,17 +114,17 @@ function DashboardContent() {
   };
 
   // 4. CALENDAR STATE
-  const [calendarEvents, setCalendarEvents] = useState<Record<number, { title: string; class: string }[]>>({
+  const [calendarEvents, setCalendarEvents] = useState<Record<number, { title: string; class: string; icon?: 'upload' | 'check' }[]>>({
     1: [{ title: 'Script: AI Tools', class: styles.evBlue }],
-    3: [{ title: '<Upload size={16} /> Upload: AI Side Hustles', class: styles.evRed }],
-    5: [{ title: '<Check size={16} /> Edit due: Stay Broke', class: styles.evGreen }],
+    3: [{ title: 'Upload: AI Side Hustles', class: styles.evRed, icon: 'upload' }],
+    5: [{ title: 'Edit due: Stay Broke', class: styles.evGreen, icon: 'check' }],
     10: [
-      { title: '<Upload size={16} /> Upload: Stay Broke', class: styles.evRed },
+      { title: 'Upload: Stay Broke', class: styles.evRed, icon: 'upload' },
       { title: 'Script: Investing', class: styles.evBlue }
     ],
-    16: [{ title: '<Check size={16} /> Thumbnail review', class: styles.evGreen }],
-    21: [{ title: '<Upload size={16} /> Upload: $10K Investing', class: styles.evRed }],
-    28: [{ title: '<Upload size={16} /> Upload: Money Mistakes', class: styles.evRed }]
+    16: [{ title: 'Thumbnail review', class: styles.evGreen, icon: 'check' }],
+    21: [{ title: 'Upload: $10K Investing', class: styles.evRed, icon: 'upload' }],
+    28: [{ title: 'Upload: Money Mistakes', class: styles.evRed, icon: 'upload' }]
   });
 
   const handleAddEvent = (day: number) => {
@@ -134,19 +134,22 @@ function DashboardContent() {
       const type = prompt('Enter event type (upload, script, review):', 'script');
       let evClass = styles.evBlue;
       let finalTitle = title;
+      let finalIcon: 'upload' | 'check' | undefined = undefined;
       if (type === 'upload') {
         evClass = styles.evRed;
-        finalTitle = '<Upload size={16} /> Upload: ' + title;
+        finalTitle = 'Upload: ' + title;
+        finalIcon = 'upload';
       } else if (type === 'review') {
         evClass = styles.evGreen;
-        finalTitle = '<Check size={16} /> ' + title;
+        finalTitle = title;
+        finalIcon = 'check';
       } else {
         finalTitle = 'Script: ' + title;
       }
 
       setCalendarEvents((prev) => ({
         ...prev,
-        [day]: [...(prev[day] || []), { title: finalTitle, class: evClass }]
+        [day]: [...(prev[day] || []), { title: finalTitle, class: evClass, icon: finalIcon }]
       }));
       triggerToast('Scheduled event successfully!');
     }
@@ -182,12 +185,12 @@ function DashboardContent() {
     analytics: 'Analytics'
   };
 
-  const viewActionLabels: Record<string, string> = {
+  const viewActionLabels: Record<string, React.ReactNode> = {
     home: '+ New Video',
-    topics: '<Search size={16} /> Find Topics',
-    shorts: '<ArrowDown size={16} /> Export All',
+    topics: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><Search size={16} /> Find Topics</span>,
+    shorts: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><ArrowDown size={16} /> Export All</span>,
     calendar: '+ Schedule',
-    analytics: '<BarChart3 size={16} /> Export'
+    analytics: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><BarChart3 size={16} /> Export</span>
   };
 
   return (
@@ -435,7 +438,7 @@ function DashboardContent() {
                   <div className={styles.cardHeader}>
                     <div className={styles.cardTitle}>Processing: {youtubeUrl ? 'Custom YouTube stream' : 'AI Side Hustles'}</div>
                     <span style={{ fontSize: '11px', color: isProcessingShorts ? 'var(--amber)' : 'var(--green)' }}>
-                      {isProcessingShorts ? `Processing ${shortsProgress}%` : '<Check size={16} /> Complete'}
+                      {isProcessingShorts ? `Processing ${shortsProgress}%` : <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Check size={16} /> Complete</span>}
                     </span>
                   </div>
                   <div style={{ height: '6px', background: 'var(--s4)', borderRadius: '3px', overflow: 'hidden', marginBottom: '14px' }}>
@@ -510,7 +513,11 @@ function DashboardContent() {
                     <div className={styles.dayNum}>{day}</div>
                     {events.map((ev, index) => (
                       <div key={index} className={`${styles.calEvent} ${ev.class}`} title={ev.title}>
-                        {ev.title}
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          {ev.icon === 'upload' && <Upload size={12} />}
+                          {ev.icon === 'check' && <Check size={12} />}
+                          {ev.title}
+                        </span>
                       </div>
                     ))}
                   </div>
