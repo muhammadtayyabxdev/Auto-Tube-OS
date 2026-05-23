@@ -431,7 +431,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
   const copyToClipboard = () => {
     if (!streamContent) return;
     navigator.clipboard.writeText(streamContent).then(() => {
-      triggerToast('Script copied to clipboard! <ClipboardList size={16} />');
+      triggerToast('Script copied to clipboard!');
     });
   };
 
@@ -444,7 +444,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
     link.href = url;
     link.download = `${cleanTopic.slice(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}_script.txt`;
     link.click();
-    triggerToast('Downloading TXT file... <ArrowDown size={16} />');
+    triggerToast('Downloading TXT file...');
   };
 
   const clearAllOutput = () => {
@@ -452,7 +452,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
     setParsedSections({});
     setShowOutput(false);
     disableButtons();
-    triggerToast('Output cleared <Trash2 size={16} />');
+    triggerToast('Output cleared');
   };
 
   const handleImproveHook = () => {
@@ -467,7 +467,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
       setStreamContent(refinedText);
       parseTextIntoSections(refinedText);
       setIsGenerating(false);
-      triggerToast('Hook improved successfully! <Flame size={16} />');
+      triggerToast('Hook improved successfully!');
     }, 1200);
   };
 
@@ -490,7 +490,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
       setStreamContent(appendedText);
       parseTextIntoSections(appendedText);
       setIsGenerating(false);
-      triggerToast('Arbitrage Point added! <Plus size={16} />');
+      triggerToast('Arbitrage Point added!');
     }, 1000);
   };
 
@@ -758,7 +758,26 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           
           {/* TOAST DISPLAY */}
           {toastMessage && (
-            <div className={`${styles.toast} ${styles.show} ${toastType === 'error' ? styles.error : styles.success}`}>
+            <div 
+              style={{
+                position: 'fixed',
+                bottom: '24px',
+                right: '24px',
+                background: toastType === 'error' ? 'var(--red-bg)' : 'var(--green-bg)',
+                border: `1px solid ${toastType === 'error' ? 'var(--red-border)' : 'var(--green-border)'}`,
+                padding: '10px 18px',
+                borderRadius: '8px',
+                color: toastType === 'error' ? 'var(--red)' : 'var(--green)',
+                zIndex: 1000,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '12px',
+                fontWeight: 600,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                animation: 'fadeUp 0.3s ease-out'
+              }}
+            >
               {toastType === 'error' ? <XCircle size={16} /> : <Check size={16} />} {toastMessage}
             </div>
           )}
