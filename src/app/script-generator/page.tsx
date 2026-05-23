@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/script-generator.module.css';
 import { AlertCircle, AlertTriangle, ArrowDown, BookOpen, Bot, Brain, Check, ClipboardList, DollarSign, Eye, EyeOff, FileText, Flame, Ghost, Link2, Magnet, MessageCircle, PenTool, Pin, Play, Plus, RefreshCw, Settings, Smile, Sparkles, Target, Trash2, XCircle, Zap } from 'lucide-react';
+import { GroqIcon, GeminiIcon } from '@/components/BrandIcons';
 
 interface SectionDef {
   key: string;
@@ -538,13 +539,13 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                   className={`${styles.apiOpt} ${styles.groq} ${currentProvider === 'groq' ? styles.on : ''}`}
                   onClick={() => handleProviderSwitch('groq')}
                 >
-                  <Zap size={16} /> Groq
+                  <GroqIcon size={16} /> Groq
                 </div>
                 <div 
                   className={`${styles.apiOpt} ${styles.gemini} ${currentProvider === 'gemini' ? styles.on : ''}`}
                   onClick={() => handleProviderSwitch('gemini')}
                 >
-                  <Sparkles size={16} /> Gemini
+                  <GeminiIcon size={16} /> Gemini
                 </div>
               </div>
             </div>
@@ -739,9 +740,9 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
           <div className={styles.tbTitle}>Script Generator</div>
           <div className={`${styles.tbPill} ${styles.tbProvider} ${currentProvider === 'groq' ? styles.groq : styles.gemini}`}>
             {currentProvider === 'groq' ? (
-              <><Zap size={14} /> Groq</>
+              <><GroqIcon size={14} /> Groq</>
             ) : (
-              <><Sparkles size={14} /> Gemini</>
+              <><GeminiIcon size={14} /> Gemini</>
             )}
           </div>
           {totalTokens > 0 && (
@@ -822,9 +823,9 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                 </div>
                 <div className={styles.smItem} style={{ marginLeft: 'auto', color: 'var(--muted2)' }}>
                   {currentProvider === 'groq' ? (
-                    <><Zap size={14} /> Groq Llama</>
+                    <><GroqIcon size={14} /> Groq Llama</>
                   ) : (
-                    <><Sparkles size={14} /> Google Gemini</>
+                    <><GeminiIcon size={14} /> Google Gemini</>
                   )} · {currentProvider === 'groq' ? groqModel.split('-')[0].toUpperCase() : 'FLASH 2.0'}
                 </div>
               </div>

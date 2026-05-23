@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/settings.module.css';
 import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Check, ClipboardList, CreditCard, DollarSign, Link2, Lock, Mail, Play, Receipt, Rocket, Shield, Sparkles, User, Users, XCircle, Zap } from 'lucide-react';
+import { GroqIcon, GeminiIcon } from '@/components/BrandIcons';
 
 function SettingsContent() {
   const searchParams = useSearchParams();
@@ -113,8 +114,8 @@ function SettingsContent() {
     { id: 'yt', name: 'YouTube Channel', sub: 'Finance Channel · 241K subscribers', icon: <Play size={16} />, connected: true },
     { id: 'ga', name: 'Google Analytics', sub: 'Track YouTube traffic to your website', icon: <BarChart3 size={16} />, connected: false },
     { id: 'bh', name: 'Beehiiv Newsletter', sub: 'Convert viewers to email subscribers', icon: <Mail size={16} />, connected: false },
-    { id: 'gr', name: 'Groq API', sub: 'gsk_••••••••••3a2f · LLaMA 3.3 70B', icon: <Zap size={16} />, connected: true },
-    { id: 'gm', name: 'Google Gemini API', sub: 'Generate high retention scripts', icon: <Sparkles size={16} />, connected: false }
+    { id: 'gr', name: 'Groq API', sub: 'gsk_••••••••••3a2f · LLaMA 3.3 70B', icon: <GroqIcon size={16} />, connected: true },
+    { id: 'gm', name: 'Google Gemini API', sub: 'Generate high retention scripts', icon: <GeminiIcon size={16} />, connected: false }
   ]);
 
   const toggleIntegration = (id: string) => {
