@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { BarChart3, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, Mail, Menu, PenTool, Settings, X, Zap } from 'lucide-react';
+import { BarChart3, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, Mail, Menu, PenTool, Settings, X, Zap, ChevronLeft, ChevronRight, Tv } from 'lucide-react';
 import styles from '@/styles/sidebar.module.css';
 
 interface SidebarProps {
@@ -15,6 +15,24 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('sb_collapsed') === 'true';
+    }
+    return false;
+  });
+
+  // Dynamically set --sidebar custom property on document root to update all layout grids and widths smoothly
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (isCollapsed) {
+        document.documentElement.style.setProperty('--sidebar', '70px');
+      } else {
+        document.documentElement.style.setProperty('--sidebar', '220px');
+      }
+      localStorage.setItem('sb_collapsed', String(isCollapsed));
+    }
+  }, [isCollapsed]);
 
   const handleItemClick = (view: string, path?: string) => {
     setIsOpen(false); // Auto-close sidebar on mobile after clicking
@@ -37,6 +55,10 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
     return false;
   };
 
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
     <>
       {/* FLOATING TRIGGER BUTTON FOR MOBILE */}
@@ -56,11 +78,24 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
         />
       )}
 
-      <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
+      <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''} ${isCollapsed ? styles.collapsed : ''}`}>
         <div className={styles.sbHeader}>
           <Link href="/" className={styles.sbLogo} onClick={() => setIsOpen(false)}>
-            AutoTube<span>OS</span>
+            {isCollapsed ? (
+              <span className={styles.logoMark} title="AutoTubeOS"><Tv size={16} /></span>
+            ) : (
+              <>AutoTube<span>OS</span></>
+            )}
           </Link>
+          
+          {/* COLLAPSE/EXPAND TRIGGER FOR DESKTOP */}
+          <button 
+            className={styles.sbCollapseBtn} 
+            onClick={toggleCollapse}
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          </button>
           
           {/* CLOSE TRIGGER BUTTON FOR MOBILE */}
           <button 
@@ -84,14 +119,16 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${isItemActive('home', '/dashboard') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('home', '/dashboard')}
         >
-          <span className={styles.sbIcon}><LayoutDashboard size={16} /></span> Overview
+          <span className={styles.sbIcon}><LayoutDashboard size={16} /></span>
+          <span className={styles.sbText}>Overview</span>
         </div>
         
         <div 
           className={`${styles.sbItem} ${isItemActive('topics') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('topics')}
         >
-          <span className={styles.sbIcon}><Flame size={16} /></span> Topic Finder
+          <span className={styles.sbIcon}><Flame size={16} /></span>
+          <span className={styles.sbText}>Topic Finder</span>
           <span className={`${styles.sbBadge} ${styles.sbBadgeNew}`}>New</span>
         </div>
 
@@ -99,21 +136,24 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${isItemActive('script', '/script-generator') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('script', '/script-generator')}
         >
-          <span className={styles.sbIcon}><PenTool size={16} /></span> Script Generator
+          <span className={styles.sbIcon}><PenTool size={16} /></span>
+          <span className={styles.sbText}>Script Generator</span>
         </div>
 
         <div 
           className={`${styles.sbItem} ${isItemActive('shorts') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('shorts')}
         >
-          <span className={styles.sbIcon}><Zap size={16} /></span> Shorts Repurposer
+          <span className={styles.sbIcon}><Zap size={16} /></span>
+          <span className={styles.sbText}>Shorts Repurposer</span>
         </div>
 
         <div 
           className={`${styles.sbItem} ${isItemActive('calendar') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('calendar')}
         >
-          <span className={styles.sbIcon}><CalendarDays size={16} /></span> Content Calendar
+          <span className={styles.sbIcon}><CalendarDays size={16} /></span>
+          <span className={styles.sbText}>Content Calendar</span>
           <span className={styles.sbBadge}>3</span>
         </div>
 
@@ -123,21 +163,24 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${isItemActive('analytics') ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('analytics')}
         >
-          <span className={styles.sbIcon}><BarChart3 size={16} /></span> Analytics
+          <span className={styles.sbIcon}><BarChart3 size={16} /></span>
+          <span className={styles.sbText}>Analytics</span>
         </div>
 
         <div 
           className={`${styles.sbItem} ${pathname === '/affiliate-dashboard' ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('affiliate-dashboard', '/affiliate-dashboard')}
         >
-          <span className={styles.sbIcon}><Handshake size={16} /></span> Affiliate Dashboard
+          <span className={styles.sbIcon}><Handshake size={16} /></span>
+          <span className={styles.sbText}>Affiliate Dashboard</span>
         </div>
 
         <div 
           className={`${styles.sbItem} ${pathname === '/emails' ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('emails', '/emails')}
         >
-          <span className={styles.sbIcon}><Mail size={16} /></span> Creator Emails
+          <span className={styles.sbIcon}><Mail size={16} /></span>
+          <span className={styles.sbText}>Creator Emails</span>
         </div>
 
         <div className={styles.sbSection}>Workspace</div>
@@ -146,7 +189,8 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           className={`${styles.sbItem} ${pathname === '/settings' ? styles.sbItemActive : ''}`}
           onClick={() => handleItemClick('settings', '/settings')}
         >
-          <span className={styles.sbIcon}><Settings size={16} /></span> Settings
+          <span className={styles.sbIcon}><Settings size={16} /></span>
+          <span className={styles.sbText}>Settings</span>
         </div>
 
         <div className={styles.sbBottom}>
@@ -162,4 +206,3 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
     </>
   );
 }
-

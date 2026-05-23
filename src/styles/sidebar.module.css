@@ -4,21 +4,53 @@
   border-right: 1px solid var(--border);
   display: flex; flex-direction: column;
   height: 100vh; overflow-y: auto;
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .sbHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border);
+  height: 56px;
+  padding: 0 16px;
 }
 .sbLogo {
-  padding: 20px 18px 16px;
   font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
   letter-spacing: -0.5px;
   color: var(--text);
   text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 .sbLogo span { color: var(--red); }
+.sbCollapseBtn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.15s;
+  margin-right: 12px;
+}
+.sbCollapseBtn:hover {
+  color: var(--red);
+  background: var(--s3);
+}
+.logoMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--red-dim);
+  border: 1px solid var(--red-border);
+  color: var(--red);
+}
 .sbCloseBtn {
   display: none;
 }
@@ -73,6 +105,84 @@
 .userInfo .name { font-size: 12px; font-weight: 500; color: var(--text); }
 .userInfo .plan { font-size: 10px; color: var(--red); }
 
+/* Desktop-only collapsed rules to preserve fully expanded layout on mobile */
+@media (min-width: 1025px) {
+  .collapsed .sbText,
+  .collapsed .wsName,
+  .collapsed .wsArrow,
+  .collapsed .userInfo,
+  .collapsed .sbBadge {
+    display: none !important;
+  }
+
+  .collapsed .sbHeader {
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 0 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .collapsed .sbLogo {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .collapsed .sbCollapseBtn {
+    margin-right: 0;
+  }
+
+  .collapsed .sbWorkspace {
+    margin: 12px auto;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    justify-content: center;
+    width: auto;
+  }
+
+  .collapsed .sbSection {
+    font-size: 0 !important;
+    color: transparent !important;
+    padding: 0 !important;
+    height: 1px;
+    background: var(--border);
+    margin: 16px 12px !important;
+    display: block;
+  }
+
+  .collapsed .sbItem {
+    margin: 2px auto;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    gap: 0;
+    border-radius: 8px;
+  }
+
+  .collapsed .sbIcon {
+    margin: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .collapsed .sbBottom {
+    padding: 12px 0;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .collapsed .sbUser {
+    padding: 0;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 1024px) {
   .sbMobileToggle {
     display: flex;
@@ -111,6 +221,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    width: 220px !important;
     height: 100vh;
     z-index: 101;
     transform: translateX(-100%);
@@ -136,6 +247,9 @@
   }
   .sbCloseBtn:hover {
     color: var(--red);
+  }
+  .sbCollapseBtn {
+    display: none !important;
   }
 }
 
