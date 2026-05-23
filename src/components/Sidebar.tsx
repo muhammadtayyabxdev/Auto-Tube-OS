@@ -18,10 +18,10 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
 
   const handleItemClick = (view: string, path?: string) => {
     setIsOpen(false); // Auto-close sidebar on mobile after clicking
-    if (onViewChange && pathname === '/dashboard') {
-      onViewChange(view);
-    } else if (path) {
+    if (path) {
       router.push(path);
+    } else if (onViewChange && pathname === '/dashboard') {
+      onViewChange(view);
     } else {
       router.push(`/dashboard?view=${view}`);
     }
