@@ -580,9 +580,11 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                     <option value="mixtral-8x7b-32768">Mixtral 8x7B — Long Context</option>
                     <option value="gemma2-9b-it">Gemma 2 9B — Efficient</option>
                   </select>
-                  <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)', lineHeight: '1.6' }}>
-                    <Link2 size={16} /> Free key at <a href="https://console.groq.com" target="_blank" rel="noreferrer" style={{ color: '#f97316' }}>console.groq.com</a><br />
-                    Daily limit: ~14,400 tokens/min free tier
+                  <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                      <Link2 size={14} /> <span>Free key at <a href="https://console.groq.com" target="_blank" rel="noreferrer" style={{ color: '#f97316' }}>console.groq.com</a></span>
+                    </div>
+                    <div>Daily limit: ~14,400 tokens/min free tier</div>
                   </div>
                 </div>
               )}
@@ -616,9 +618,11 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                     <option value="gemini-1.5-flash">Gemini 1.5 Flash — Balanced</option>
                     <option value="gemini-1.5-pro">Gemini 1.5 Pro — Best Quality</option>
                   </select>
-                  <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)', lineHeight: '1.6' }}>
-                    <Link2 size={16} /> Free key at <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: '#4285f4' }}>aistudio.google.com</a><br />
-                    Free tier: 15 req/min, 1M tokens/day
+                  <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                      <Link2 size={14} /> <span>Free key at <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: '#4285f4' }}>aistudio.google.com</a></span>
+                    </div>
+                    <div>Free tier: 15 req/min, 1M tokens/day</div>
                   </div>
                 </div>
               )}
