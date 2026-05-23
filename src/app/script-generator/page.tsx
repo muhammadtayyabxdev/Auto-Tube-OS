@@ -3,6 +3,7 @@
 import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/script-generator.module.css';
 import { AlertCircle, AlertTriangle, ArrowDown, BookOpen, Bot, Brain, Check, ClipboardList, DollarSign, Eye, EyeOff, FileText, Flame, Ghost, Link2, Magnet, MessageCircle, PenTool, Pin, Play, Plus, RefreshCw, Settings, Smile, Sparkles, Target, Trash2, XCircle, Zap } from 'lucide-react';
 
@@ -501,6 +502,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
 
   return (
     <div className={styles.app}>
+      <Sidebar />
       
       {/* MOBILE TABS SELECTOR */}
       <div className={styles.mobileTabHeader}>
@@ -520,10 +522,8 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
 
       {/* LEFT PANEL */}
       <div className={`${styles.panel} ${activeMobileTab === 'config' ? styles.mobileVisible : ''}`}>
-        <div className={styles.panelHeader}>
-          <Link href="/dashboard" className={styles.logo}>
-            AutoTube<span>OS</span>
-          </Link>
+        <div className={styles.panelHeader} style={{ justifyContent: 'flex-start', gap: '8px' }}>
+          <span style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text)' }}>Script Config</span>
           <div className={styles.versionBadge}>Script AI</div>
         </div>
 
