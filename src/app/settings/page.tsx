@@ -658,9 +658,9 @@ function SettingsContent() {
                         value={aiSettings.defaultFormat} 
                         onChange={(e) => handleAISelect('defaultFormat', e.target.value)}
                       >
-                        <option value="Listicle"><ClipboardList size={16} /> Listicle</option>
-                        <option value="Documentary"><Play size={16} /> Documentary</option>
-                        <option value="Finance"><DollarSign size={16} /> Finance</option>
+                        <option value="Listicle">Listicle</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="Finance">Finance</option>
                       </select>
                     </div>
 
