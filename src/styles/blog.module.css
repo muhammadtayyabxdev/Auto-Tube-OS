@@ -113,6 +113,9 @@
 }
 
 .category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 7px 16px;
   border-radius: 100px;
   background: var(--s2);
@@ -257,6 +260,9 @@
 }
 
 .fcFeaturedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 9px;
   background: var(--s4);
   border: 1px solid var(--border);

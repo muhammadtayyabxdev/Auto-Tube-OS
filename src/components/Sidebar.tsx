@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { BarChart3, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, Mail, Menu, PenTool, Settings, X, Zap } from 'lucide-react';
+import { useRouter } from 'next/router';
+import { BarChart3, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, LogOut, Mail, Menu, PenTool, Settings, X, Zap } from 'lucide-react';
 import styles from '@/styles/sidebar.module.css';
 
 interface SidebarProps {
@@ -12,9 +12,10 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ currentView = 'home', onViewChange }: SidebarProps) {
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = router.pathname;
   const [isOpen, setIsOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const handleItemClick = (view: string, path?: string) => {
     setIsOpen(false); // Auto-close sidebar on mobile after clicking
@@ -58,7 +59,7 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
 
       <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.sbHeader}>
-          <Link href="/" className={styles.sbLogo} onClick={() => setIsOpen(false)}>
+          <Link href="/dashboard" className={styles.sbLogo} onClick={() => setIsOpen(false)}>
             AutoTube<span>OS</span>
           </Link>
           
@@ -150,13 +151,42 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
         </div>
 
         <div className={styles.sbBottom}>
-          <Link href="/settings" className={styles.sbUser} onClick={() => setIsOpen(false)}>
-            <div className={styles.userAv}>AK</div>
-            <div className={styles.userInfo}>
-              <div className={styles.name}>Ahmed K.</div>
-              <div className={styles.plan}>Pro Plan</div>
-            </div>
-          </Link>
+          <div style={{ position: 'relative' }}>
+            <button
+              className={styles.sbUser}
+              onClick={() => setUserMenuOpen(prev => !prev)}
+              aria-label="User menu"
+            >
+              <div className={styles.userAv}>AK</div>
+              <div className={styles.userInfo}>
+                <div className={styles.name}>Ahmed K.</div>
+                <div className={styles.plan}>Pro Plan</div>
+              </div>
+              <ChevronDown size={12} style={{ marginLeft: 'auto', color: 'var(--muted)', transform: userMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            </button>
+            {userMenuOpen && (
+              <div className={styles.userDropdown}>
+                <button className={styles.udItem} onClick={() => { setUserMenuOpen(false); setIsOpen(false); router.push('/settings?tab=profile'); }}>
+                  Profile
+                </button>
+                <button className={styles.udItem} onClick={() => { setUserMenuOpen(false); setIsOpen(false); router.push('/settings'); }}>
+                  Settings
+                </button>
+                <div className={styles.udDivider} />
+                <button 
+                  className={`${styles.udItem} ${styles.udLogout}`} 
+                  onClick={() => { 
+                    setUserMenuOpen(false); 
+                    setIsOpen(false); 
+                    localStorage.removeItem('isLoggedIn');
+                    router.push('/'); 
+                  }}
+                >
+                  <LogOut size={13} /> Log Out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
