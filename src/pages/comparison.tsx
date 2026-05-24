@@ -643,7 +643,7 @@ export default function Comparison() {
         <h2 className={styles.ctaT}>Try AutoTubeOS free for 14 days.</h2>
         <p className={styles.ctaS}>No credit card. No commitment. Cancel anytime.</p>
         <Link href="/auth" className={styles.btnR}>
-          Start Free Trial →
+          Start Free Trial
         </Link>
       </div>
 

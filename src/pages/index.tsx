@@ -3,7 +3,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/home.module.css";
-import { Search, Star, TrendingDown, Scissors } from 'lucide-react';
+import { Search, Star, TrendingDown, Scissors, Hourglass } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -12,6 +12,15 @@ export default function Home() {
         <title>AutoTube OS — The Operating System for Faceless YouTube Creators</title>
         <meta name="description" content="Run your entire YouTube automation workflow from one AI-powered workspace. Replaces ChatGPT, Canva, Notion, and TubeBuddy." />
       </Head>
+
+      <svg style={{ width: 0, height: 0, position: 'absolute' }}>
+        <defs>
+          <linearGradient id="starHalfGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="60%" stopColor="var(--red)" stopOpacity="1" />
+            <stop offset="60%" stopColor="rgba(255, 61, 61, 0.05)" stopOpacity="1" />
+          </linearGradient>
+        </defs>
+      </svg>
 
       <Navbar />
       
@@ -37,7 +46,7 @@ export default function Home() {
 
         <div className={styles.heroActions}>
           <Link href="#waitlist" className={styles.btnPrimary}>
-            Start for Free →
+            Start for Free
           </Link>
           <Link href="#features" className={styles.btnSecondary}>
             See Features
@@ -82,22 +91,22 @@ export default function Home() {
         </div>
         <div className={styles.problemGrid}>
           <div className={styles.problemCard}>
-            <div className={styles.problemIcon}>⏳</div>
+            <div className={styles.problemIcon}><Hourglass size={20} /></div>
             <h3>Too many tools</h3>
             <p>Average creator uses 7+ separate apps just to publish one video. Context-switching kills momentum.</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemIcon}><TrendingDown size={16} /></div>
+            <div className={styles.problemIcon}><TrendingDown size={20} /></div>
             <h3>Inconsistent output</h3>
             <p>Manual workflows break down. You miss posting days, lose subscribers, and momentum disappears.</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemIcon}><Search size={16} /></div>
+            <div className={styles.problemIcon}><Search size={20} /></div>
             <h3>No topic strategy</h3>
             <p>Guessing video ideas instead of using data. Competitors find viral topics while you post blindly.</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemIcon}><Scissors size={16} /></div>
+            <div className={styles.problemIcon}><Scissors size={20} /></div>
             <h3>Shorts left on table</h3>
             <p>Every long video has 5+ shorts hiding inside it. Nobody has time to manually repurpose all of them.</p>
           </div>
@@ -105,7 +114,7 @@ export default function Home() {
       </section>
 
       {/* STATS */}
-      <section className={styles.section} style={{ padding: "4rem 5%" }}>
+      <section style={{ padding: "0 5%" }}>
         <div className={styles.statsBar}>
           <div className={styles.statItem}>
             <div className={styles.statNum}>73%</div>
@@ -317,12 +326,20 @@ export default function Home() {
         </div>
         <div className={styles.testimonialsGrid}>
           <div className={styles.testiCard}>
-            <div className={styles.testiStars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
+            <div className={styles.testiStars}>
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="rgba(255, 61, 61, 0.05)" strokeWidth={1.5} />
+            </div>
             <p className={styles.testiText}>
               &quot;I was using 8 different tools before this. Now I run my entire 3-channel operation from one dashboard. The topic finder alone is worth the subscription.&quot;
             </p>
             <div className={styles.testiAuthor}>
-              <div className={styles.testiAv}>AK</div>
+              <div className={styles.testiAv}>
+                <img src="/ahmed_avatar.png" alt="Ahmed K." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div>
                 <div className={styles.testiName}>Ahmed K.</div>
                 <div className={styles.testiMeta}>Finance YouTube · 240K subscribers</div>
@@ -330,12 +347,20 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.testiCard}>
-            <div className={styles.testiStars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
+            <div className={styles.testiStars}>
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="url(#starHalfGrad)" strokeWidth={1.5} />
+            </div>
             <p className={styles.testiText}>
               &quot;The Shorts Repurposer literally doubled my channel growth. Each long video now gives me 5 shorts automatically. I can&apos;t believe I was doing this manually before.&quot;
             </p>
             <div className={styles.testiAuthor}>
-              <div className={styles.testiAv}>SR</div>
+              <div className={styles.testiAv}>
+                <img src="/sarah_avatar.png" alt="Sarah R." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div>
                 <div className={styles.testiName}>Sarah R.</div>
                 <div className={styles.testiMeta}>Faceless Horror Channel · 89K subscribers</div>
@@ -343,12 +368,20 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.testiCard}>
-            <div className={styles.testiStars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
+            <div className={styles.testiStars}>
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+            </div>
             <p className={styles.testiText}>
               &quot;We manage 12 client channels at my agency. AutoTubeOS cut our production time by 60%. The team collaboration feature is exactly what we needed.&quot;
             </p>
             <div className={styles.testiAuthor}>
-              <div className={styles.testiAv}>JL</div>
+              <div className={styles.testiAv}>
+                <img src="/james_avatar.png" alt="James L." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div>
                 <div className={styles.testiName}>James L.</div>
                 <div className={styles.testiMeta}>YouTube Automation Agency · 12 clients</div>
@@ -432,7 +465,7 @@ export default function Home() {
         <p>Join 1,200+ creators on the waitlist. Early members get 50% off for life.</p>
         <div className={styles.waitlistForm}>
           <input type="email" placeholder="your@email.com" />
-          <button type="button">Join Waitlist →</button>
+          <button type="button">Join Waitlist</button>
         </div>
         <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "var(--muted2)" }}>No spam. Unsubscribe anytime.</p>
       </section>

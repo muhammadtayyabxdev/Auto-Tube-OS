@@ -201,24 +201,29 @@ export default function StatusPage() {
         </div>
       </div>
 
-      <section className={styles.subSection}>
-        <h3 className={styles.subTitle}><MailOpen size={16} /> Get status notifications</h3>
-        <div style={{ fontSize: '13px', color: 'var(--muted)' }}>
-          We'll email you when incidents are created, updated, or resolved.
+      <section className={styles.subWrapper}>
+        <div className={styles.subCard}>
+          <div className={styles.subGlow}></div>
+          <h3 className={styles.subTitle}>
+            <MailOpen size={20} /> Get status notifications
+          </h3>
+          <p className={styles.subDesc}>
+            We'll email you when incidents are created, updated, or resolved.
+          </p>
+          <form onSubmit={handleSubscribe} className={styles.subRow}>
+            <input
+              className={styles.subInp}
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <button type="submit" className={styles.subBtn}>
+              Subscribe
+            </button>
+          </form>
         </div>
-        <form onSubmit={handleSubscribe} className={styles.subRow}>
-          <input
-            className={styles.subInp}
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <button type="submit" className={styles.subBtn}>
-            Subscribe
-          </button>
-        </form>
       </section>
 
       <Footer />

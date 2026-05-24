@@ -105,7 +105,7 @@ export default function Affiliate() {
             className={styles.formSubmitBtn}
             style={{ display: 'inline-block', width: 'auto', padding: '13px 36px', fontSize: '15px', borderRadius: '12px' }}
           >
-            Apply to Join →
+            Apply to Join
           </button>
           <div style={{ marginTop: '14px', fontSize: '13px', color: 'var(--muted2)' }}>
             Free to join · Instant approval · Paid monthly via PayPal or Wise
@@ -373,7 +373,7 @@ export default function Affiliate() {
               className={styles.formSubmitBtn}
               style={submitted ? { backgroundColor: 'var(--green)' } : {}}
             >
-              {submitted ? <><Check size={16} /> Application submitted!</> : "Apply Now — It's Free →"}
+              {submitted ? <><Check size={16} /> Application submitted!</> : "Apply Now — It's Free"}
             </button>
           </form>
           <p style={{ fontSize: '11px', color: 'var(--muted2)', textAlign: 'center', marginTop: '12px' }}>
@@ -442,7 +442,7 @@ export default function Affiliate() {
           className={styles.ctaBtn}
           onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
         >
-          Apply to Join — It&apos;s Free →
+          Apply to Join — It&apos;s Free
         </button>
       </div>
 

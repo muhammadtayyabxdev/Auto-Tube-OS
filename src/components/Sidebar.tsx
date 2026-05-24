@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { BarChart3, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, LogOut, Mail, Menu, PenTool, Settings, X, Zap } from 'lucide-react';
+import { BarChart3, Bell, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, LogOut, Mail, Menu, PenTool, Settings, X, Zap } from 'lucide-react';
 import styles from '@/styles/sidebar.module.css';
 
 interface SidebarProps {
@@ -141,14 +141,13 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
           <span className={styles.sbIcon}><Mail size={16} /></span> Creator Emails
         </div>
 
-        <div className={styles.sbSection}>Workspace</div>
-        
         <div 
-          className={`${styles.sbItem} ${pathname === '/settings' ? styles.sbItemActive : ''}`}
-          onClick={() => handleItemClick('settings', '/settings')}
+          className={`${styles.sbItem} ${pathname === '/notifications' ? styles.sbItemActive : ''}`}
+          onClick={() => handleItemClick('notifications', '/notifications')}
         >
-          <span className={styles.sbIcon}><Settings size={16} /></span> Settings
+          <span className={styles.sbIcon}><Bell size={16} /></span> Notifications
         </div>
+
 
         <div className={styles.sbBottom}>
           <div style={{ position: 'relative' }}>
@@ -157,7 +156,9 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
               onClick={() => setUserMenuOpen(prev => !prev)}
               aria-label="User menu"
             >
-              <div className={styles.userAv}>AK</div>
+              <div className={styles.userAv}>
+                <img src="/ahmed_avatar.png" alt="Ahmed K." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div className={styles.userInfo}>
                 <div className={styles.name}>Ahmed K.</div>
                 <div className={styles.plan}>Pro Plan</div>
@@ -166,23 +167,27 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
             </button>
             {userMenuOpen && (
               <div className={styles.userDropdown}>
-                <button className={styles.udItem} onClick={() => { setUserMenuOpen(false); setIsOpen(false); router.push('/settings?tab=profile'); }}>
-                  Profile
-                </button>
-                <button className={styles.udItem} onClick={() => { setUserMenuOpen(false); setIsOpen(false); router.push('/settings'); }}>
+                <div className={styles.udEmail}>ahmed@example.com</div>
+                <div className={styles.udDivider} />
+                <button
+                  className={styles.udItem}
+                  onClick={() => { setUserMenuOpen(false); setIsOpen(false); router.push('/settings'); }}
+                >
+                  <Settings size={13} strokeWidth={1.8} />
                   Settings
                 </button>
                 <div className={styles.udDivider} />
-                <button 
-                  className={`${styles.udItem} ${styles.udLogout}`} 
-                  onClick={() => { 
-                    setUserMenuOpen(false); 
-                    setIsOpen(false); 
+                <button
+                  className={`${styles.udItem} ${styles.udLogout}`}
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    setIsOpen(false);
                     localStorage.removeItem('isLoggedIn');
-                    router.push('/'); 
+                    router.push('/');
                   }}
                 >
-                  <LogOut size={13} /> Log Out
+                  <LogOut size={13} strokeWidth={1.8} />
+                  Log Out
                 </button>
               </div>
             )}

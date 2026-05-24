@@ -125,3 +125,8 @@ h1, h2, h3, h4, h5, h6 {
   0%, 100% { opacity: 0.3; transform: scale(0.8); }
   50% { opacity: 1; transform: scale(1.2); }
 }
+
+/* Align all lucide icons nicely with inline text globally */
+svg.lucide {
+  vertical-align: -0.125em;
+}

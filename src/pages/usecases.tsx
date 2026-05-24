@@ -104,7 +104,7 @@ export default function UseCasesPage() {
                 AI handles everything from topic research to script generation. You focus on growth strategy — not
                 content production.
               </div>
-              <div className={styles.uccLink}>See how it works →</div>
+              <div className={styles.uccLink}>See how it works</div>
             </div>
             <div className={styles.uccCard} onClick={() => handleTabChange('agency')}>
               <div className={styles.uccIcon}><Building size={16} /></div>
@@ -113,7 +113,7 @@ export default function UseCasesPage() {
                 Manage 5–50 channels with one team. Client approval workflows, white-label reports, and bulk
                 content generation.
               </div>
-              <div className={styles.uccLink}>See how it works →</div>
+              <div className={styles.uccLink}>See how it works</div>
             </div>
             <div className={styles.uccCard} onClick={() => handleTabChange('beginners')}>
               <div className={styles.uccIcon}><Sprout size={32} /></div>
@@ -122,7 +122,7 @@ export default function UseCasesPage() {
                 No experience needed. AutoTubeOS guides you from zero to your first video with step-by-step AI
                 assistance.
               </div>
-              <div className={styles.uccLink}>See how it works →</div>
+              <div className={styles.uccLink}>See how it works</div>
             </div>
             <div className={styles.uccCard} onClick={() => handleTabChange('shorts')}>
               <div className={styles.uccIcon}><Zap size={16} /></div>
@@ -131,7 +131,7 @@ export default function UseCasesPage() {
                 Automatically turn every long video into 5 viral Shorts. Post daily without creating daily — the
                 smart way.
               </div>
-              <div className={styles.uccLink}>See how it works →</div>
+              <div className={styles.uccLink}>See how it works</div>
             </div>
           </div>
         </div>
@@ -164,9 +164,11 @@ export default function UseCasesPage() {
                   background: 'var(--red-bg)',
                   border: '1px solid var(--red-border)',
                   color: 'var(--red)',
+                  overflow: 'hidden',
+                  padding: 0
                 }}
               >
-                AK
+                <img src="/ahmed_avatar.png" alt="Ahmed K." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               </div>
               <div className={styles.pcName}>Ahmed K.</div>
               <div className={styles.pcRole}>Faceless Finance Creator · Lahore, Pakistan</div>
@@ -372,9 +374,11 @@ export default function UseCasesPage() {
                   background: 'var(--blue-bg)',
                   border: '1px solid var(--blue-border)',
                   color: 'var(--blue)',
+                  overflow: 'hidden',
+                  padding: 0
                 }}
               >
-                JL
+                <img src="/james_avatar.png" alt="James L." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               </div>
               <div className={styles.pcName}>James L.</div>
               <div className={styles.pcRole}>YouTube Automation Agency · London, UK</div>
@@ -554,7 +558,7 @@ export default function UseCasesPage() {
               </div>
               <div className={styles.uiBtns}>
                 <Link href="/auth" className={styles.btnP} style={{ background: 'var(--green)' }}>
-                  Start for Free →
+                  Start for Free
                 </Link>
               </div>
             </div>
@@ -565,9 +569,11 @@ export default function UseCasesPage() {
                   background: 'var(--green-bg)',
                   border: '1px solid var(--green-border)',
                   color: 'var(--green)',
+                  overflow: 'hidden',
+                  padding: 0
                 }}
               >
-                MZ
+                <img src="/mariam_avatar.png" alt="Mariam Z." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               </div>
               <div className={styles.pcName}>Mariam Z.</div>
               <div className={styles.pcRole}>Started 3 months ago · AI Tools Niche</div>
@@ -748,7 +754,7 @@ export default function UseCasesPage() {
               </div>
               <div className={styles.uiBtns}>
                 <Link href="/auth" className={styles.btnP} style={{ background: 'var(--amber)', color: '#000' }}>
-                  Try Shorts Repurposer →
+                  Try Shorts Repurposer
                 </Link>
               </div>
             </div>
@@ -759,9 +765,11 @@ export default function UseCasesPage() {
                   background: 'var(--amber-bg)',
                   border: '1px solid rgba(245, 158, 11, 0.28)',
                   color: 'var(--amber)',
+                  overflow: 'hidden',
+                  padding: 0
                 }}
               >
-                SR
+                <img src="/sarah_avatar.png" alt="Sara R." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               </div>
               <div className={styles.pcName}>Sara R.</div>
               <div className={styles.pcRole}>Finance Shorts Creator · 180K Subscribers</div>
@@ -950,7 +958,7 @@ export default function UseCasesPage() {
             zIndex: 1,
           }}
         >
-          Start Free Trial →
+          Start Free Trial
         </Link>
       </div>
 

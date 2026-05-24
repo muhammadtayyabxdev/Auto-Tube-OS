@@ -73,7 +73,7 @@ export default function FeaturesPage() {
               </div>
               <div className={styles.fiBtns}>
                 <Link href="/auth" className={styles.btnP}>
-                  Try Topic Finder Free →
+                  Try Topic Finder Free
                 </Link>
               </div>
             </div>
@@ -326,7 +326,7 @@ export default function FeaturesPage() {
               </div>
               <div className={styles.fiBtns}>
                 <Link href="/auth" className={styles.btnP} style={{ background: 'var(--blue)' }}>
-                  Generate a Script →
+                  Generate a Script
                 </Link>
               </div>
             </div>
@@ -491,7 +491,7 @@ export default function FeaturesPage() {
               </div>
               <div className={styles.fiBtns}>
                 <Link href="/auth" className={styles.btnP} style={{ background: 'var(--green)' }}>
-                  Try Shorts Repurposer →
+                  Try Shorts Repurposer
                 </Link>
               </div>
             </div>
@@ -658,7 +658,7 @@ export default function FeaturesPage() {
                   className={styles.btnP}
                   style={{ background: 'var(--amber)', color: '#000' }}
                 >
-                  Analyze My Script →
+                  Analyze My Script
                 </Link>
               </div>
             </div>
@@ -763,7 +763,7 @@ export default function FeaturesPage() {
               </div>
               <div className={styles.fiBtns}>
                 <Link href="/auth" className={styles.btnP} style={{ background: 'var(--purple)' }}>
-                  Open Calendar →
+                  Open Calendar
                 </Link>
               </div>
             </div>
@@ -918,7 +918,7 @@ export default function FeaturesPage() {
               </div>
               <div className={styles.fiBtns}>
                 <Link href="/auth" className={styles.btnP} style={{ background: 'var(--blue)' }}>
-                  Analyze a Competitor →
+                  Analyze a Competitor
                 </Link>
               </div>
             </div>
@@ -1060,7 +1060,7 @@ export default function FeaturesPage() {
               </div>
               <div className={styles.fiBtns}>
                 <Link href="/auth" className={styles.btnP} style={{ background: 'var(--purple)' }}>
-                  Set Up Your Agent →
+                  Set Up Your Agent
                 </Link>
                 <div
                   style={{
@@ -1217,7 +1217,7 @@ export default function FeaturesPage() {
           Start your 14-day free trial — no credit card required.
         </div>
         <Link href="/auth" className={styles.btnP} style={{ fontSize: '15px', padding: '14px 36px' }}>
-          Start Free Trial →
+          Start Free Trial
         </Link>
       </div>
 

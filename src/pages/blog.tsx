@@ -465,7 +465,7 @@ export default function Blog() {
                       <div className={styles.authorRole}>{featuredPost.role}</div>
                     </div>
                   </div>
-                  <div className={styles.readBtn}>Read article →</div>
+                  <div className={styles.readBtn}>Read article</div>
                 </div>
               </div>
             </div>
@@ -503,7 +503,7 @@ export default function Blog() {
           {posts.length > 0 && (
             <div className={styles.loadMore}>
               <button className={styles.loadBtn} onClick={() => alert('All articles are loaded!')}>
-                Load More Articles →
+                Load More Articles
               </button>
             </div>
           )}
@@ -531,7 +531,7 @@ export default function Blog() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <button type="submit" className={styles.nlBtn}>Subscribe Free →</button>
+                <button type="submit" className={styles.nlBtn}>Subscribe Free</button>
               </form>
             )}
             <div className={styles.nlNote}>2,400+ creators · No spam ever</div>
@@ -574,7 +574,7 @@ export default function Blog() {
               Put everything you read here into action — inside one AI-powered workspace.
             </div>
             <Link href="/auth" className={styles.tbBtn}>
-              Start Free Trial →
+              Start Free Trial
             </Link>
           </div>
         </div>
@@ -634,7 +634,7 @@ export default function Blog() {
                 AutoTubeOS gives you the exact system described in this article — topic finder, script generator, Shorts repurposer, and content calendar in one workspace.
               </p>
               <Link href="/auth" style={{ display: 'inline-block', textDecoration: 'none' }}>
-                <button className={styles.aCtaBtn}>Try AutoTubeOS Free →</button>
+                <button className={styles.aCtaBtn}>Try AutoTubeOS Free</button>
               </Link>
             </div>
           </div>

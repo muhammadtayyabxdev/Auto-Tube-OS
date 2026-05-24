@@ -234,7 +234,9 @@ export default function About() {
         </div>
         <div className={styles.teamGrid}>
           <div className={styles.teamCard}>
-            <div className={`${styles.teamAv} ${styles.red}`}>AK</div>
+            <div className={styles.teamAv} style={{ overflow: 'hidden', padding: 0 }}>
+              <img src="/ahmed_avatar.png" alt="Ahmed K." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+            </div>
             <div className={styles.teamName}>Ahmed K.</div>
             <div className={styles.teamRole}>Founder & CEO</div>
             <p className={styles.teamBio}>
@@ -246,7 +248,9 @@ export default function About() {
             </div>
           </div>
           <div className={styles.teamCard}>
-            <div className={`${styles.teamAv} ${styles.blue}`}>SR</div>
+            <div className={styles.teamAv} style={{ overflow: 'hidden', padding: 0 }}>
+              <img src="/sarah_avatar.png" alt="Sara R." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+            </div>
             <div className={styles.teamName}>Sara R.</div>
             <div className={styles.teamRole}>Head of Product</div>
             <p className={styles.teamBio}>
@@ -258,7 +262,9 @@ export default function About() {
             </div>
           </div>
           <div className={styles.teamCard}>
-            <div className={`${styles.teamAv} ${styles.green}`}>MZ</div>
+            <div className={styles.teamAv} style={{ overflow: 'hidden', padding: 0 }}>
+              <img src="/mariam_avatar.png" alt="Mariam Z." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+            </div>
             <div className={styles.teamName}>Mariam Z.</div>
             <div className={styles.teamRole}>AI Lead</div>
             <p className={styles.teamBio}>
@@ -270,7 +276,9 @@ export default function About() {
             </div>
           </div>
           <div className={styles.teamCard}>
-            <div className={`${styles.teamAv} ${styles.amber}`}>JL</div>
+            <div className={styles.teamAv} style={{ overflow: 'hidden', padding: 0 }}>
+              <img src="/james_avatar.png" alt="James L." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+            </div>
             <div className={styles.teamName}>James L.</div>
             <div className={styles.teamRole}>Head of Growth</div>
             <p className={styles.teamBio}>

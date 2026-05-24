@@ -370,7 +370,7 @@ export default function Pricing() {
         <p>Join 1,200+ creators already on the waitlist. Early members lock in 50% off forever.</p>
         <div className={styles.ctaBtns}>
           <Link href="/auth" className={styles.ctaMain}>
-            Start Free Trial →
+            Start Free Trial
           </Link>
           <Link href="/dashboard" className={styles.ctaSec}>
             See the Dashboard

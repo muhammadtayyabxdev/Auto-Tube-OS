@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@/styles/auth.module.css";
-import { Star, Eye, EyeOff } from 'lucide-react';
+import { Star, Eye, EyeOff, Check, Circle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Auth() {
@@ -16,6 +16,13 @@ export default function Auth() {
   const [showSignUpPw, setShowSignUpPw] = useState(false);
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState({ pct: 0, color: "#ff3d3d" });
+
+  const pwRules = [
+    { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
+    { label: "One uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
+    { label: "One number", test: (p: string) => /[0-9]/.test(p) },
+    { label: "One special character", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+  ];
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -88,6 +95,14 @@ export default function Auth() {
 
   return (
     <div className={styles.shell}>
+      <svg style={{ width: 0, height: 0, position: 'absolute' }}>
+        <defs>
+          <linearGradient id="starHalfGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="60%" stopColor="var(--red)" stopOpacity="1" />
+            <stop offset="60%" stopColor="rgba(255, 61, 61, 0.05)" stopOpacity="1" />
+          </linearGradient>
+        </defs>
+      </svg>
       <Head>
         <title>Sign In / Sign Up — AutoTube OS</title>
         <meta name="description" content="Access your AutoTube OS workspace and automate your YouTube content pipeline." />
@@ -130,12 +145,20 @@ export default function Auth() {
         </div>
         <div className={styles.leftBottom}>
           <div className={styles.testi}>
-            <div className={styles.stars}><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
+            <div className={styles.stars}>
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="var(--red)" strokeWidth={1.5} />
+              <Star size={16} stroke="var(--red)" fill="url(#starHalfGrad)" strokeWidth={1.5} />
+            </div>
             <p className={styles.testiText}>
               &quot;I run 3 channels and AutoTubeOS replaced every other tool in my stack. The script generator alone saves me 4 hours a week.&quot;
             </p>
             <div className={styles.testiAuthor}>
-              <div className={styles.tAv}>JL</div>
+              <div className={styles.tAv}>
+                <img src="/james_avatar.png" alt="James L." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div>
                 <div className={styles.tName}>James L.</div>
                 <div className={styles.tRole}>YouTube Agency · 12 clients</div>
@@ -176,7 +199,7 @@ export default function Auth() {
             <div className={styles.oauthRow}>
               <button type="button" className={styles.oauthBtn}>
                 <span className={styles.oauthIcon}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: "middle" }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
@@ -186,7 +209,7 @@ export default function Auth() {
               </button>
               <button type="button" className={styles.oauthBtn}>
                 <span className={styles.oauthIcon}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: "middle" }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg">
                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                   </svg>
                 </span> Twitter
@@ -226,7 +249,7 @@ export default function Auth() {
               </div>
             </div>
             <button type="submit" className={styles.submitBtn}>
-              Sign In →
+              Sign In
             </button>
             <div className={styles.formNote}>
               Don&apos;t have an account?{" "}
@@ -246,7 +269,7 @@ export default function Auth() {
             <div className={styles.oauthRow}>
               <button type="button" className={styles.oauthBtn}>
                 <span className={styles.oauthIcon}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: "middle" }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
@@ -256,7 +279,7 @@ export default function Auth() {
               </button>
               <button type="button" className={styles.oauthBtn}>
                 <span className={styles.oauthIcon}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: "middle" }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg">
                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                   </svg>
                 </span> Twitter
@@ -308,8 +331,28 @@ export default function Auth() {
                 </div>
               )}
             </div>
+            {password && (
+              <div className={styles.pwRulesCard}>
+                <div className={styles.pwRulesTitle}>Password requirements</div>
+                <div className={styles.pwRulesList}>
+                  {pwRules.map((rule) => {
+                    const passed = rule.test(password);
+                    return (
+                      <div key={rule.label} className={`${styles.pwRule} ${passed ? styles.pwRulePass : ""}`}>
+                        <span className={styles.pwRuleIcon}>
+                          {passed
+                            ? <Check size={11} strokeWidth={3} />
+                            : <Circle size={9} strokeWidth={2} />}
+                        </span>
+                        {rule.label}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             <button type="submit" className={styles.submitBtn}>
-              Create Free Account →
+              Create Free Account
             </button>
             <div className={styles.termsNote}>
               By signing up you agree to our{" "}

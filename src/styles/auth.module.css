@@ -4,6 +4,7 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  font-size: 14px;
 }
 
 /* LEFT PANEL */
@@ -47,7 +48,7 @@
 }
 .logo {
   font-family: var(--fh);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 800;
   margin-bottom: 48px;
   display: inline-block;
@@ -66,7 +67,7 @@
   justify-content: center;
 }
 .leftTag {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--red);
@@ -75,14 +76,14 @@
 }
 .leftTitle {
   font-family: var(--fh);
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(1.9rem, 3.1vw, 2.7rem);
   font-weight: 800;
   letter-spacing: -1px;
   line-height: 1.1;
   margin-bottom: 16px;
 }
 .leftSub {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
   line-height: 1.7;
   max-width: 380px;
@@ -98,13 +99,13 @@
 }
 .statMNum {
   font-family: var(--fh);
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 800;
   color: var(--red);
   letter-spacing: -0.5px;
 }
 .statMLbl {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted2);
   margin-top: 2px;
 }
@@ -120,10 +121,10 @@
   padding: 18px;
 }
 .testiText {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
   line-height: 1.6;
-  font-style: italic;
+  font-style: normal;
   margin-bottom: 12px;
 }
 .testiAuthor {
@@ -140,39 +141,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--muted);
 }
 .tName {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
 }
 .tRole {
-  font-size: 9px;
+  font-size: 10px;
   color: var(--muted2);
 }
 .stars {
   color: var(--red);
-  font-size: 10px;
+  font-size: 11px;
   margin-bottom: 8px;
 }
 
 /* RIGHT PANEL */
 .right {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   padding: 36px;
   overflow-y: auto;
 }
 .formWrap {
   width: 100%;
   max-width: 400px;
+  margin: auto;
 }
 .formLogo {
   font-family: var(--fh);
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 800;
   margin-bottom: 36px;
   display: none;
@@ -193,7 +194,7 @@
   text-align: center;
   padding: 8px;
   border-radius: 7px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   color: var(--muted);
@@ -209,13 +210,13 @@
 }
 .formTitle {
   font-family: var(--fh);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 6px;
 }
 .formSub {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
   margin-bottom: 24px;
 }
@@ -235,7 +236,7 @@
   border-radius: 9px;
   padding: 10px;
   font-family: var(--fb);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text);
   cursor: pointer;
   transition: all 0.15s;
@@ -259,7 +260,7 @@
   background: var(--border);
 }
 .dividerText {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted2);
 }
 .field {
@@ -267,7 +268,7 @@
 }
 .fieldLabel {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
   margin-bottom: 7px;
   font-weight: 500;
@@ -283,7 +284,7 @@
   padding: 11px 14px;
   color: var(--text);
   font-family: var(--fb);
-  font-size: 12px;
+  font-size: 13px;
   outline: none;
   transition: border-color 0.2s;
 }
@@ -298,7 +299,9 @@
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--muted2);
   cursor: pointer;
   user-select: none;
@@ -310,7 +313,7 @@
   margin-bottom: 7px;
 }
 .forgot {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--red);
   cursor: pointer;
   text-decoration: none;
@@ -326,7 +329,7 @@
   border-radius: 9px;
   padding: 12px;
   font-family: var(--fb);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -339,7 +342,7 @@
   opacity: 0.87;
 }
 .formNote {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted2);
   text-align: center;
   margin-top: 16px;
@@ -353,7 +356,7 @@
   text-decoration: underline;
 }
 .termsNote {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted2);
   text-align: center;
   margin-top: 12px;
@@ -363,7 +366,7 @@
   height: 3px;
   border-radius: 2px;
   background: var(--s4);
-  margin-top: 6px;
+  margin-top: 10px;
   overflow: hidden;
 }
 .strengthFill {
@@ -376,6 +379,58 @@
 }
 .pwScreen.active {
   display: block;
+}
+
+/* Password Rules Card */
+.pwRulesCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  animation: fadeSlideIn 0.2s ease;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.pwRulesTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.pwRulesList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+}
+.pwRule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted2);
+  transition: color 0.2s;
+}
+.pwRulePass {
+  color: #22c55e;
+}
+.pwRuleIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  transition: background 0.2s;
+}
+.pwRulePass .pwRuleIcon {
+  background: rgba(34, 197, 94, 0.15);
 }
 
 @media (max-width: 700px) {

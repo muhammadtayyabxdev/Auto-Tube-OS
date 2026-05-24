@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '@/styles/legal.module.css';
@@ -12,7 +12,7 @@ type DocType = 'terms' | 'privacy';
 
 export default function LegalPage() {
   const [activeDoc, setActiveDoc] = useState<DocType>('terms');
-  const [activeSection, setActiveSection] = useState<string>('');
+  const [activeSection, setActiveSection] = useState<string>('t1');
 
   const scrollTo = (id: string) => {
     setActiveSection(id);
@@ -21,6 +21,38 @@ export default function LegalPage() {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  useEffect(() => {
+    const prefix = activeDoc === 'terms' ? 't' : 'p';
+    const count = activeDoc === 'terms' ? 10 : 8;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-120px 0px -60% 0px', // Compensate for sticky navbar
+      threshold: 0,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+    for (let i = 1; i <= count; i++) {
+      const el = document.getElementById(`${prefix}${i}`);
+      if (el) {
+        observer.observe(el);
+      }
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [activeDoc]);
 
   return (
     <>

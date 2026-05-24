@@ -124,7 +124,7 @@ export default function PasswordReset() {
                 />
               </div>
               <button type="submit" className={styles.submitBtn}>
-                Send Reset Link →
+                Send Reset Link
               </button>
             </div>
             <div className={styles.cardFooter}>
@@ -172,7 +172,7 @@ export default function PasswordReset() {
                 .
               </div>
               <button className={`${styles.submitBtn} ${styles.blue}`} onClick={() => setStep(3)}>
-                I got the link, continue →
+                I got the link, continue
               </button>
             </div>
             <div className={styles.cardFooter}>
@@ -254,7 +254,7 @@ export default function PasswordReset() {
                 )}
               </div>
               <button type="submit" className={styles.submitBtn}>
-                Reset Password →
+                Reset Password
               </button>
             </div>
           </form>
@@ -275,7 +275,7 @@ export default function PasswordReset() {
                 className={`${styles.submitBtn} ${styles.green}`}
                 onClick={() => router.push("/auth")}
               >
-                Go to Login →
+                Go to Login
               </button>
             </div>
           </div>

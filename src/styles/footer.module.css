@@ -5,7 +5,7 @@
   flex-wrap: wrap; gap: 1rem;
   background: var(--bg);
 }
-.logo { font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--text); text-decoration: none; }
+.logo { font-family: var(--font-head); font-weight: 800; font-size: 1.2rem; color: var(--text); text-decoration: none; }
 .logo span { color: var(--red); }
 .footer p { color: var(--muted2); font-size: 0.82rem; }
 .footerLinks { display: flex; gap: 1.5rem; }

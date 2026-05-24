@@ -213,7 +213,7 @@ export default function Onboarding() {
           </span>
           {cur < total && (
             <button className={styles.skipBtn} onClick={() => go(cur + 1)}>
-              Skip →
+              Skip
             </button>
           )}
         </div>
@@ -556,7 +556,7 @@ export default function Onboarding() {
                 style={{ margin: "0 auto", padding: "13px 44px", fontSize: "15px" }}
                 onClick={handleFinishSetup}
               >
-                Open Dashboard →
+                Open Dashboard
               </button>
               <div style={{ marginTop: "12px", fontSize: "12px", color: "var(--muted2)" }}>
                 No credit card required · Free for 14 days
@@ -579,7 +579,7 @@ export default function Onboarding() {
             </button>
             <div className={styles.hint}>{hints[cur - 1] || ""}</div>
             <button className={styles.nextBtn} onClick={() => go(cur + 1)}>
-              {cur === total - 1 ? <><span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Finish Setup <Rocket size={16} /></span></> : "Continue"} <span>→</span>
+              {cur === total - 1 ? <><span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Finish Setup <Rocket size={16} /></span></> : "Continue"}
             </button>
           </div>
         )}

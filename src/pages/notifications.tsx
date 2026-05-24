@@ -13,8 +13,7 @@ import {
   CreditCard, 
   Settings, 
   MailOpen, 
-  Sparkles, 
-  ArrowLeft 
+  Sparkles 
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -223,9 +222,6 @@ export default function NotificationsCenter() {
           <div className={styles.tbTitle}>Notifications Center</div>
           
           <div className={styles.topbarActions}>
-            <Link href="/dashboard" className={styles.tbActionBtn}>
-              <ArrowLeft size={13} /> Back to Dashboard
-            </Link>
             {notifications.length > 0 && (
               <>
                 <button className={styles.tbActionBtn} onClick={markAllAsRead}>

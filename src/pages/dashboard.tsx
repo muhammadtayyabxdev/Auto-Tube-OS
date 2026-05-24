@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 
-import { Suspense, useState, useEffect, useMemo } from 'react';
+import { Suspense, useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/dashboard.module.css';
@@ -39,6 +39,38 @@ function DashboardContent() {
       setToastType(null);
     }, 3000);
   };
+
+  // Spotlight Search State
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+        searchInputRef.current?.focus();
+      } else if (e.key === 'Escape') {
+        setSearchOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const navigationItems = useMemo(() => [
+    { name: 'Overview / Dashboard', icon: <Landmark size={14} />, action: () => handleViewChange('home'), type: 'nav' },
+    { name: 'Topic Finder', icon: <Flame size={14} />, action: () => handleViewChange('topics'), type: 'nav' },
+    { name: 'Script Generator', icon: <PenTool size={14} />, action: () => router.push('/script-generator'), type: 'nav' },
+    { name: 'Shorts Repurposer', icon: <Zap size={14} />, action: () => handleViewChange('shorts'), type: 'nav' },
+    { name: 'Content Calendar', icon: <Clock size={14} />, action: () => handleViewChange('calendar'), type: 'nav' },
+    { name: 'Analytics & Reports', icon: <BarChart3 size={14} />, action: () => handleViewChange('analytics'), type: 'nav' },
+    { name: 'Affiliate Dashboard', icon: <DollarSign size={14} />, action: () => router.push('/affiliate-dashboard'), type: 'nav' },
+    { name: 'Creator Emails', icon: <Bell size={14} />, action: () => router.push('/emails'), type: 'nav' },
+    { name: 'Notifications Center', icon: <Bell size={14} />, action: () => router.push('/notifications'), type: 'nav' },
+    { name: 'Account Settings', icon: <Bot size={14} />, action: () => router.push('/settings'), type: 'nav' },
+  ], []);
 
   // 1. HOME VIEW STATE
   const [pipelineItems] = useState([
@@ -114,6 +146,40 @@ function DashboardContent() {
   const handleExportAllShorts = () => {
     triggerToast('Exporting all 5 clips to Google Drive/Local downloads...');
   };
+
+  const searchItems = useMemo(() => {
+    const projectItems = pipelineItems.map(item => ({
+      name: item.title,
+      icon: <Play size={14} />,
+      action: () => {
+        triggerToast(`Opening project: "${item.title}"`);
+        handleViewChange('home');
+      },
+      type: 'project'
+    }));
+
+    const topicItems = topicList.map(item => ({
+      name: item.title.replace(/"/g, ''),
+      icon: <Flame size={14} />,
+      action: () => {
+        handleWriteScriptRedirect(item.title);
+      },
+      type: 'topic'
+    }));
+
+    return [
+      ...navigationItems,
+      ...projectItems,
+      ...topicItems
+    ];
+  }, [pipelineItems, topicList, navigationItems]);
+
+  const filteredSearchItems = useMemo(() => {
+    if (!searchQuery) return searchItems.slice(0, 8);
+    return searchItems.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, searchItems]);
 
   // 4. CALENDAR STATE
   const [calendarEvents, setCalendarEvents] = useState<Record<number, { title: string; class: string; icon?: 'upload' | 'check' }[]>>({
@@ -206,13 +272,87 @@ function DashboardContent() {
         <div className={styles.topbar}>
           <div className={styles.tbTitle}>{viewTitles[currentView] || 'Dashboard'}</div>
           
-          <div className={styles.tbSearch} onClick={() => triggerToast('Search indexing database... Please type in sections.')}>
-            <span><Search size={16} /></span>
-            <span style={{ color: 'var(--muted2)' }}>Search anything…</span>
-            <kbd>⌘K</kbd>
+          <div className={styles.tbSearchContainer}>
+            <div className={styles.tbSearch} onClick={() => setSearchOpen(true)}>
+              <span><Search size={16} /></span>
+              <input
+                ref={searchInputRef}
+                className={styles.searchInput}
+                type="text"
+                placeholder="Search anything…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setSearchOpen(true)}
+              />
+              <kbd>⌘K</kbd>
+            </div>
+            
+            {searchOpen && searchQuery.trim().length > 0 && (
+              <>
+                <div 
+                  style={{ position: 'fixed', inset: 0, zIndex: 998, background: 'transparent' }} 
+                  onClick={() => setSearchOpen(false)} 
+                />
+                <div className={styles.searchResultsDropdown} style={{ zIndex: 999 }}>
+                  {filteredSearchItems.length === 0 ? (
+                    <div className={styles.searchEmpty}>No results found for &quot;{searchQuery}&quot;</div>
+                  ) : (
+                    <>
+                      {filteredSearchItems.filter(item => item.type === 'nav').length > 0 && (
+                        <div className={styles.searchSection}>
+                          <div className={styles.searchHeader}>Tools & Pages</div>
+                          {filteredSearchItems.filter(item => item.type === 'nav').map((item) => (
+                            <div 
+                              key={item.name} 
+                              className={styles.searchItem} 
+                              onClick={() => { item.action(); setSearchOpen(false); setSearchQuery(''); }}
+                            >
+                              <span className={styles.searchIcon}>{item.icon}</span>
+                              <span>{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {filteredSearchItems.filter(item => item.type === 'project').length > 0 && (
+                        <div className={styles.searchSection}>
+                          <div className={styles.searchHeader}>Active Projects</div>
+                          {filteredSearchItems.filter(item => item.type === 'project').map((item) => (
+                            <div 
+                              key={item.name} 
+                              className={styles.searchItem} 
+                              onClick={() => { item.action(); setSearchOpen(false); setSearchQuery(''); }}
+                            >
+                              <span className={styles.searchIcon}>{item.icon}</span>
+                              <span>{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {filteredSearchItems.filter(item => item.type === 'topic').length > 0 && (
+                        <div className={styles.searchSection}>
+                          <div className={styles.searchHeader}>Viral Suggestions</div>
+                          {filteredSearchItems.filter(item => item.type === 'topic').map((item) => (
+                            <div 
+                              key={item.name} 
+                              className={styles.searchItem} 
+                              onClick={() => { item.action(); setSearchOpen(false); setSearchQuery(''); }}
+                            >
+                              <span className={styles.searchIcon}>{item.icon}</span>
+                              <span>{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </>
+            )}
           </div>
 
-          <div className={`${styles.tbIconBtn} ${styles.notifDot}`} onClick={() => triggerToast('No new notifications!')}><Bell size={16} /></div>
+          <div className={`${styles.tbIconBtn} ${styles.notifDot}`} onClick={() => router.push('/notifications')}><Bell size={16} /></div>
           
           <button className={styles.tbBtn} onClick={handleTopbarAction}>
             {viewActionLabels[currentView] || '+ New'}

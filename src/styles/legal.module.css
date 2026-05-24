@@ -37,6 +37,8 @@
   font-weight: 500;
   cursor: pointer;
   color: var(--muted);
+  background: transparent;
+  border: none;
   transition: all 0.2s;
 }
 

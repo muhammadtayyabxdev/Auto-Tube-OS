@@ -163,7 +163,7 @@ export default function Careers() {
               <span className={styles.jskill}>AI APIs</span>
             </div>
             <button className={styles.applyBtn} onClick={triggerToast}>
-              Apply Now →
+              Apply Now
             </button>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function Careers() {
               <span className={styles.jskill}>FastAPI</span>
             </div>
             <button className={styles.applyBtn} onClick={triggerToast}>
-              Apply Now →
+              Apply Now
             </button>
           </div>
         </div>
@@ -221,24 +221,25 @@ export default function Careers() {
               <span className={styles.jskill}>YouTube</span>
             </div>
             <button className={styles.applyBtn} onClick={triggerToast}>
-              Apply Now →
+              Apply Now
             </button>
           </div>
         </div>
+      </div>
 
+      <section className={styles.openAppWrapper}>
         <div className={styles.openApp}>
-          <div style={{ fontSize: "2rem", marginBottom: "10px" }}><MailOpen size={16} /></div>
-          <div style={{ fontFamily: "var(--font-head)", fontSize: "1rem", fontWeight: 700, marginBottom: "6px" }}>
-            Don&apos;t see the right role?
-          </div>
-          <div style={{ fontSize: "13px", color: "var(--muted)", marginBottom: "14px" }}>
+          <div className={styles.openAppGlow}></div>
+          <div className={styles.openAppIcon}><MailOpen size={24} /></div>
+          <h3 className={styles.openAppTitle}>Don&apos;t see the right role?</h3>
+          <p className={styles.openAppDesc}>
             Send us your story and what you&apos;d build at AutoTubeOS.
-          </div>
-          <button className={styles.applyBtn} style={{ float: "none" }} onClick={triggerToast}>
-            Send Open Application →
+          </p>
+          <button className={styles.applyBtnOpen} onClick={triggerToast}>
+            Send Open Application
           </button>
         </div>
-      </div>
+      </section>
 
       <Footer />
 

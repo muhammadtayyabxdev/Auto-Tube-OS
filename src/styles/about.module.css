@@ -322,48 +322,53 @@
 }
 .tlItem {
   display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 24px;
+  grid-template-columns: 120px 1fr;
+  gap: 36px;
   padding-bottom: 36px;
   position: relative;
 }
 .tlItem:not(:last-child)::after {
   content: '';
   position: absolute;
-  left: 49px;
+  left: 137px;
   top: 28px;
-  width: 1px;
+  width: 2px;
   bottom: 0;
-  background: var(--border);
+  background: linear-gradient(to bottom, var(--red) 0%, var(--border) 100%);
+  opacity: 0.65;
 }
 .tlDate {
   font-family: var(--font-head);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  color: var(--muted2);
+  color: var(--muted);
   padding-top: 4px;
   text-align: right;
+  letter-spacing: -0.2px;
 }
 .tlDot {
   position: absolute;
-  left: 44px;
+  left: 133px;
   top: 6px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: var(--red);
   border: 2px solid var(--bg);
+  box-shadow: 0 0 0 3px rgba(255, 61, 61, 0.18), 0 0 8px rgba(255, 61, 61, 0.55);
+  z-index: 2;
 }
 .tlContent h3 {
   font-family: var(--font-head);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  color: var(--text);
 }
 .tlContent p {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* INVESTORS */
@@ -504,5 +509,27 @@
   }
   .teamGrid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width: 600px) {
+  .tlItem {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-left: 32px;
+  }
+  .tlDate {
+    text-align: left;
+    font-size: 0.82rem;
+    padding-top: 0;
+    margin-bottom: 2px;
+  }
+  .tlDot {
+    left: 11px;
+    top: 5px;
+  }
+  .tlItem:not(:last-child)::after {
+    left: 15px;
+    top: 24px;
   }
 }

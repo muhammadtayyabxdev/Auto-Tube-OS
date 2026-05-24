@@ -124,7 +124,7 @@ export default function EmailVerify() {
                 )}
               </div>
               <button type="submit" className={styles.submitBtn}>
-                Verify Email →
+                Verify Email
               </button>
               <div
                 style={{
@@ -183,7 +183,7 @@ export default function EmailVerify() {
                 className={`${styles.submitBtn} ${styles.green}`}
                 onClick={() => router.push("/dashboard")}
               >
-                Go to Dashboard →
+                Go to Dashboard
               </button>
             </div>
           </div>

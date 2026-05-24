@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import styles from '@/styles/changelog.module.css';
 import { Check, MailOpen, Bot, Zap, Search, Globe, Users, CalendarDays, Bug, BarChart3, Palette, AlertTriangle } from 'lucide-react';
 
@@ -283,7 +284,7 @@ export default function Changelog() {
               </div>
             ))}
             <div className={styles.relLink} onClick={() => alert('Archive loading soon!')}>
-              v1.x Archive →
+              v1.x Archive
             </div>
           </div>
 
@@ -395,6 +396,7 @@ export default function Changelog() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

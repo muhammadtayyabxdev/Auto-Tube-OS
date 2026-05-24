@@ -59,7 +59,7 @@ export default function ThankYouPage() {
 
           <div className={styles.btns}>
             <Link href="/dashboard" className={styles.btnGreen}>
-              Open Dashboard →
+              Open Dashboard
             </Link>
             <button 
               className={styles.btnGhost}
