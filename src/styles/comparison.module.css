@@ -155,13 +155,16 @@
   margin-bottom: 24px;
   text-align: center;
 }
-.cmpTable {
-  width: 100%;
-  border-collapse: collapse;
+.tableWrap {
   background: var(--s2);
   border: 1px solid var(--border);
   border-radius: 16px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.cmpTable {
+  width: 100%;
+  border-collapse: collapse;
 }
 .cmpTable thead tr {
   background: var(--s3);
@@ -404,5 +407,6 @@
   }
   .cmpTable {
     font-size: 11px;
+    min-width: 600px !important;
   }
 }

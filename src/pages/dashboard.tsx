@@ -1,11 +1,11 @@
 import Head from 'next/head';
 
 
-import { Suspense, useState, useEffect, useMemo, useRef } from 'react';
+import { Suspense, useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/dashboard.module.css';
-import { ArrowDown, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Landmark, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Upload, XCircle, Zap } from 'lucide-react';
+import { ArrowDown, ArrowUp, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Landmark, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Upload, X, XCircle, Zap } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 function DashboardContent() {
@@ -25,10 +25,10 @@ function DashboardContent() {
     }
   }, [searchParams]);
 
-  const handleViewChange = (view: string) => {
+  const handleViewChange = useCallback((view: string) => {
     setCurrentView(view);
     router.push(`/dashboard?view=${view}`, undefined, { scroll: false });
-  };
+  }, [router]);
 
   // Toast notification system
   const triggerToast = (msg: string, type: 'success' | 'error' = 'success') => {
@@ -70,7 +70,7 @@ function DashboardContent() {
     { name: 'Creator Emails', icon: <Bell size={14} />, action: () => router.push('/emails'), type: 'nav' },
     { name: 'Notifications Center', icon: <Bell size={14} />, action: () => router.push('/notifications'), type: 'nav' },
     { name: 'Account Settings', icon: <Bot size={14} />, action: () => router.push('/settings'), type: 'nav' },
-  ], []);
+  ], [handleViewChange, router]);
 
   // 1. HOME VIEW STATE
   const [pipelineItems] = useState([
@@ -102,10 +102,10 @@ function DashboardContent() {
     }, 1000);
   };
 
-  const handleWriteScriptRedirect = (title: string) => {
+  const handleWriteScriptRedirect = useCallback((title: string) => {
     const cleanTitle = title.replace(/"/g, '');
     router.push(`/script-generator?topic=${encodeURIComponent(cleanTitle)}`);
-  };
+  }, [router]);
 
   // 3. SHORTS STATE
   const [youtubeUrl, setYoutubeUrl] = useState<string>('');
@@ -172,7 +172,7 @@ function DashboardContent() {
       ...projectItems,
       ...topicItems
     ];
-  }, [pipelineItems, topicList, navigationItems]);
+  }, [pipelineItems, topicList, navigationItems, handleViewChange, handleWriteScriptRedirect]);
 
   const filteredSearchItems = useMemo(() => {
     if (!searchQuery) return searchItems.slice(0, 8);
@@ -287,14 +287,35 @@ function DashboardContent() {
               <kbd>⌘K</kbd>
             </div>
             
-            {searchOpen && searchQuery.trim().length > 0 && (
+            {searchOpen && (
               <>
                 <div 
-                  style={{ position: 'fixed', inset: 0, zIndex: 998, background: 'transparent' }} 
-                  onClick={() => setSearchOpen(false)} 
+                  className={styles.searchBackdrop}
+                  onClick={() => { setSearchOpen(false); setSearchQuery(''); }} 
                 />
                 <div className={styles.searchResultsDropdown} style={{ zIndex: 999 }}>
-                  {filteredSearchItems.length === 0 ? (
+                  {/* Mobile Search Header */}
+                  <div className={styles.mobileSearchHeader}>
+                    <Search size={16} className={styles.mobileSearchIcon} />
+                    <input
+                      type="text"
+                      className={styles.mobileSearchInput}
+                      placeholder="Search anything..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      autoFocus
+                    />
+                    <button 
+                      className={styles.mobileSearchClose}
+                      onClick={() => { setSearchOpen(false); setSearchQuery(''); }}
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+
+                  {searchQuery.trim().length === 0 ? (
+                    <div className={styles.searchPrompt}>Type a query to search tools, active projects, and viral topics...</div>
+                  ) : filteredSearchItems.length === 0 ? (
                     <div className={styles.searchEmpty}>No results found for &quot;{searchQuery}&quot;</div>
                   ) : (
                     <>
@@ -392,22 +413,22 @@ function DashboardContent() {
               <div className={styles.statCard}>
                 <div className={styles.statLabel}>Total Views (30d)</div>
                 <div className={styles.statVal}>2.4M</div>
-                <div className={`${styles.statDelta} ${styles.deltaUp}`}>↑ 18% vs last month</div>
+                <div className={`${styles.statDelta} ${styles.deltaUp}`}><ArrowUp size={10} /> 18% vs last month</div>
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statLabel}>Subscribers</div>
                 <div className={styles.statVal}>241K</div>
-                <div className={`${styles.statDelta} ${styles.deltaUp}`}>↑ +3.2K this week</div>
+                <div className={`${styles.statDelta} ${styles.deltaUp}`}><ArrowUp size={10} /> +3.2K this week</div>
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statLabel}>Videos Published</div>
                 <div className={styles.statVal}>12</div>
-                <div className={`${styles.statDelta} ${styles.deltaUp}`}>↑ 4 more than last month</div>
+                <div className={`${styles.statDelta} ${styles.deltaUp}`}><ArrowUp size={10} /> 4 more than last month</div>
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statLabel}>Est. Revenue (30d)</div>
                 <div className={styles.statVal}>$3,840</div>
-                <div className={`${styles.statDelta} ${styles.deltaUp}`}>↑ 22% vs last month</div>
+                <div className={`${styles.statDelta} ${styles.deltaUp}`}><ArrowUp size={10} /> 22% vs last month</div>
               </div>
             </div>
 
@@ -416,7 +437,7 @@ function DashboardContent() {
               <div className={styles.card}>
                 <div className={styles.cardHeader}>
                   <div className={styles.cardTitle}>Content Pipeline</div>
-                  <div className={styles.cardAction} onClick={() => handleViewChange('calendar')}>View all →</div>
+                  <div className={styles.cardAction} onClick={() => handleViewChange('calendar')}>View all</div>
                 </div>
                 
                 {pipelineItems.map((item) => (
@@ -435,7 +456,7 @@ function DashboardContent() {
               <div className={styles.card}>
                 <div className={styles.cardHeader}>
                   <div className={styles.cardTitle}>Views This Week</div>
-                  <div className={styles.cardAction}>↑ Best week ever</div>
+                  <div className={styles.cardAction}><ArrowUp size={11} /> Best week ever</div>
                 </div>
                 <div className={styles.miniChart}>
                   <div className={styles.bar} style={{ height: '35%' }} title="Mon: 120k"></div>
@@ -725,31 +746,31 @@ function DashboardContent() {
                 <div className={styles.chAv}><DollarSign size={16} /></div>
                 <div className={styles.chName}>AI Side Hustles That Pay $500/Day</div>
                 <div className={styles.chSubs}>342K views · $1,240</div>
-                <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 38%</div>
+                <div className={`${styles.chTrend} ${styles.chUp}`}><ArrowUp size={10} /> 38%</div>
               </div>
               <div className={styles.chRow}>
                 <div className={styles.chAv}><Brain size={16} /></div>
                 <div className={styles.chName}>Why 99% of People Stay Broke Forever</div>
                 <div className={styles.chSubs}>218K views · $890</div>
-                <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 22%</div>
+                <div className={`${styles.chTrend} ${styles.chUp}`}><ArrowUp size={10} /> 22%</div>
               </div>
               <div className={styles.chRow}>
                 <div className={styles.chAv}><TrendingUp size={16} /></div>
                 <div className={styles.chName}>I Invested $10K for 1 Year — Results</div>
                 <div className={styles.chSubs}>187K views · $740</div>
-                <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 14%</div>
+                <div className={`${styles.chTrend} ${styles.chUp}`}><ArrowUp size={10} /> 14%</div>
               </div>
               <div className={styles.chRow}>
                 <div className={styles.chAv}><Lightbulb size={16} /></div>
                 <div className={styles.chName}>10 Money Mistakes Rich People Never Make</div>
                 <div className={styles.chSubs}>143K views · $580</div>
-                <div className={`${styles.chTrend} ${styles.chDn}`}>↓ 3%</div>
+                <div className={`${styles.chTrend} ${styles.chDn}`}><ArrowDown size={10} /> 3%</div>
               </div>
               <div className={styles.chRow}>
                 <div className={styles.chAv}><Landmark size={16} /></div>
                 <div className={styles.chName}>The Truth About Passive Income in 2026</div>
                 <div className={styles.chSubs}>98K views · $390</div>
-                <div className={`${styles.chTrend} ${styles.chUp}`}>↑ 8%</div>
+                <div className={`${styles.chTrend} ${styles.chUp}`}><ArrowUp size={10} /> 8%</div>
               </div>
             </div>
           </div>

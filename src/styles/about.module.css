@@ -71,7 +71,7 @@
 .mQuote {
   font-family: var(--font-head);
   font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.5px;
   line-height: 1.3;
   margin-bottom: 16px;

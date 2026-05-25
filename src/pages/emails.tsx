@@ -1,21 +1,11 @@
 import Head from 'next/head';
 
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/emails.module.css';
-import { Check, Lightbulb, Clock, Play } from 'lucide-react';
+import { Check, Lightbulb } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-
-const renderSubjectText = (subject: string) => {
-  if (subject.startsWith('<Clock size={16} />')) {
-    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><Clock size={16} /> {subject.replace('<Clock size={16} /> ', '')}</span>;
-  }
-  if (subject.startsWith('<Play size={16} />')) {
-    return <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', verticalAlign: 'middle' }}><Play size={16} /> {subject.replace('<Play size={16} /> ', '')}</span>;
-  }
-  return subject;
-};
 
 interface EmailTemplate {
   id: string;
@@ -37,6 +27,7 @@ const templates: EmailTemplate[] = [
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to AutoTubeOS</title>
   <style>
     /* Hide scrollbars completely inside the preview */
@@ -46,19 +37,20 @@ const templates: EmailTemplate[] = [
 
 </head>
 <body style="margin:0;padding:0;background-color:#0d0f16;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#eef0f6;font-size:16px;line-height:1.6;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;border:none;">
+    <!-- Header (Full Width Black Bar) -->
     <tr>
-      <td>
-        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background-color:#0d0f16;border:none;overflow:hidden;">
-          <!-- Header -->
-          <tr>
-            <td style="background-color:#060608;padding:28px 32px;text-align:center;">
-              <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
-            </td>
-          </tr>
+      <td style="background-color:#060608;padding:28px 16px;text-align:center;">
+        <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
+      </td>
+    </tr>
+    <!-- Centered Content Wrapper -->
+    <tr>
+      <td align="center" style="padding:0;">
+        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#0d0f16;border:none;overflow:hidden;text-align:left;">
           <!-- Hero -->
           <tr>
-            <td style="padding:40px 32px 32px;text-align:center;">
+            <td style="padding:40px 16px 32px;text-align:center;">
               <div style="font-size:11px;font-weight:700;color:#ff3d3d;background-color:rgba(255,61,61,0.1);display:inline-block;padding:4px 12px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;">Welcome</div>
               <h1 style="font-size:24px;font-weight:800;color:#ffffff;line-height:1.2;margin:0 0 10px;">You're in. Let's build your channel system.</h1>
               <p style="font-size:15px;color:#a0aec0;line-height:1.6;margin:0;">Welcome to AutoTubeOS, Ahmed. Your 14-day free trial starts now.</p>
@@ -66,11 +58,11 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- Divider -->
           <tr>
-            <td style="padding:0 32px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
+            <td style="padding:0 16px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
           </tr>
           <!-- Body -->
           <tr>
-            <td style="padding:28px 32px;">
+            <td style="padding:28px 16px;">
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Hey Ahmed,</p>
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">You just joined 1,200+ creators who are building YouTube channels that run without them being glued to their desk 24/7. That's a big deal — and we're glad you're here.</p>
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Here's what your workspace is ready for right now:</p>
@@ -107,13 +99,13 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- CTA -->
           <tr>
-            <td style="text-align:center;padding:8px 32px 32px;">
+            <td style="text-align:center;padding:8px 16px 32px;">
               <a href="https://autotubeos.com/dashboard" style="display:inline-block;background-color:#ff3d3d;color:#ffffff;text-decoration:none;border-radius:10px;padding:14px 36px;font-size:15px;font-weight:600;box-shadow:0 4px 12px rgba(255,61,61,0.25);">Open Your Dashboard →</a>
             </td>
           </tr>
           <!-- Bottom Info / Stats -->
           <tr>
-            <td style="padding:0 32px 28px;">
+            <td style="padding:0 16px 28px;">
               <table width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0;">
                 <tr>
                   <td width="30%" align="center" style="background-color:#12151e;border-radius:8px;padding:14px 8px;">
@@ -137,7 +129,7 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- Footer -->
           <tr>
-            <td style="background-color:#0d0f16;padding:20px 32px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
+            <td style="background-color:#0d0f16;padding:20px 16px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
               AutoTubeOS · Lahore, Pakistan<br>
               <a href="#" style="color:#ff3d3d;text-decoration:none;">Unsubscribe</a> · <a href="#" style="color:#ff3d3d;text-decoration:none;">Privacy Policy</a> · <a href="#" style="color:#ff3d3d;text-decoration:none;">Help Center</a>
             </td>
@@ -153,12 +145,13 @@ const templates: EmailTemplate[] = [
     id: 'trial',
     name: 'Trial Ending (Day 12)',
     dotColor: 'var(--amber)',
-    subject: '<Clock size={16} /> Your free trial ends in 2 days',
+    subject: 'Your free trial ends in 2 days',
     from: 'Ahmed at AutoTubeOS <hello@autotubeos.com>',
     html: `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trial Ending</title>
   <style>
     /* Hide scrollbars completely inside the preview */
@@ -168,19 +161,20 @@ const templates: EmailTemplate[] = [
 
 </head>
 <body style="margin:0;padding:0;background-color:#0d0f16;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#eef0f6;font-size:16px;line-height:1.6;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;border:none;">
+    <!-- Header (Full Width Black Bar) -->
     <tr>
-      <td>
-        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background-color:#0d0f16;border:none;overflow:hidden;">
-          <!-- Header -->
-          <tr>
-            <td style="background-color:#060608;padding:28px 32px;text-align:center;">
-              <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
-            </td>
-          </tr>
+      <td style="background-color:#060608;padding:28px 16px;text-align:center;">
+        <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
+      </td>
+    </tr>
+    <!-- Centered Content Wrapper -->
+    <tr>
+      <td align="center" style="padding:0;">
+        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#0d0f16;border:none;overflow:hidden;text-align:left;">
           <!-- Hero -->
           <tr>
-            <td style="padding:40px 32px 32px;text-align:center;">
+            <td style="padding:40px 16px 32px;text-align:center;">
               <span style="font-size:48px;margin-bottom:16px;display:block;"><Clock size={28} /></span>
               <h1 style="font-size:24px;font-weight:800;color:#ffffff;line-height:1.2;margin:0 0 10px;">Your trial ends in 2 days.</h1>
               <p style="font-size:15px;color:#a0aec0;line-height:1.6;margin:0;">Don't lose access to your workspace — upgrade now and keep everything.</p>
@@ -188,11 +182,11 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- Divider -->
           <tr>
-            <td style="padding:0 32px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
+            <td style="padding:0 16px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
           </tr>
           <!-- Body -->
           <tr>
-            <td style="padding:28px 32px;">
+            <td style="padding:28px 16px;">
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Hey Ahmed,</p>
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Your 14-day free trial of AutoTubeOS ends on <strong style="color:#ffffff;">May 19, 2026</strong>. After that, you'll lose access to:</p>
               
@@ -211,20 +205,20 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- CTA -->
           <tr>
-            <td style="text-align:center;padding:8px 32px 24px;">
+            <td style="text-align:center;padding:8px 16px 24px;">
               <a href="https://autotubeos.com/pricing" style="display:inline-block;background-color:#ff3d3d;color:#ffffff;text-decoration:none;border-radius:10px;padding:14px 36px;font-size:15px;font-weight:600;box-shadow:0 4px 12px rgba(255,61,61,0.25);">Upgrade to Pro — $29/mo →</a>
             </td>
           </tr>
           <!-- Bottom links -->
           <tr>
-            <td style="padding:0 32px 28px;text-align:center;font-size:13px;color:#a0aec0;">
+            <td style="padding:0 16px 28px;text-align:center;font-size:13px;color:#a0aec0;">
               <p style="margin:0 0 16px;">Or <a href="https://autotubeos.com/dashboard" style="color:#ff3d3d;text-decoration:none;">continue with the Free plan</a> (5 ideas/mo, 3 scripts/mo)</p>
               <p style="margin:0;">Questions? Reply to this email anytime.</p>
             </td>
           </tr>
           <!-- Footer -->
           <tr>
-            <td style="background-color:#0d0f16;padding:20px 32px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
+            <td style="background-color:#0d0f16;padding:20px 16px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
               AutoTubeOS · Lahore, Pakistan<br>
               <a href="#" style="color:#ff3d3d;text-decoration:none;">Unsubscribe</a> · <a href="#" style="color:#ff3d3d;text-decoration:none;">Privacy Policy</a> · <a href="#" style="color:#ff3d3d;text-decoration:none;">Manage Subscription</a>
             </td>
@@ -246,6 +240,7 @@ const templates: EmailTemplate[] = [
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receipt Invoice</title>
   <style>
     /* Hide scrollbars completely inside the preview */
@@ -255,19 +250,20 @@ const templates: EmailTemplate[] = [
 
 </head>
 <body style="margin:0;padding:0;background-color:#0d0f16;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#eef0f6;font-size:16px;line-height:1.6;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;border:none;">
+    <!-- Header (Full Width Black Bar) -->
     <tr>
-      <td>
-        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background-color:#0d0f16;border:none;overflow:hidden;">
-          <!-- Header -->
-          <tr>
-            <td style="background-color:#060608;padding:28px 32px;text-align:center;">
-              <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
-            </td>
-          </tr>
+      <td style="background-color:#060608;padding:28px 16px;text-align:center;">
+        <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
+      </td>
+    </tr>
+    <!-- Centered Content Wrapper -->
+    <tr>
+      <td align="center" style="padding:0;">
+        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#0d0f16;border:none;overflow:hidden;text-align:left;">
           <!-- Hero -->
           <tr>
-            <td style="padding:40px 32px 24px;text-align:center;">
+            <td style="padding:40px 16px 24px;text-align:center;">
               <div style="font-size:11px;font-weight:700;color:#ff3d3d;background-color:rgba(255,61,61,0.1);display:inline-block;padding:4px 12px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;">Receipt</div>
               <h1 style="font-size:24px;font-weight:800;color:#ffffff;line-height:1.2;margin:0 0 10px;">Payment confirmed.</h1>
               <p style="font-size:15px;color:#a0aec0;line-height:1.6;margin:0;">Thanks for subscribing to AutoTubeOS Pro. Here's your receipt.</p>
@@ -275,11 +271,11 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- Divider -->
           <tr>
-            <td style="padding:0 32px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
+            <td style="padding:0 16px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
           </tr>
           <!-- Body -->
           <tr>
-            <td style="padding:28px 32px;">
+            <td style="padding:28px 16px;">
               <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;margin:16px 0;">
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
                   <th style="text-align:left;padding:10px 12px;background-color:#12151e;color:#a0aec0;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;border-radius:4px 0 0 4px;">Description</th>
@@ -326,13 +322,13 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- CTA -->
           <tr>
-            <td style="text-align:center;padding:8px 32px 32px;">
+            <td style="text-align:center;padding:8px 16px 32px;">
               <a href="https://autotubeos.com/dashboard" style="display:inline-block;background-color:#ff3d3d;color:#ffffff;text-decoration:none;border-radius:10px;padding:14px 36px;font-size:15px;font-weight:600;box-shadow:0 4px 12px rgba(255,61,61,0.25);">Go to Dashboard →</a>
             </td>
           </tr>
           <!-- Footer -->
           <tr>
-            <td style="background-color:#0d0f16;padding:20px 32px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
+            <td style="background-color:#0d0f16;padding:20px 16px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
               AutoTubeOS · Lahore, Pakistan<br>
               Questions? <a href="mailto:billing@autotubeos.com" style="color:#ff3d3d;text-decoration:none;">billing@autotubeos.com</a><br>
               <a href="#" style="color:#ff3d3d;text-decoration:none;">Unsubscribe</a> · <a href="#" style="color:#ff3d3d;text-decoration:none;">Privacy Policy</a>
@@ -349,12 +345,13 @@ const templates: EmailTemplate[] = [
     id: 'onboarding2',
     name: 'Onboarding Day 3',
     dotColor: 'var(--red)',
-    subject: '<Play size={16} /> Day 3 tip: The fastest way to get your first viral idea',
+    subject: 'Day 3 tip: The fastest way to get your first viral idea',
     from: 'Ahmed at AutoTubeOS <hello@autotubeos.com>',
     html: `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Onboarding Day 3</title>
   <style>
     /* Hide scrollbars completely inside the preview */
@@ -364,30 +361,31 @@ const templates: EmailTemplate[] = [
 
 </head>
 <body style="margin:0;padding:0;background-color:#0d0f16;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#eef0f6;font-size:16px;line-height:1.6;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;border:none;">
+    <!-- Header (Full Width Black Bar) -->
     <tr>
-      <td>
-        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background-color:#0d0f16;border:none;overflow:hidden;">
-          <!-- Header -->
-          <tr>
-            <td style="background-color:#060608;padding:28px 32px;text-align:center;">
-              <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
-            </td>
-          </tr>
+      <td style="background-color:#060608;padding:28px 16px;text-align:center;">
+        <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
+      </td>
+    </tr>
+    <!-- Centered Content Wrapper -->
+    <tr>
+      <td align="center" style="padding:0;">
+        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#0d0f16;border:none;overflow:hidden;text-align:left;">
           <!-- Hero -->
           <tr>
-            <td style="padding:40px 32px 32px;text-align:center;">
+            <td style="padding:40px 16px 32px;text-align:center;">
               <span style="font-size:48px;margin-bottom:16px;display:block;"><Play size={28} /></span>
               <h1 style="font-size:24px;font-weight:800;color:#ffffff;line-height:1.2;margin:0 0 10px;">Day 3 tip: Find your first viral idea in under 5 minutes.</h1>
             </td>
           </tr>
           <!-- Divider -->
           <tr>
-            <td style="padding:0 32px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
+            <td style="padding:0 16px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
           </tr>
           <!-- Body -->
           <tr>
-            <td style="padding:28px 32px;">
+            <td style="padding:28px 16px;">
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Hey Ahmed,</p>
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Most new creators spend <strong style="color:#ffffff;">hours</strong> trying to find the "perfect" first video idea. Here's the truth: the best idea isn't the one you think of — it's the one your audience is already searching for.</p>
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Here's the fastest way to find it using AutoTubeOS:</p>
@@ -430,19 +428,19 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- CTA -->
           <tr>
-            <td style="text-align:center;padding:8px 32px 32px;">
+            <td style="text-align:center;padding:8px 16px 32px;">
               <a href="https://autotubeos.com/dashboard?view=topics" style="display:inline-block;background-color:#ff3d3d;color:#ffffff;text-decoration:none;border-radius:10px;padding:14px 36px;font-size:15px;font-weight:600;box-shadow:0 4px 12px rgba(255,61,61,0.25);">Open Topic Finder →</a>
             </td>
           </tr>
           <!-- Bottom signature -->
           <tr>
-            <td style="padding:0 32px 28px;text-align:center;font-size:13px;color:#a0aec0;">
+            <td style="padding:0 16px 28px;text-align:center;font-size:13px;color:#a0aec0;">
               <p style="margin:0;">— Ahmed K., Founder</p>
             </td>
           </tr>
           <!-- Footer -->
           <tr>
-            <td style="background-color:#0d0f16;padding:20px 32px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
+            <td style="background-color:#0d0f16;padding:20px 16px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
               AutoTubeOS · Lahore, Pakistan<br>
               <a href="#" style="color:#ff3d3d;text-decoration:none;">Unsubscribe</a> · <a href="#" style="color:#ff3d3d;text-decoration:none;">Privacy Policy</a>
             </td>
@@ -464,6 +462,7 @@ const templates: EmailTemplate[] = [
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>We Miss You</title>
   <style>
     /* Hide scrollbars completely inside the preview */
@@ -473,19 +472,20 @@ const templates: EmailTemplate[] = [
 
 </head>
 <body style="margin:0;padding:0;background-color:#0d0f16;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#eef0f6;font-size:16px;line-height:1.6;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0d0f16;padding:0;border:none;">
+    <!-- Header (Full Width Black Bar) -->
     <tr>
-      <td>
-        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background-color:#0d0f16;border:none;overflow:hidden;">
-          <!-- Header -->
-          <tr>
-            <td style="background-color:#060608;padding:28px 32px;text-align:center;">
-              <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
-            </td>
-          </tr>
+      <td style="background-color:#060608;padding:28px 16px;text-align:center;">
+        <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">AutoTube<span style="color:#ff3d3d;">OS</span></span>
+      </td>
+    </tr>
+    <!-- Centered Content Wrapper -->
+    <tr>
+      <td align="center" style="padding:0;">
+        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#0d0f16;border:none;overflow:hidden;text-align:left;">
           <!-- Hero -->
           <tr>
-            <td style="padding:40px 32px 32px;text-align:center;">
+            <td style="padding:40px 16px 32px;text-align:center;">
               <div style="font-size:11px;font-weight:700;color:#ff3d3d;background-color:rgba(255,61,61,0.1);display:inline-block;padding:4px 12px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;">Update</div>
               <h1 style="font-size:24px;font-weight:800;color:#ffffff;line-height:1.2;margin:0 0 10px;">It's been a while, Ahmed.</h1>
               <p style="font-size:15px;color:#a0aec0;line-height:1.6;margin:0;">We've shipped 6 major features since you left. Come see what's new — on us.</p>
@@ -493,11 +493,11 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- Divider -->
           <tr>
-            <td style="padding:0 32px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
+            <td style="padding:0 16px;"><div style="height:1px;background-color:rgba(255,255,255,0.08);"></div></td>
           </tr>
           <!-- Body -->
           <tr>
-            <td style="padding:28px 32px;">
+            <td style="padding:28px 16px;">
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">Hey Ahmed,</p>
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;">You cancelled AutoTubeOS a few weeks ago, and that's okay. But we've been busy — and we think what we've built might change your mind.</p>
               <p style="margin:0 0 14px;color:#eef0f6;font-size:15px;line-height:1.7;"><strong style="color:#ffffff;">What's new since you left:</strong></p>
@@ -541,19 +541,19 @@ const templates: EmailTemplate[] = [
           </tr>
           <!-- CTA -->
           <tr>
-            <td style="text-align:center;padding:0 32px 32px;">
+            <td style="text-align:center;padding:0 16px 32px;">
               <a href="https://autotubeos.com/auth" style="display:inline-block;background-color:#ff3d3d;color:#ffffff;text-decoration:none;border-radius:10px;padding:14px 36px;font-size:15px;font-weight:600;box-shadow:0 4px 12px rgba(255,61,61,0.25);">Come Back — 30% Off →</a>
             </td>
           </tr>
           <!-- Bottom note -->
           <tr>
-            <td style="padding:0 32px 28px;text-align:center;font-size:13px;color:#a0aec0;">
+            <td style="padding:0 16px 28px;text-align:center;font-size:13px;color:#a0aec0;">
               <p style="margin:0;">If you're not interested, no worries — we won't email you again about this.</p>
             </td>
           </tr>
           <!-- Footer -->
           <tr>
-            <td style="background-color:#0d0f16;padding:20px 32px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
+            <td style="background-color:#0d0f16;padding:20px 16px;text-align:center;font-size:12px;color:#a0aec0;line-height:1.7;border-top:1px solid rgba(255,255,255,0.08);">
               AutoTubeOS · Lahore, Pakistan<br>
               <a href="#" style="color:#ff3d3d;text-decoration:none;">Unsubscribe</a> · <a href="#" style="color:#ff3d3d;text-decoration:none;">Privacy Policy</a>
             </td>
@@ -577,22 +577,40 @@ export default function CreatorEmails() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeHeight, setIframeHeight] = useState<string>('650px');
 
-  const adjustIframeHeight = () => {
+  const adjustIframeHeight = useCallback(() => {
     if (iframeRef.current && iframeRef.current.contentWindow) {
       try {
         const doc = iframeRef.current.contentWindow.document;
-        const height = doc.documentElement.scrollHeight || doc.body.scrollHeight;
-        setIframeHeight(`${height + 30}px`);
+        if (!doc) return;
+        const mainTable = doc.querySelector('table');
+        const height = mainTable ? mainTable.offsetHeight : (doc.body?.scrollHeight || doc.documentElement?.scrollHeight || 500);
+        setIframeHeight(`${height + 16}px`);
       } catch (e) {
         console.error("Failed to adjust iframe height", e);
       }
     }
-  };
+  }, []);
+
+  const handleIframeLoad = useCallback(() => {
+    adjustIframeHeight();
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        const doc = iframeRef.current.contentWindow.document;
+        const links = doc.querySelectorAll('a');
+        links.forEach((link) => {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        });
+      } catch (e) {
+        console.error("Failed to post-process iframe links", e);
+      }
+    }
+  }, [adjustIframeHeight]);
 
   useEffect(() => {
-    const timer = setTimeout(adjustIframeHeight, 100);
+    const timer = setTimeout(handleIframeLoad, 100);
     return () => clearTimeout(timer);
-  }, [activeTemplateId, deviceMode]);
+  }, [activeTemplateId, deviceMode, handleIframeLoad]);
 
   if (loading) {
     return (
@@ -714,7 +732,7 @@ export default function CreatorEmails() {
                       <b>From:</b> {activeTemplate.from}
                     </div>
                     <div className={styles.emailField} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginTop: '4px' }}>
-                      <b>Subject:</b> {renderSubjectText(activeTemplate.subject)}
+                      <b>Subject:</b> {activeTemplate.subject}
                     </div>
                   </div>
                   <div className={styles.emailDevice}>
@@ -740,7 +758,7 @@ export default function CreatorEmails() {
                     title="Email Preview"
                     className={styles.emailIframe}
                     scrolling="no"
-                    onLoad={adjustIframeHeight}
+                    onLoad={handleIframeLoad}
                     style={{ height: iframeHeight }}
                   />
                 </div>

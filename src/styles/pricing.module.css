@@ -306,7 +306,8 @@
   background: var(--s2);
   border: 1px solid var(--border);
   border-radius: 16px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .compareSection table {
   width: 100%;
@@ -550,8 +551,8 @@
     grid-template-columns: 1fr;
     max-width: 440px;
   }
-  .compareSection {
-    overflow-x: auto;
+  .compareSection table {
+    min-width: 640px;
   }
 }
 @media(max-width: 500px) {

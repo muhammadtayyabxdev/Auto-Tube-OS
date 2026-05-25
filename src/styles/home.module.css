@@ -108,21 +108,41 @@
 
 /* LOGOS */
 .logosSection {
-  padding: 3rem 5%;
+  padding: 4.5rem 5%;
   border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   text-align: center;
 }
 .logosLabel { color: var(--muted2); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem; }
 .logosRow {
-  display: flex; gap: 3rem; align-items: center; justify-content: center;
+  display: flex; gap: 0.8rem; align-items: center; justify-content: center;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 .logoChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 100px;
   color: var(--muted);
   font-family: var(--font-head);
-  font-size: 1rem; font-weight: 700;
-  opacity: 0.4;
-  letter-spacing: 0.5px;
+  font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.logoChip:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), 
+              0 0 15px var(--brand-color);
+  transform: translateY(-2px);
 }
 
 /* SECTION COMMONS */

@@ -6,7 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/pricing.module.css";
-import { Check, Globe, Lock, Star, X, Zap } from 'lucide-react';
+import { Check, Globe, Lock, X, Zap } from 'lucide-react';
 
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -116,7 +116,7 @@ export default function Pricing() {
 
         {/* PRO */}
         <div className={`${styles.planCard} ${styles.featured}`}>
-          <div className={styles.popularBadge}><Star size={14} /> Most Popular</div>
+          <div className={styles.popularBadge}>Most Popular</div>
           <div className={styles.planTier}>Pro</div>
           <div className={styles.planPrice}>
             <sup>$</sup>

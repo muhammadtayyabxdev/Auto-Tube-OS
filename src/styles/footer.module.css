@@ -11,3 +11,18 @@
 .footerLinks { display: flex; gap: 1.5rem; }
 .footerLinks a { color: var(--muted); font-size: 0.85rem; text-decoration: none; transition: color 0.2s; }
 .footerLinks a:hover { color: var(--text); }
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2.5rem 5%;
+  }
+  .footerLinks {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+

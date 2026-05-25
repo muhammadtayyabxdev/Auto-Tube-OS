@@ -68,13 +68,13 @@ export default function Home() {
       <div className={styles.logosSection}>
         <p className={styles.logosLabel}>Replaces your entire toolstack</p>
         <div className={styles.logosRow}>
-          <span className={styles.logoChip}>ChatGPT</span>
-          <span className={styles.logoChip}>Canva</span>
-          <span className={styles.logoChip}>Notion</span>
-          <span className={styles.logoChip}>TubeBuddy</span>
-          <span className={styles.logoChip}>ElevenLabs</span>
-          <span className={styles.logoChip}>CapCut</span>
-          <span className={styles.logoChip}>VidIQ</span>
+          <span className={styles.logoChip} style={{ '--brand-color': 'rgba(16, 185, 129, 0.4)' } as React.CSSProperties}>ChatGPT</span>
+          <span className={styles.logoChip} style={{ '--brand-color': 'rgba(139, 92, 246, 0.4)' } as React.CSSProperties}>Canva</span>
+          <span className={styles.logoChip} style={{ '--brand-color': 'rgba(226, 232, 240, 0.25)' } as React.CSSProperties}>Notion</span>
+          <span className={styles.logoChip} style={{ '--brand-color': 'rgba(239, 68, 68, 0.4)' } as React.CSSProperties}>TubeBuddy</span>
+          <span className={styles.logoChip} style={{ '--brand-color': 'rgba(245, 158, 11, 0.4)' } as React.CSSProperties}>ElevenLabs</span>
+          <span className={styles.logoChip} style={{ '--brand-color': 'rgba(6, 182, 212, 0.4)' } as React.CSSProperties}>CapCut</span>
+          <span className={styles.logoChip} style={{ '--brand-color': 'rgba(59, 130, 246, 0.4)' } as React.CSSProperties}>VidIQ</span>
         </div>
       </div>
 

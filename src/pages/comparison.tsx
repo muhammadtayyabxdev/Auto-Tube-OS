@@ -76,7 +76,8 @@ export default function Comparison() {
 
           <div className={styles.tableSection}>
             <h2 className={styles.tsTitle}>Full Feature Comparison</h2>
-            <table className={styles.cmpTable}>
+            <div className={styles.tableWrap}>
+              <table className={styles.cmpTable}>
               <thead>
                 <tr>
                   <th>Feature</th>
@@ -197,6 +198,7 @@ export default function Comparison() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
 
           <div className={styles.painSection}>
@@ -288,7 +290,8 @@ export default function Comparison() {
 
           <div className={styles.tableSection}>
             <h2 className={styles.tsTitle}>Full Feature Comparison</h2>
-            <table className={styles.cmpTable}>
+            <div className={styles.tableWrap}>
+              <table className={styles.cmpTable}>
               <thead>
                 <tr>
                   <th>Feature</th>
@@ -394,6 +397,7 @@ export default function Comparison() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
 
           <div className={styles.painSection}>
@@ -490,7 +494,8 @@ export default function Comparison() {
 
           <div className={styles.tableSection}>
             <h2 className={styles.tsTitle}>Complete 3-Way Feature Table</h2>
-            <table className={styles.cmpTable}>
+            <div className={styles.tableWrap}>
+              <table className={styles.cmpTable}>
               <thead>
                 <tr>
                   <th>Feature</th>
@@ -601,6 +606,7 @@ export default function Comparison() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       )}

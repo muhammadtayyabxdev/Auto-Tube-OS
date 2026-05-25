@@ -181,6 +181,9 @@
 }
 
 .statDelta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   font-size: 10px;
   margin-top: 6px;
 }
@@ -228,6 +231,9 @@
 }
 
 .cardAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   font-size: 11px;
   color: var(--red);
   cursor: pointer;
@@ -879,6 +885,9 @@
 }
 
 .chTrend {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   font-size: 10px;
   padding: 2px 7px;
   border-radius: 5px;
@@ -917,9 +926,14 @@
     border-radius: 8px;
     background: var(--s2);
     border-color: var(--border2);
+    cursor: pointer;
   }
   .tbSearch span:nth-child(2),
-  .tbSearch kbd {
+  .tbSearch kbd,
+  .searchInput {
+    display: none;
+  }
+  .tbBtn {
     display: none;
   }
   .content {
@@ -1078,5 +1092,109 @@
   font-size: 12px;
   color: var(--muted);
 }
+
+.searchBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background: transparent;
+}
+
+.mobileSearchHeader {
+  display: none;
+}
+
+.searchPrompt {
+  padding: 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@keyframes fadeSlideUpSearch {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Spotlight Search Mobile & Tablet Overlay Modal styles (overriding all desktop/absolute properties) */
+@media (max-width: 1024px) {
+  .searchBackdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 998 !important;
+    background: rgba(7, 8, 12, 0.8) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  .searchResultsDropdown {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    z-index: 999 !important;
+    background: var(--bg) !important;
+    padding: 20px 16px !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    animation: fadeSlideUpSearch 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  }
+
+  .mobileSearchHeader {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    background: var(--s2) !important;
+    border: 1px solid var(--border2) !important;
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 20px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobileSearchIcon {
+    color: var(--red) !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .mobileSearchInput {
+    flex: 1 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    color: var(--text) !important;
+    font-size: 13px !important;
+    font-family: var(--fb) !important;
+  }
+
+  .mobileSearchClose {
+    background: none !important;
+    border: none !important;
+    color: var(--muted) !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 4px !important;
+  }
+
+  .mobileSearchClose:hover {
+    color: var(--text) !important;
+  }
+}
+
 
 

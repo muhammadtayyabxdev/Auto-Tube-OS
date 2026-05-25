@@ -111,6 +111,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .tabBtn:hover {
@@ -423,7 +424,7 @@
   }
   
   .topbar {
-    padding: 0 16px;
+    padding: 0 16px 0 58px;
   }
   
   .tbTitle {
@@ -438,6 +439,12 @@
   .card {
     padding: 14px 16px;
     gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .cardContent {
+    flex: 1;
+    min-width: 180px;
   }
   
   .controls {
