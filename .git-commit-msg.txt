@@ -1,0 +1,9 @@
+security: strengthen proxy headers & enhance AI simulation points
+
+## API Proxy Security & Auth Bridge
+- **Secure Shared-Secret Authentication**: Re-engineered live Render proxy mechanism across all AI API handlers (`retention.ts`, `script.ts`, `shorts.ts`, `topics.ts`) using standard `X-Proxy-Secret` matching local server `CLERK_SECRET_KEY` and explicit `X-Proxy-User-Id` header tags.
+- **Improved Security Boundary**: Ensured that the local development fallback only passes authorized requests forward, preventing open access routes on the live server while preserving perfect developer-experience (DX) hot-swapping.
+- **Header Handshake**: Cleaned up legacy request cookie forwarders that triggered authentication mismatch in serverless proxy chains.
+
+## Frontend Script Generator Fallbacks
+- **Dynamic Simulated Script Points**: Upgraded client fallback list for simulated section generation in `script-generator.tsx` with 5 high-converting YouTube viral hooks and visual structure tips (e.g., pacing compression, community loops, audio pattern interrupts).

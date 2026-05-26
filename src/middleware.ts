@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { createClient as createSupabaseClient } from './utils/supabase/middleware';
 
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
@@ -11,7 +12,11 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
+  // 1. Clerk authentication protection for protected routes
   if (isProtectedRoute(req)) await auth.protect();
+
+  // 2. Refresh Supabase session cookies
+  return createSupabaseClient(req);
 });
 
 export const config = {
