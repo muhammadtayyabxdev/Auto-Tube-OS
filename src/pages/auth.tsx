@@ -7,14 +7,29 @@ import { useRouter } from "next/router";
 import styles from "@/styles/auth.module.css";
 import { Star, Eye, EyeOff, Check, Circle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useSignIn, useSignUp } from "@clerk/nextjs";
 
 export default function Auth() {
   const router = useRouter();
   const { loading } = useAuth(false); // requireAuth = false: redirects to dashboard/previous target if already logged in
+  
+  const { signIn } = useSignIn();
+  const { signUp } = useSignUp();
+
   const [tab, setTab] = useState<"signin" | "signup">("signin");
   const [showSignInPw, setShowSignInPw] = useState(false);
   const [showSignUpPw, setShowSignUpPw] = useState(false);
+  
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signInPassword, setSignInPassword] = useState("");
+  
+  const [signUpEmail, setSignUpEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const [authError, setAuthError] = useState("");
+  const [authLoading, setAuthLoading] = useState(false);
   const [strength, setStrength] = useState({ pct: 0, color: "#ff3d3d" });
 
   const pwRules = [
@@ -43,19 +58,92 @@ export default function Auth() {
     setStrength({ pct, color: colors[score] || "#ff3d3d" });
   };
 
-  const handleSignInSubmit = (e: React.FormEvent) => {
+  const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem('isLoggedIn', 'true');
-    const dest = (router.query.redirect as string) || "/dashboard";
-    router.push(dest);
+    if (!signIn) return;
+    setAuthError("");
+    setAuthLoading(true);
+
+    try {
+      const result = await signIn.create({
+        identifier: signInEmail,
+        password: signInPassword,
+      });
+
+      if (result.error) {
+        setAuthError(result.error.message || "Invalid email or password. Please try again.");
+      } else if (signIn.status === "complete") {
+        const finalizeResult = await signIn.finalize();
+        if (finalizeResult.error) {
+          setAuthError(finalizeResult.error.message || "Failed to finalize session.");
+        } else {
+          const dest = (router.query.redirect as string) || "/dashboard";
+          router.push(dest);
+        }
+      } else {
+        setAuthError(`Sign in status is ${signIn.status}. Additional steps may be required.`);
+      }
+    } catch (err: any) {
+      setAuthError(err.message || "An unexpected error occurred.");
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
-  const handleSignUpSubmit = (e: React.FormEvent) => {
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem('isLoggedIn', 'true');
-    const redirectParam = router.query.redirect ? `?redirect=${encodeURIComponent(router.query.redirect as string)}` : '';
-    router.push(`/onboarding${redirectParam}`);
+    if (!signUp) return;
+    setAuthError("");
+    setAuthLoading(true);
+
+    try {
+      const createResult = await signUp.create({
+        emailAddress: signUpEmail,
+        password,
+        firstName,
+        lastName,
+      });
+
+      if (createResult.error) {
+        setAuthError(createResult.error.message || "Failed to create account. Please check your information.");
+      } else {
+        const sendResult = await signUp.verifications.sendEmailCode();
+        if (sendResult.error) {
+          setAuthError(sendResult.error.message || "Failed to send verification email.");
+        } else {
+          const redirectParam = router.query.redirect ? `?redirect=${encodeURIComponent(router.query.redirect as string)}` : '';
+          router.push(`/email-verify?email=${encodeURIComponent(signUpEmail)}${redirectParam}`);
+        }
+      }
+    } catch (err: any) {
+      setAuthError(err.message || "Failed to create account.");
+    } finally {
+      setAuthLoading(false);
+    }
   };
+
+  const handleOAuthSignIn = async (strategy: "oauth_google" | "oauth_twitter" | "oauth_facebook") => {
+    if (!signIn) return;
+    setAuthError("");
+    try {
+      const redirectUrl = window.location.origin + "/sso-callback";
+      const redirectCallbackUrl = window.location.origin + ((router.query.redirect as string) || "/dashboard");
+      
+      const result = await signIn.sso({
+        strategy,
+        redirectUrl,
+        redirectCallbackUrl,
+      });
+      
+      if (result.error) {
+        setAuthError(result.error.message || "OAuth redirect failed.");
+      }
+    } catch (err: any) {
+      setAuthError(err.message || "OAuth redirect failed.");
+    }
+  };
+
+
 
   if (loading) {
     return (
@@ -197,7 +285,7 @@ export default function Auth() {
             <h2 className={styles.formTitle}>Welcome back</h2>
             <p className={styles.formSub}>Sign in to your workspace</p>
             <div className={styles.oauthRow}>
-              <button type="button" className={styles.oauthBtn}>
+              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_google")} disabled={authLoading}>
                 <span className={styles.oauthIcon}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -207,7 +295,14 @@ export default function Auth() {
                   </svg>
                 </span> Google
               </button>
-              <button type="button" className={styles.oauthBtn}>
+              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_facebook")} disabled={authLoading}>
+                <span className={styles.oauthIcon}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </span> Facebook
+              </button>
+              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_twitter")} disabled={authLoading}>
                 <span className={styles.oauthIcon}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg">
                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
@@ -222,7 +317,15 @@ export default function Auth() {
             </div>
             <div className={styles.field}>
               <label className={styles.fieldLabel}>Email Address</label>
-              <input className={styles.inp} type="email" placeholder="you@example.com" required />
+              <input
+                className={styles.inp}
+                type="email"
+                placeholder="you@example.com"
+                value={signInEmail}
+                onChange={(e) => setSignInEmail(e.target.value)}
+                required
+                disabled={authLoading}
+              />
             </div>
             <div className={styles.field}>
               <div className={styles.fieldRow}>
@@ -238,7 +341,10 @@ export default function Auth() {
                   className={styles.inp}
                   type={showSignInPw ? "text" : "password"}
                   placeholder="Enter your password"
+                  value={signInPassword}
+                  onChange={(e) => setSignInPassword(e.target.value)}
                   required
+                  disabled={authLoading}
                 />
                 <span
                   className={styles.inpIcon}
@@ -248,12 +354,17 @@ export default function Auth() {
                 </span>
               </div>
             </div>
-            <button type="submit" className={styles.submitBtn}>
-              Sign In
+            {authError && tab === "signin" && (
+              <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
+                {authError}
+              </div>
+            )}
+            <button type="submit" className={styles.submitBtn} disabled={authLoading}>
+              {authLoading ? "Signing in..." : "Sign In"}
             </button>
             <div className={styles.formNote}>
               Don&apos;t have an account?{" "}
-              <a href="#" onClick={(e) => { e.preventDefault(); setTab("signup"); }}>
+              <a href="#" onClick={(e) => { e.preventDefault(); setTab("signup"); setAuthError(""); }}>
                 Create one free
               </a>
             </div>
@@ -267,7 +378,7 @@ export default function Auth() {
             <h2 className={styles.formTitle}>Start for free</h2>
             <p className={styles.formSub}>14-day trial · No credit card needed</p>
             <div className={styles.oauthRow}>
-              <button type="button" className={styles.oauthBtn}>
+              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_google")} disabled={authLoading}>
                 <span className={styles.oauthIcon}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -277,7 +388,14 @@ export default function Auth() {
                   </svg>
                 </span> Google
               </button>
-              <button type="button" className={styles.oauthBtn}>
+              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_facebook")} disabled={authLoading}>
+                <span className={styles.oauthIcon}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </span> Facebook
+              </button>
+              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_twitter")} disabled={authLoading}>
                 <span className={styles.oauthIcon}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg">
                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
@@ -293,16 +411,38 @@ export default function Auth() {
             <div className={styles.field} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
               <div>
                 <label className={styles.fieldLabel}>First Name</label>
-                <input className={styles.inp} placeholder="Ahmed" required />
+                <input
+                  className={styles.inp}
+                  placeholder="Ahmed"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  disabled={authLoading}
+                />
               </div>
               <div>
                 <label className={styles.fieldLabel}>Last Name</label>
-                <input className={styles.inp} placeholder="Khan" required />
+                <input
+                  className={styles.inp}
+                  placeholder="Khan"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  disabled={authLoading}
+                />
               </div>
             </div>
             <div className={styles.field}>
               <label className={styles.fieldLabel}>Email Address</label>
-              <input className={styles.inp} type="email" placeholder="you@example.com" required />
+              <input
+                className={styles.inp}
+                type="email"
+                placeholder="you@example.com"
+                value={signUpEmail}
+                onChange={(e) => setSignUpEmail(e.target.value)}
+                required
+                disabled={authLoading}
+              />
             </div>
             <div className={styles.field}>
               <label className={styles.fieldLabel}>Password</label>
@@ -314,6 +454,7 @@ export default function Auth() {
                   value={password}
                   onChange={handlePasswordChange}
                   required
+                  disabled={authLoading}
                 />
                 <span
                   className={styles.inpIcon}
@@ -351,8 +492,13 @@ export default function Auth() {
                 </div>
               </div>
             )}
-            <button type="submit" className={styles.submitBtn}>
-              Create Free Account
+            {authError && tab === "signup" && (
+              <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
+                {authError}
+              </div>
+            )}
+            <button type="submit" className={styles.submitBtn} disabled={authLoading}>
+              {authLoading ? "Creating Account..." : "Create Free Account"}
             </button>
             <div className={styles.termsNote}>
               By signing up you agree to our{" "}
@@ -366,7 +512,7 @@ export default function Auth() {
             </div>
             <div className={styles.formNote} style={{ marginTop: "8px" }}>
               Already have an account?{" "}
-              <a href="#" onClick={(e) => { e.preventDefault(); setTab("signin"); }}>
+              <a href="#" onClick={(e) => { e.preventDefault(); setTab("signin"); setAuthError(""); }}>
                 Sign in
               </a>
             </div>

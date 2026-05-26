@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import { ClerkProvider } from '@clerk/nextjs';
 import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -33,7 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <>
+    <ClerkProvider {...pageProps}>
       <Head>
         <title>AutoTube OS — The Operating System for Faceless YouTube Creators</title>
         <meta name="description" content="Run your entire YouTube automation workflow from one AI-powered workspace. Replaces ChatGPT, Canva, Notion, and TubeBuddy." />
@@ -50,6 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
       >
         <Component {...pageProps} />
       </div>
-    </>
+    </ClerkProvider>
   );
 }
+

@@ -6,17 +6,23 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@/styles/password-reset.module.css";
 import { Check, Eye, EyeOff, Key, Lock, Mail, X } from 'lucide-react';
+import { useSignIn } from "@clerk/nextjs";
 
 export default function PasswordReset() {
   const router = useRouter();
+  const { signIn } = useSignIn();
+  
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
   const [newPw, setNewPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
   const [showNewPw, setShowNewPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [strength, setStrength] = useState({ pct: 0, color: "#ff3d3d", label: "Enter a password" });
   const [matchMsg, setMatchMsg] = useState<{ text: React.ReactNode; color: string }>({ text: "", color: "" });
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const checkStr = (val: string) => {
     setNewPw(val);
@@ -58,21 +64,94 @@ export default function PasswordReset() {
     }
   };
 
-  const handleStep1 = (e: React.FormEvent) => {
+  const handleStep1 = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setStep(2);
+    if (!signIn) return;
+    setErrorMsg("");
+    setLoading(true);
+
+    try {
+      const createResult = await signIn.create({
+        identifier: email,
+      });
+
+      if (createResult.error) {
+        setErrorMsg(createResult.error.message || "Failed to initiate password reset.");
+        return;
+      }
+
+      const sendResult = await signIn.resetPasswordEmailCode.sendCode();
+      if (sendResult.error) {
+        setErrorMsg(sendResult.error.message || "Failed to send reset code.");
+      } else {
+        setStep(2);
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "Failed to send reset code. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleStep3 = (e: React.FormEvent) => {
+  const handleResendCode = async () => {
+    if (!signIn) return;
+    setErrorMsg("");
+    try {
+      const result = await signIn.resetPasswordEmailCode.sendCode();
+      if (result.error) {
+        setErrorMsg(result.error.message || "Failed to resend code.");
+      } else {
+        alert("Verification code has been resent to your email.");
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "Failed to resend code.");
+    }
+  };
+
+  const handleStep3 = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!signIn) return;
     if (!newPw || newPw !== confirmPw) {
       setMatchMsg({ text: <><X size={16} /> Passwords do not match</>, color: "var(--red)" });
       return;
     }
-    setStep(4);
+    setErrorMsg("");
+    setLoading(true);
+
+    try {
+      // First verify the code
+      const verifyResult = await signIn.resetPasswordEmailCode.verifyCode({
+        code,
+      });
+
+      if (verifyResult.error) {
+        setErrorMsg(verifyResult.error.message || "Invalid or expired code. Please try again.");
+      } else {
+        // Then submit the new password
+        const submitResult = await signIn.resetPasswordEmailCode.submitPassword({
+          password: newPw,
+        });
+
+        if (submitResult.error) {
+          setErrorMsg(submitResult.error.message || "Failed to update password.");
+        } else if (signIn.status === "complete") {
+          const finalizeResult = await signIn.finalize();
+          if (finalizeResult.error) {
+            setErrorMsg(finalizeResult.error.message || "Failed to finalize session.");
+          } else {
+            setStep(4);
+          }
+        } else {
+          setErrorMsg(`Reset status is ${signIn.status}. Additional steps may be required.`);
+        }
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "Failed to reset password. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <>
@@ -121,10 +200,16 @@ export default function PasswordReset() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  disabled={loading}
                 />
               </div>
-              <button type="submit" className={styles.submitBtn}>
-                Send Reset Link
+              {errorMsg && step === 1 && (
+                <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
+                  {errorMsg}
+                </div>
+              )}
+              <button type="submit" className={styles.submitBtn} disabled={loading}>
+                {loading ? "Sending Code..." : "Send Verification Code"}
               </button>
             </div>
             <div className={styles.cardFooter}>
@@ -145,7 +230,7 @@ export default function PasswordReset() {
               </div>
               <h2 className={styles.cardTitle}>Check your inbox</h2>
               <p className={styles.cardSub}>
-                We sent a reset link to{" "}
+                We sent a verification code to{" "}
                 <strong style={{ color: "var(--text)" }}>{email || "you@example.com"}</strong>. Expires in
                 15 minutes.
               </p>
@@ -165,14 +250,19 @@ export default function PasswordReset() {
                 Check your spam folder, or{" "}
                 <span
                   style={{ color: "var(--red)", cursor: "pointer", textDecoration: "underline" }}
-                  onClick={() => setStep(2)}
+                  onClick={handleResendCode}
                 >
                   click here to resend
                 </span>
                 .
               </div>
+              {errorMsg && step === 2 && (
+                <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
+                  {errorMsg}
+                </div>
+              )}
               <button className={`${styles.submitBtn} ${styles.blue}`} onClick={() => setStep(3)}>
-                I got the link, continue
+                I got the code, continue
               </button>
             </div>
             <div className={styles.cardFooter}>
@@ -198,6 +288,18 @@ export default function PasswordReset() {
             </div>
             <div className={styles.cardBody}>
               <div className={styles.field}>
+                <label className={styles.fieldLabel}>Verification Code</label>
+                <input
+                  className={styles.inp}
+                  type="text"
+                  placeholder="Enter the 6-digit code"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  required
+                  disabled={loading}
+                />
+              </div>
+              <div className={styles.field}>
                 <label className={styles.fieldLabel}>New Password</label>
                 <div className={styles.inpWrap}>
                   <input
@@ -208,6 +310,7 @@ export default function PasswordReset() {
                     onChange={(e) => checkStr(e.target.value)}
                     style={{ paddingRight: "40px" }}
                     required
+                    disabled={loading}
                   />
                   <button
                     type="button"
@@ -238,6 +341,7 @@ export default function PasswordReset() {
                     onChange={(e) => handleConfirmChange(e.target.value)}
                     style={{ paddingRight: "40px" }}
                     required
+                    disabled={loading}
                   />
                   <button
                     type="button"
@@ -253,8 +357,13 @@ export default function PasswordReset() {
                   </div>
                 )}
               </div>
-              <button type="submit" className={styles.submitBtn}>
-                Reset Password
+              {errorMsg && step === 3 && (
+                <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
+                  {errorMsg}
+                </div>
+              )}
+              <button type="submit" className={styles.submitBtn} disabled={loading}>
+                {loading ? "Resetting..." : "Reset Password"}
               </button>
             </div>
           </form>

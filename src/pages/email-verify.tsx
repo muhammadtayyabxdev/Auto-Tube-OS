@@ -5,15 +5,20 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@/styles/email-verify.module.css";
-import { Check, Lightbulb, Mail, PartyPopper } from 'lucide-react';
+import { Check, Lightbulb, Mail } from 'lucide-react';
+import { useSignUp } from "@clerk/nextjs";
 
 export default function EmailVerify() {
   const router = useRouter();
+  const { signUp } = useSignUp();
+  
   const [verified, setVerified] = useState(false);
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [timer, setTimer] = useState(0);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [verifying, setVerifying] = useState(false);
 
-  const email = "ahmed@example.com";
+  const displayEmail = signUp?.emailAddress || (router.query.email as string) || "your email";
 
   useEffect(() => {
     if (timer <= 0) return;
@@ -23,8 +28,19 @@ export default function EmailVerify() {
     return () => clearInterval(interval);
   }, [timer]);
 
-  const startResend = () => {
-    setTimer(60);
+  const startResend = async () => {
+    if (!signUp) return;
+    setErrorMsg("");
+    try {
+      const result = await signUp.verifications.sendEmailCode();
+      if (result.error) {
+        setErrorMsg(result.error.message || "Failed to resend code.");
+      } else {
+        setTimer(60);
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "Failed to resend code.");
+    }
   };
 
   const handleOtpChange = (val: string, idx: number) => {
@@ -49,10 +65,36 @@ export default function EmailVerify() {
     }
   };
 
-  const handleVerify = (e?: React.FormEvent) => {
+  const handleVerify = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    setVerified(true);
+    if (!signUp) return;
+    setErrorMsg("");
+    setVerifying(true);
+
+    try {
+      const verifyResult = await signUp.verifications.verifyEmailCode({
+        code: otp.join(""),
+      });
+
+      if (verifyResult.error) {
+        setErrorMsg(verifyResult.error.message || "Invalid or expired code. Please try again.");
+      } else if (signUp.status === "complete") {
+        const finalizeResult = await signUp.finalize();
+        if (finalizeResult.error) {
+          setErrorMsg(finalizeResult.error.message || "Failed to finalize session.");
+        } else {
+          setVerified(true);
+        }
+      } else {
+        setErrorMsg(`Sign up status is ${signUp.status}. Additional steps may be required.`);
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "Invalid or expired code. Please try again.");
+    } finally {
+      setVerifying(false);
+    }
   };
+
 
   const allFilled = otp.every((char) => char !== "");
 
@@ -87,7 +129,7 @@ export default function EmailVerify() {
               </div>
               <h2 className={styles.cardTitle}>Verify your email</h2>
               <p className={styles.cardSub}>
-                We sent a verification link to <strong style={{ color: "var(--text)" }}>{email}</strong>.
+                We sent a verification link to <strong style={{ color: "var(--text)" }}>{displayEmail}</strong>.
                 Click the link to activate your account.
               </p>
             </div>
@@ -105,6 +147,7 @@ export default function EmailVerify() {
                     value={char}
                     onChange={(e) => handleOtpChange(e.target.value, idx)}
                     onKeyDown={(e) => handleKeyDown(e, idx)}
+                    disabled={verifying}
                     style={{
                       borderColor: allFilled ? "var(--green-border)" : undefined,
                     }}
@@ -123,8 +166,13 @@ export default function EmailVerify() {
                   </span>
                 )}
               </div>
-              <button type="submit" className={styles.submitBtn}>
-                Verify Email
+              {errorMsg && (
+                <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
+                  {errorMsg}
+                </div>
+              )}
+              <button type="submit" className={styles.submitBtn} disabled={verifying}>
+                {verifying ? "Verifying..." : "Verify Email"}
               </button>
               <div
                 style={{
@@ -147,7 +195,7 @@ export default function EmailVerify() {
             <div className={styles.cardBody} style={{ padding: "40px 32px", textAlign: "center" }}>
               <div className={styles.checkmark}><Check size={16} /></div>
               <h2 style={{ fontFamily: "var(--fh)", fontSize: "1.4rem", fontWeight: 800, marginBottom: "8px" }}>
-                Email verified! <PartyPopper size={18} style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: '6px', color: 'var(--red)' }} />
+                Email verified!
               </h2>
               <p style={{ fontSize: "13px", color: "var(--muted)", marginBottom: "16px" }}>
                 Your account is active. Welcome to AutoTubeOS!

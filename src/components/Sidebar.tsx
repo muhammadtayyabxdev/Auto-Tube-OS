@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { BarChart3, Bell, CalendarDays, ChevronDown, Flame, Handshake, LayoutDashboard, LogOut, Mail, Menu, PenTool, Settings, X, Zap } from 'lucide-react';
 import styles from '@/styles/sidebar.module.css';
+import { useUser, useClerk } from '@clerk/nextjs';
 
 interface SidebarProps {
   currentView?: string;
@@ -12,6 +13,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ currentView = 'home', onViewChange }: SidebarProps) {
+  const { user } = useUser();
+  const { signOut } = useClerk();
   const router = useRouter();
   const pathname = router.pathname;
   const [isOpen, setIsOpen] = useState(false);
@@ -157,17 +160,17 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
               aria-label="User menu"
             >
               <div className={styles.userAv}>
-                <img src="/ahmed_avatar.png" alt="Ahmed K." style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                <img src={user?.imageUrl || "/ahmed_avatar.png"} alt={user?.fullName || "User"} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               </div>
               <div className={styles.userInfo}>
-                <div className={styles.name}>Ahmed K.</div>
+                <div className={styles.name}>{user?.fullName || "Creator"}</div>
                 <div className={styles.plan}>Pro Plan</div>
               </div>
               <ChevronDown size={12} style={{ marginLeft: 'auto', color: 'var(--muted)', transform: userMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </button>
             {userMenuOpen && (
               <div className={styles.userDropdown}>
-                <div className={styles.udEmail}>ahmed@example.com</div>
+                <div className={styles.udEmail}>{user?.primaryEmailAddress?.emailAddress || "no email"}</div>
                 <div className={styles.udDivider} />
                 <button
                   className={styles.udItem}
@@ -179,10 +182,10 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
                 <div className={styles.udDivider} />
                 <button
                   className={`${styles.udItem} ${styles.udLogout}`}
-                  onClick={() => {
+                  onClick={async () => {
                     setUserMenuOpen(false);
                     setIsOpen(false);
-                    localStorage.removeItem('isLoggedIn');
+                    await signOut();
                     router.push('/');
                   }}
                 >

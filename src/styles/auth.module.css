@@ -291,6 +291,14 @@
 .inp:focus {
   border-color: var(--red);
 }
+.inp:-webkit-autofill,
+.inp:-webkit-autofill:hover,
+.inp:-webkit-autofill:focus,
+.inp:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--s2) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
 .inp::placeholder {
   color: var(--muted2);
 }
@@ -305,6 +313,11 @@
   color: var(--muted2);
   cursor: pointer;
   user-select: none;
+  z-index: 10;
+  transition: color 0.15s ease;
+}
+.inpIcon:hover {
+  color: var(--text);
 }
 .fieldRow {
   display: flex;
