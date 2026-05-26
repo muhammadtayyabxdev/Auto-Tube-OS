@@ -17,7 +17,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // 1. Auth & Rate Limit Check
+    const serverGroqKey = process.env.GROQ_API_KEY || '';
+    const serverGeminiKey = process.env.GEMINI_API_KEY || '';
+
+    // Active Proxy Forwarding: If local keys are placeholders, forward to live Render!
+    const isLocalPlaceholder = !serverGroqKey || serverGroqKey.includes('placeholder');
+    if (isLocalPlaceholder) {
+      const renderUrl = process.env.NEXT_PUBLIC_RENDER_URL || 'https://auto-tube-os.onrender.com';
+      console.log(`Local API key is a placeholder. Forwarding script request to live Render server (${renderUrl})...`);
+      
+      try {
+        const renderRes = await fetch(`${renderUrl}/api/ai/script`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': req.headers.authorization || '',
+            'Cookie': req.headers.cookie || '',
+          },
+          body: JSON.stringify(req.body),
+        });
+
+        if (!renderRes.ok) {
+          const text = await renderRes.text();
+          return res.status(renderRes.status).send(text);
+        }
+
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        });
+
+        // Forward stream chunks from Render directly to the local client browser
+        const reader = renderRes.body;
+        if (reader) {
+          for await (const chunk of reader as any) {
+            res.write(chunk);
+          }
+        }
+        res.end();
+        return;
+      } catch (proxyError: any) {
+        console.error('Render Proxy redirection failed:', proxyError);
+        return res.status(500).json({ error: `Connection to Render failed: ${proxyError.message}` });
+      }
+    }
+
+    // 1. Auth & Rate Limit Check (Standard Server Execution)
     const { userId } = getAuth(req);
     if (!userId) {
       return res.status(401).json({ error: 'Authentication required. Please sign in.' });
@@ -48,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (record.count >= quota.limit) {
       const resetHours = Math.ceil((record.resetTime - now) / (1000 * 60 * 60));
       return res.status(429).json({
-        error: `Rate limit reached. Your ${plan.toUpperCase()} plan allows ${quota.limit} script generations per day. Your quota will reset in ${resetHours} hour(s).`
+        error: `Rate limit reached. Your ${plan.toUpperCase()} plan allows ${quota.limit} script generations per day. Your quota resets in ${resetHours} hour(s).`
       });
     }
 
@@ -64,9 +110,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const currentProvider = provider || 'groq';
     const activeModel = model || (currentProvider === 'groq' ? 'llama-3.3-70b-versatile' : 'gemini-2.0-flash');
     const temp = typeof creativity === 'number' ? creativity : 0.7;
-
-    const serverGroqKey = process.env.GROQ_API_KEY || '';
-    const serverGeminiKey = process.env.GEMINI_API_KEY || '';
 
     let selectedKey = apiKey && apiKey.trim() ? apiKey : '';
     if (!selectedKey) {
@@ -98,29 +141,36 @@ OUTPUT FORMAT — use exactly these section headers:
 
 Write the full script now. Make it so good that viewers can't stop watching.`;
 
-    // Configure headers for Event Stream
-    res.writeHead(200, {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
-      'X-RateLimit-Limit': String(quota.limit),
-      'X-RateLimit-Remaining': String(quota.limit - record.count),
-    });
-
     // Handle Gemini streaming directly
     if (currentProvider === 'gemini') {
-      const genAI = new GoogleGenerativeAI(selectedKey);
-      const modelInstance = genAI.getGenerativeModel({ model: activeModel });
-      const result = await modelInstance.generateContentStream({
-        contents: [{ role: 'user', parts: [{ text: promptText }] }],
-        generationConfig: { temperature: temp, maxOutputTokens: 3000 }
-      });
+      try {
+        const genAI = new GoogleGenerativeAI(selectedKey);
+        const modelInstance = genAI.getGenerativeModel({ model: activeModel });
+        const result = await modelInstance.generateContentStream({
+          contents: [{ role: 'user', parts: [{ text: promptText }] }],
+          generationConfig: { temperature: temp, maxOutputTokens: 3000 }
+        });
 
-      for await (const chunk of result.stream) {
-        res.write(chunk.text());
+        // Write head only after stream is successfully created!
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'X-RateLimit-Limit': String(quota.limit),
+          'X-RateLimit-Remaining': String(quota.limit - record.count),
+        });
+
+        for await (const chunk of result.stream) {
+          res.write(chunk.text());
+        }
+        res.end();
+        return;
+      } catch (geminiError: any) {
+        console.error('Gemini Pages API failed:', geminiError);
+        return res.status(401).json({
+          error: `Gemini authentication failed (Invalid API Key). ${geminiError.message || ''}`
+        });
       }
-      res.end();
-      return;
     }
 
     // Handle Groq Llama with Gemini Fallover
@@ -134,6 +184,15 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
         max_tokens: 3000,
       });
 
+      // Write head only after Groq stream is successfully created!
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'X-RateLimit-Limit': String(quota.limit),
+        'X-RateLimit-Remaining': String(quota.limit - record.count),
+      });
+
       for await (const chunk of stream) {
         const text = chunk.choices[0]?.delta?.content || '';
         res.write(text);
@@ -142,21 +201,40 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
 
     } catch (groqError: any) {
       console.error('Groq Pages API failed. Failing over to Gemini fallback...', groqError);
+      
+      // Try Gemini failover
       if (serverGeminiKey && !serverGeminiKey.includes('placeholder')) {
-        const genAI = new GoogleGenerativeAI(serverGeminiKey);
-        const modelInstance = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-        const result = await modelInstance.generateContentStream({
-          contents: [{ role: 'user', parts: [{ text: promptText }] }],
-          generationConfig: { temperature: temp, maxOutputTokens: 3000 }
-        });
+        try {
+          const genAI = new GoogleGenerativeAI(serverGeminiKey);
+          const modelInstance = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+          const result = await modelInstance.generateContentStream({
+            contents: [{ role: 'user', parts: [{ text: promptText }] }],
+            generationConfig: { temperature: temp, maxOutputTokens: 3000 }
+          });
 
-        for await (const chunk of result.stream) {
-          res.write(chunk.text());
+          // Write head only after Gemini succeeds!
+          res.writeHead(200, {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'X-RateLimit-Limit': String(quota.limit),
+            'X-RateLimit-Remaining': String(quota.limit - record.count),
+          });
+
+          for await (const chunk of result.stream) {
+            res.write(chunk.text());
+          }
+          res.end();
+        } catch (geminiError: any) {
+          return res.status(401).json({
+            error: `Failover failed: Groq failed (${groqError.message}) and Gemini failed (${geminiError.message})`
+          });
         }
-        res.end();
       } else {
-        res.write(`Failover Error: Groq failed and Gemini is not configured. ${groqError.message}`);
-        res.end();
+        // Headers are NOT written yet, so return a clean 401/500 JSON error!
+        return res.status(401).json({
+          error: `Groq authentication failed (Invalid API Key) and Gemini is not configured. Please configure valid API keys in your environment. Details: ${groqError.message}`
+        });
       }
     }
 

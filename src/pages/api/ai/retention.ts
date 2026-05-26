@@ -55,6 +55,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    const groqKey = process.env.GROQ_API_KEY || '';
+    const geminiKey = process.env.GEMINI_API_KEY || '';
+
+    // Active Proxy Forwarding: If local keys are placeholders, forward to live Render!
+    const isLocalPlaceholder = !groqKey || groqKey.includes('placeholder');
+    if (isLocalPlaceholder) {
+      const renderUrl = process.env.NEXT_PUBLIC_RENDER_URL || 'https://auto-tube-os.onrender.com';
+      console.log(`Local API key is a placeholder. Forwarding retention request to live Render server (${renderUrl})...`);
+      try {
+        const renderRes = await fetch(`${renderUrl}/api/ai/retention`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': req.headers.authorization || '',
+            'Cookie': req.headers.cookie || '',
+          },
+          body: JSON.stringify(req.body),
+        });
+
+        const text = await renderRes.text();
+        return res.status(renderRes.status)
+                  .setHeader('Content-Type', 'application/json')
+                  .send(text);
+      } catch (proxyError: any) {
+        console.error('Render retention proxy failed:', proxyError);
+        return res.status(500).json({ error: `Connection to Render failed: ${proxyError.message}` });
+      }
+    }
+
     // 1. Auth & Rate Limit Check
     const { userId } = getAuth(req);
     if (!userId) {
@@ -97,9 +126,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!script || !script.trim()) {
       return res.status(400).json({ error: 'Script content is required' });
     }
-
-    const groqKey = process.env.GROQ_API_KEY || '';
-    const geminiKey = process.env.GEMINI_API_KEY || '';
 
     const hasGroq = groqKey && !groqKey.includes('placeholder');
     const hasGemini = geminiKey && !geminiKey.includes('placeholder');
