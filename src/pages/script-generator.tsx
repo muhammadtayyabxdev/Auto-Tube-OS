@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/script-generator.module.css';
-import { AlertCircle, AlertTriangle, ArrowDown, BookOpen, Bot, Brain, Check, ClipboardList, DollarSign, Eye, EyeOff, FileText, Flame, Ghost, Link2, Magnet, MessageCircle, PenTool, Pin, Play, Plus, RefreshCw, Settings, Smile, Sparkles, Target, Trash2, XCircle, Zap } from 'lucide-react';
+import { AlertCircle, AlertTriangle, ArrowDown, BookOpen, Bot, Brain, Check, ClipboardList, DollarSign, FileText, Flame, Ghost, Magnet, MessageCircle, PenTool, Pin, Play, Plus, RefreshCw, Settings, Smile, Sparkles, Target, Trash2, XCircle, Zap } from 'lucide-react';
 import { GroqIcon, GeminiIcon } from '@/components/BrandIcons';
 
 interface SectionDef {
@@ -51,14 +51,8 @@ function ScriptGeneratorContent() {
   const [currentProvider, setCurrentProvider] = useState<'groq' | 'gemini'>('groq');
   
   // Key states
-  const [groqKey, setGroqKey] = useState<string>('');
-  const [geminiKey, setGeminiKey] = useState<string>('');
-  const [showGroqKey, setShowGroqKey] = useState<boolean>(false);
-  const [showGeminiKey, setShowGeminiKey] = useState<boolean>(false);
-  const [groqStatus, setGroqStatus] = useState<React.ReactNode>('Enter your API key');
-  const [groqDotClass, setGroqDotClass] = useState<string>('');
-  const [geminiStatus, setGeminiStatus] = useState<React.ReactNode>('Enter your API key');
-  const [geminiDotClass, setGeminiDotClass] = useState<string>('');
+  const [groqKey] = useState<string>('');
+  const [geminiKey] = useState<string>('');
 
   // Selected config states
   const [selectedFormat, setSelectedFormat] = useState<string>('Listicle');
@@ -106,30 +100,7 @@ function ScriptGeneratorContent() {
     }, 3000);
   };
 
-  // Input validations
-  const validateGroqKey = (val: string) => {
-    setGroqKey(val);
-    if (!val) {
-      setGroqDotClass('');
-      setGroqStatus('Enter your API key');
-      return;
-    }
-    const isValid = val.startsWith('gsk_');
-    setGroqDotClass(isValid ? styles.ok : styles.err);
-    setGroqStatus(isValid ? <><Check size={16} /> Key format looks correct</> : <><XCircle size={16} style={{ color: 'var(--red)' }} /> Check key format (starts with gsk_)</>);
-  };
 
-  const validateGeminiKey = (val: string) => {
-    setGeminiKey(val);
-    if (!val) {
-      setGeminiDotClass('');
-      setGeminiStatus('Enter your API key');
-      return;
-    }
-    const isValid = val.startsWith('AIza');
-    setGeminiDotClass(isValid ? styles.ok : styles.err);
-    setGeminiStatus(isValid ? <><Check size={14} /> Key format looks correct</> : <><XCircle size={14} style={{ color: 'var(--red)' }} /> Check key format (starts with AIza)</>);
-  };
 
   const handleProviderSwitch = (p: 'groq' | 'gemini') => {
     setCurrentProvider(p);
@@ -280,111 +251,90 @@ If this breakdown helped you see what is truly possible with AI automation in 20
     const activeKey = currentProvider === 'groq' ? groqKey : geminiKey;
     const model = currentProvider === 'groq' ? groqModel : geminiModel;
 
-    // Use Mock fallback if no API key is specified (For excellent out-of-the-box UI/UX)
-    if (!activeKey) {
-      triggerToast('No API key entered. Running high-retention AI simulation!', 'success');
-      setIsGenerating(true);
-      setShowThinking(true);
-      setThinkingText('Connecting to local AI runner...');
-      
-      setTimeout(() => {
-        setShowThinking(false);
-        simulateStreaming();
-      }, 1000);
-      return;
-    }
-
     // RUN REAL API CALLS
     setIsGenerating(true);
     setShowThinking(true);
-    setThinkingText(`Connecting to ${currentProvider === 'groq' ? 'Groq API' : 'Google Gemini API'} (${model})...`);
-
-    const promptText = `You are an expert YouTube script writer specializing in high-retention faceless YouTube videos.
-
-Write a complete, publish-ready YouTube script for the following:
-
-TOPIC: ${topic}
-FORMAT: ${selectedFormat}
-TONE: ${selectedTone}
-LENGTH: ${selectedLength === '60s' ? '60s YouTube Shorts' : '8-12 minutes longform'}
-
-CRITICAL RULES:
-1. Start with a KILLER hook (first 15 seconds must be irresistible — no "Hey guys welcome back")
-2. Use pattern interrupts every 60-90 seconds to maintain retention
-3. Write conversational, natural language — not stiff or robotic
-4. Include [VISUAL CUE] annotations where relevant
-5. Use short sentences. Power words. Emotional triggers.
-6. End with a strong CTA that feels natural, not forced
-
-OUTPUT FORMAT — use exactly these section headers:
-[HOOK] — First 15 seconds
-[INTRO] — 15-45 seconds  
-[MAIN CONTENT] — Body
-[CTA] — Final 20 seconds
-
-Write the full script now. Make it so good that viewers can't stop watching.`;
+    setThinkingText(`Connecting to backend service (${model})...`);
 
     try {
-      if (currentProvider === 'groq') {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${activeKey}`
-          },
-          body: JSON.stringify({
-            model: model,
-            messages: [{ role: 'user', content: promptText }],
-            temperature: creativity,
-            max_tokens: 2500
-          })
-        });
+      const response = await fetch('/api/ai/script', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic,
+          format: selectedFormat,
+          tone: selectedTone,
+          length: selectedLength,
+          creativity,
+          provider: currentProvider,
+          model: model,
+          apiKey: activeKey || undefined
+        })
+      });
 
-        if (!response.ok) {
-          const err = await response.json();
-          throw new Error(err.error?.message || `Groq API Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const text = data.choices?.[0]?.message?.content || '';
-        const tokens = data.usage?.total_tokens || 0;
-        
-        setShowThinking(false);
-        setShowOutput(true);
-        typewriterDisplay(text, tokens);
-      } else {
-        // Gemini Call
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: promptText }] }],
-              generationConfig: {
-                temperature: creativity,
-                maxOutputTokens: 2500
-              }
-            })
+      if (!response.ok) {
+        let errMsg = `Server Error: ${response.status}`;
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const err = await response.json();
+            errMsg = err.error || errMsg;
+          } else {
+            const text = await response.text();
+            // Clean up raw HTML response to get human-readable status text if it is an HTML error page
+            if (text && text.trim().startsWith('<')) {
+              errMsg = `Server Error: ${response.status} (${response.statusText || 'Internal Server Error'})`;
+            } else {
+              errMsg = text || errMsg;
+            }
           }
-        );
-
-        if (!response.ok) {
-          const err = await response.json();
-          throw new Error(err.error?.message || `Gemini API Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        const tokens = data.usageMetadata?.totalTokenCount || 0;
-        
-        setShowThinking(false);
-        setShowOutput(true);
-        typewriterDisplay(text, tokens);
+        } catch {}
+        throw new Error(errMsg);
       }
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No readable stream available from server.');
+      }
+
+      setShowThinking(false);
+      setShowOutput(true);
+      setIsStreamingCompleted(false);
+      setStreamContent('');
+
+      const decoder = new TextDecoder();
+      let fullText = '';
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        if (value) {
+          const chunk = decoder.decode(value, { stream: !done });
+          fullText += chunk;
+          setStreamContent(fullText);
+          parseTextIntoSections(fullText);
+          setWordCount(fullText.trim().split(/\s+/).filter(w => w).length);
+        }
+      }
+
+      setIsStreamingCompleted(true);
+      setIsGenerating(false);
+      const finalWords = fullText.trim().split(/\s+/).filter(w => w).length;
+      setWordCount(finalWords);
+      setReadTime(Math.round(finalWords / 130));
+      setTotalTokens((prev) => prev + Math.round(finalWords * 1.35));
+      enableButtons();
+      triggerToast(`Script generated! ${finalWords} words`, 'success');
+
     } catch (err: any) {
       console.error(err);
       triggerToast(err.message || 'Something went wrong. Running simulation fallback...', 'error');
+      
+      // Graceful fallback to rich simulation
+      setIsGenerating(true);
+      setShowThinking(true);
+      setThinkingText('Running simulation fallback...');
       setTimeout(() => {
         setShowThinking(false);
         simulateStreaming();
@@ -392,34 +342,7 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
     }
   };
 
-  const typewriterDisplay = async (text: string, tokens: number) => {
-    setIsStreamingCompleted(false);
-    let i = 0;
-    const speed = 12; // Character increment
-    setStreamContent('');
 
-    const timer = setInterval(() => {
-      i += speed;
-      if (i >= text.length) {
-        clearInterval(timer);
-        setStreamContent(text);
-        parseTextIntoSections(text);
-        setIsStreamingCompleted(true);
-        setIsGenerating(false);
-        const words = text.trim().split(/\s+/).filter(w => w).length;
-        setWordCount(words);
-        setReadTime(Math.round(words / 130));
-        setTotalTokens((prev) => prev + tokens);
-        enableButtons();
-        triggerToast(`Script generated! ${words} words`, 'success');
-      } else {
-        const slice = text.slice(0, i);
-        setStreamContent(slice);
-        parseTextIntoSections(slice);
-        setWordCount(slice.trim().split(/\s+/).filter(w => w).length);
-      }
-    }, 30);
-  };
 
   // Button disability states
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(true);
@@ -553,22 +476,9 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
               {/* GROQ FORM */}
               {currentProvider === 'groq' && (
                 <div>
-                  <div className={styles.cfgLabel}>Groq API Key</div>
-                  <div className={styles.apiInpWrap}>
-                    <input 
-                      className={styles.apiInp}
-                      type={showGroqKey ? 'text' : 'password'}
-                      placeholder="gsk_..."
-                      value={groqKey}
-                      onChange={(e) => validateGroqKey(e.target.value)}
-                    />
-                    <button className={styles.eyeBtn} onClick={() => setShowGroqKey(!showGroqKey)}>
-                      {showGroqKey ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                  <div className={styles.apiStatus}>
-                    <div className={`${styles.statusDot} ${groqDotClass}`}></div>
-                    <span>{groqStatus}</span>
+                  <div className={styles.apiStatus} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
+                    <div className={`${styles.statusDot}`} style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 10px #22c55e' }}></div>
+                    <span style={{ color: '#22c55e', fontSize: '11px', fontWeight: 600, letterSpacing: '0.3px' }}>Server Key Active (Premium)</span>
                   </div>
                   <select 
                     className={styles.modelSelect} 
@@ -580,34 +490,15 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                     <option value="mixtral-8x7b-32768">Mixtral 8x7B — Long Context</option>
                     <option value="gemma2-9b-it">Gemma 2 9B — Efficient</option>
                   </select>
-                  <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                      <Link2 size={14} /> <span>Free key at <a href="https://console.groq.com" target="_blank" rel="noreferrer" style={{ color: '#f97316' }}>console.groq.com</a></span>
-                    </div>
-                    <div>Daily limit: ~14,400 tokens/min free tier</div>
-                  </div>
                 </div>
               )}
 
               {/* GEMINI FORM */}
               {currentProvider === 'gemini' && (
                 <div>
-                  <div className={styles.cfgLabel}>Gemini API Key</div>
-                  <div className={styles.apiInpWrap}>
-                    <input 
-                      className={styles.apiInp}
-                      type={showGeminiKey ? 'text' : 'password'}
-                      placeholder="AIza..."
-                      value={geminiKey}
-                      onChange={(e) => validateGeminiKey(e.target.value)}
-                    />
-                    <button className={styles.eyeBtn} onClick={() => setShowGeminiKey(!showGeminiKey)}>
-                      {showGeminiKey ? <EyeOff size={14} /> : <Eye size={14} />}
-                    </button>
-                  </div>
-                  <div className={styles.apiStatus}>
-                    <div className={`${styles.statusDot} ${geminiDotClass}`}></div>
-                    <span>{geminiStatus}</span>
+                  <div className={styles.apiStatus} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
+                    <div className={`${styles.statusDot}`} style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 10px #22c55e' }}></div>
+                    <span style={{ color: '#22c55e', fontSize: '11px', fontWeight: 600, letterSpacing: '0.3px' }}>Server Key Active (Premium)</span>
                   </div>
                   <select 
                     className={styles.modelSelect} 
@@ -618,12 +509,6 @@ Write the full script now. Make it so good that viewers can't stop watching.`;
                     <option value="gemini-1.5-flash">Gemini 1.5 Flash — Balanced</option>
                     <option value="gemini-1.5-pro">Gemini 1.5 Pro — Best Quality</option>
                   </select>
-                  <div style={{ marginTop: '10px', padding: '10px', background: 'var(--s3)', borderRadius: '8px', fontSize: '11px', color: 'var(--muted2)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                      <Link2 size={14} /> <span>Free key at <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: '#4285f4' }}>aistudio.google.com</a></span>
-                    </div>
-                    <div>Free tier: 15 req/min, 1M tokens/day</div>
-                  </div>
                 </div>
               )}
             </div>

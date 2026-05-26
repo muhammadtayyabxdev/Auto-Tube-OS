@@ -85,7 +85,7 @@ function DashboardContent() {
   const [market, setMarket] = useState<string>('US Market');
   const [period, setPeriod] = useState<string>('This Week');
   const [isSearchingTopics, setIsSearchingTopics] = useState<boolean>(false);
-  const [topicList] = useState([
+  const [topicList, setTopicList] = useState<any[]>([
     { id: 1, title: '"AI Side Hustles That Actually Pay $500/Day in 2026"', score: 9.4, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Flame size={14} /> HOT PICK</span>, badgeClass: styles.scoreHot, views: '2.1M', rpm: '$18', comp: 'Low', isTop: true },
     { id: 2, title: '"Why 99% of People Stay Broke (And How to Escape)"', score: 8.8, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Flame size={14} /> TRENDING</span>, badgeClass: styles.scoreHot, views: '1.7M', rpm: '$22', comp: 'Medium', isTop: false },
     { id: 3, title: '"I Tested Every AI Investing Tool for 30 Days — Here\'s What Happened"', score: 8.1, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Zap size={14} /> RISING</span>, badgeClass: styles.scoreWarm, views: '980K', rpm: '$15', comp: 'Low', isTop: false },
@@ -94,12 +94,59 @@ function DashboardContent() {
     { id: 6, title: '"How to Save $1,000 in 30 Days on Any Income"', score: 6.8, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><BarChart3 size={14} /> STEADY</span>, badgeClass: styles.scoreOk, views: '510K', rpm: '$17', comp: 'Medium', isTop: false }
   ]);
 
-  const handleSearchTopics = () => {
+  const handleSearchTopics = async () => {
+    if (!niche.trim()) {
+      triggerToast('Enter your niche first!', 'error');
+      return;
+    }
+
     setIsSearchingTopics(true);
-    setTimeout(() => {
+    triggerToast('Analyzing market search trends and RPM yields...', 'success');
+
+    try {
+      const response = await fetch('/api/ai/topics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ niche, market, period })
+      });
+
+      if (!response.ok) {
+        let errMsg = `Server Error: ${response.status}`;
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const err = await response.json();
+            errMsg = err.error || errMsg;
+          } else {
+            const text = await response.text();
+            if (text && text.trim().startsWith('<')) {
+              errMsg = `Server Error: ${response.status} (${response.statusText || 'Internal Server Error'})`;
+            } else {
+              errMsg = text || errMsg;
+            }
+          }
+        } catch {}
+        throw new Error(errMsg);
+      }
+
+      const data = await response.json();
+      if (data.topics && Array.isArray(data.topics)) {
+        setTopicList(data.topics);
+        triggerToast(`Found ${data.topics.length} viral topic ideas for ${niche}!`, 'success');
+      } else {
+        throw new Error('Invalid response structure');
+      }
+    } catch (err: any) {
+      console.error(err);
+      triggerToast(err.message || 'Failed to search topics. Running offline simulation...', 'error');
+      
+      // Graceful simulation fallback
+      setTimeout(() => {
+        triggerToast('Simulation loaded! Found 6 trending viral topics!');
+      }, 1000);
+    } finally {
       setIsSearchingTopics(false);
-      triggerToast('Found 6 trending viral topics!');
-    }, 1000);
+    }
   };
 
   const handleWriteScriptRedirect = useCallback((title: string) => {
@@ -111,7 +158,7 @@ function DashboardContent() {
   const [youtubeUrl, setYoutubeUrl] = useState<string>('');
   const [isProcessingShorts, setIsProcessingShorts] = useState<boolean>(false);
   const [shortsProgress, setShortsProgress] = useState<number>(100);
-  const [shortsClips] = useState([
+  const [shortsClips, setShortsClips] = useState<any[]>([
     { id: 1, title: 'Hook: "What if I told you people are making $500/day with AI…"', meta: '0:00 – 0:38 · Perfect hook · High energy', score: 9.6, thumb: <Flame size={14} /> },
     { id: 2, title: 'AI Faceless YouTube breakdown — numbers revealed', meta: '2:14 – 2:58 · Surprising stat · Strong CTA', score: 8.9, thumb: <Lightbulb size={14} /> },
     { id: 3, title: '"This one tool replaced my $3K/mo freelancer"', meta: '5:40 – 6:22 · Value bomb · Shareable', score: 8.7, thumb: <DollarSign size={14} /> },
@@ -123,28 +170,80 @@ function DashboardContent() {
     triggerToast('Starting video file upload...', 'success');
   };
 
-  const handleProcessYoutube = () => {
-    if (!youtubeUrl) {
+  const handleProcessYoutube = async () => {
+    if (!youtubeUrl.trim()) {
       triggerToast('Please enter a YouTube URL', 'error');
       return;
     }
     setIsProcessingShorts(true);
-    setShortsProgress(15);
-    const interval = setInterval(() => {
-      setShortsProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsProcessingShorts(false);
-          triggerToast('Repurposer processing complete! Found 5 viral clips.');
-          return 100;
-        }
-        return prev + 17;
+    setShortsProgress(10);
+    triggerToast('Downloading stream meta and parsing transcript...', 'success');
+
+    const progressTimer = setInterval(() => {
+      setShortsProgress((prev) => Math.min(prev + 12, 90));
+    }, 450);
+
+    try {
+      const response = await fetch('/api/ai/shorts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ youtubeUrl })
       });
-    }, 400);
+
+      clearInterval(progressTimer);
+
+      if (!response.ok) {
+        let errMsg = `Server Error: ${response.status}`;
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const err = await response.json();
+            errMsg = err.error || errMsg;
+          } else {
+            const text = await response.text();
+            if (text && text.trim().startsWith('<')) {
+              errMsg = `Server Error: ${response.status} (${response.statusText || 'Internal Server Error'})`;
+            } else {
+              errMsg = text || errMsg;
+            }
+          }
+        } catch {}
+        throw new Error(errMsg);
+      }
+
+      const data = await response.json();
+      if (data.clips && Array.isArray(data.clips)) {
+        setShortsProgress(100);
+        setShortsClips(data.clips);
+        triggerToast(`Success! Found ${data.clips.length} viral hooks in this video!`, 'success');
+      } else {
+        throw new Error('Invalid response structure');
+      }
+    } catch (err: any) {
+      console.error(err);
+      clearInterval(progressTimer);
+      triggerToast(err.message || 'Failed to parse video. Running offline simulation...', 'error');
+      
+      // Graceful simulation fallback
+      setShortsProgress(15);
+      const interval = setInterval(() => {
+        setShortsProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            setIsProcessingShorts(false);
+            triggerToast('Repurposer processing complete! Found 5 viral clips.');
+            return 100;
+          }
+          return prev + 17;
+        });
+      }, 400);
+    } finally {
+      setIsProcessingShorts(false);
+    }
   };
 
   const handleExportAllShorts = () => {
-    triggerToast('Exporting all 5 clips to Google Drive/Local downloads...');
+    triggerToast('Exporting all clips to Google Drive/Local downloads...');
   };
 
   const searchItems = useMemo(() => {
@@ -554,24 +653,40 @@ function DashboardContent() {
             </div>
 
             <div className={styles.topicsGrid}>
-              {topicList.map((topic) => (
-                <div key={topic.id} className={`${styles.topicCard} ${topic.isTop ? styles.topPick : ''}`}>
-                  <div className={styles.topicScore}>
-                    <span className={`${styles.scoreBadge} ${topic.badgeClass}`}>{topic.badge}</span>
-                    <span className={styles.scoreNum}>{topic.score}</span>
+              {topicList.map((topic) => {
+                const isStringBadge = typeof topic.badge === 'string';
+                const displayBadge = isStringBadge ? (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                    {topic.badge === 'HOT PICK' || topic.badge === 'TRENDING' ? <Flame size={14} /> : 
+                     topic.badge === 'RISING' ? <Zap size={14} /> : <BarChart3 size={14} />}
+                    {topic.badge}
+                  </span>
+                ) : topic.badge;
+
+                const badgeClass = isStringBadge ? (
+                  topic.badge === 'HOT PICK' || topic.badge === 'TRENDING' ? styles.scoreHot :
+                  topic.badge === 'RISING' ? styles.scoreWarm : styles.scoreOk
+                ) : topic.badgeClass;
+
+                return (
+                  <div key={topic.id} className={`${styles.topicCard} ${topic.isTop ? styles.topPick : ''}`}>
+                    <div className={styles.topicScore}>
+                      <span className={`${styles.scoreBadge} ${badgeClass}`}>{displayBadge}</span>
+                      <span className={styles.scoreNum}>{topic.score}</span>
+                    </div>
+                    <div className={styles.topicTitle}>{topic.title}</div>
+                    <div className={styles.topicMeta}>
+                      <div className={styles.tMetaItem}><b>{topic.views}</b> est. views</div>
+                      <div className={styles.tMetaItem}><b>{topic.rpm}</b> RPM</div>
+                      <div className={styles.tMetaItem}><b>{topic.comp}</b> competition</div>
+                    </div>
+                    <div className={styles.topicActions}>
+                      <button className={styles.tAction} onClick={() => triggerToast('Topic ideas saved to clipboard!')}>Save</button>
+                      <button className={`${styles.tAction} ${styles.primary}`} onClick={() => handleWriteScriptRedirect(topic.title)}><PenTool size={16} /> Write Script</button>
+                    </div>
                   </div>
-                  <div className={styles.topicTitle}>{topic.title}</div>
-                  <div className={styles.topicMeta}>
-                    <div className={styles.tMetaItem}><b>{topic.views}</b> est. views</div>
-                    <div className={styles.tMetaItem}><b>{topic.rpm}</b> RPM</div>
-                    <div className={styles.tMetaItem}><b>{topic.comp}</b> competition</div>
-                  </div>
-                  <div className={styles.topicActions}>
-                    <button className={styles.tAction} onClick={() => triggerToast('Topic ideas saved to clipboard!')}>Save</button>
-                    <button className={`${styles.tAction} ${styles.primary}`} onClick={() => handleWriteScriptRedirect(topic.title)}><PenTool size={16} /> Write Script</button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -621,16 +736,24 @@ function DashboardContent() {
                   <button className={styles.tbBtn} style={{ fontSize: '11px', padding: '6px 12px' }} onClick={handleExportAllShorts}><ArrowDown size={16} /> Export All</button>
                 </div>
                 <div className={styles.shortsClips}>
-                  {shortsClips.map((clip) => (
-                    <div key={clip.id} className={styles.clipCard} onClick={() => triggerToast(`Playing preview for clip: ${clip.title}`)}>
-                      <div className={styles.clipThumb}>{clip.thumb}</div>
-                      <div className={styles.clipInfo}>
-                        <div className={styles.clipTitle}>{clip.title}</div>
-                        <div className={styles.clipMeta}>{clip.meta}</div>
+                  {shortsClips.map((clip) => {
+                    const displayThumb = clip.thumb || (
+                      clip.score >= 9.0 ? <Flame size={14} /> :
+                      clip.score >= 8.5 ? <Lightbulb size={14} /> :
+                      clip.score >= 8.0 ? <DollarSign size={14} /> : <Smartphone size={14} />
+                    );
+
+                    return (
+                      <div key={clip.id} className={styles.clipCard} onClick={() => triggerToast(`Playing preview for clip: ${clip.title}`)}>
+                        <div className={styles.clipThumb}>{displayThumb}</div>
+                        <div className={styles.clipInfo}>
+                          <div className={styles.clipTitle}>{clip.title}</div>
+                          <div className={styles.clipMeta}>{clip.meta}</div>
+                        </div>
+                        <div className={styles.clipScore}>{clip.score}</div>
                       </div>
-                      <div className={styles.clipScore}>{clip.score}</div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
