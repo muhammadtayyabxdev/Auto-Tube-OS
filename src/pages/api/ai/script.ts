@@ -101,7 +101,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     record.count += 1;
     store.set(storeKey, record);
 
-    const { topic, format, tone, length, creativity, provider, model, apiKey } = req.body;
+    const { topic, format, tone, length, creativity, provider, model, apiKey, action, script } = req.body;
 
     if (!topic || !topic.trim()) {
       return res.status(400).json({ error: 'Topic is required' });
@@ -116,7 +116,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       selectedKey = currentProvider === 'gemini' ? serverGeminiKey : serverGroqKey;
     }
 
-    const promptText = `You are an expert YouTube script writer specializing in high-retention faceless YouTube videos.
+    let promptText = '';
+    
+    if (action === 'improve_hook') {
+      promptText = `You are an expert YouTube script writer specializing in high-retention hook optimization.
+Your task is to take this existing YouTube script and write a refined, extremely hooky, high-retention HOOK section (first 15 seconds) to replace the old one.
+
+CURRENT SCRIPT:
+---
+${script}
+---
+
+CRITICAL RULES:
+1. Write a KILLER hook (first 15 seconds must be absolutely irresistible). Use pattern interrupts, extreme curiosity loops, or a shocking statistic.
+2. Incorporate natural, conversational flow. Avoid robotic or dry transitions.
+3. Include [VISUAL CUE] annotations.
+4. Output ONLY the new hook section, starting exactly with the header "[HOOK]". Do not include any other sections, conversational commentary, or explanations.`;
+    } else if (action === 'add_point') {
+      promptText = `You are an expert YouTube script writer specializing in listicle and high-retention content formatting.
+Your task is to take this existing YouTube script and write one additional high-retention content point that can be inserted seamlessly before the final [CTA] section.
+
+CURRENT SCRIPT:
+---
+${script}
+---
+
+CRITICAL RULES:
+1. Structure the new section as a distinct point (e.g. [POINT 4] or [POINT 5] depending on how many points already exist in the script). Find the last point number and increment it.
+2. It should fit the overall flow, topic, and tone of the script.
+3. Include high-retention elements like conversational flow and a clear [VISUAL CUE].
+4. Output ONLY the new point section. Do not include the rest of the script, conversational commentary, or explanations.`;
+    } else {
+      promptText = `You are an expert YouTube script writer specializing in high-retention faceless YouTube videos.
 
 Write a complete, publish-ready YouTube script for the following:
 
@@ -140,6 +171,7 @@ OUTPUT FORMAT — use exactly these section headers:
 [CTA] — Final 20 seconds
 
 Write the full script now. Make it so good that viewers can't stop watching.`;
+    }
 
     // Handle Gemini streaming directly
     if (currentProvider === 'gemini') {

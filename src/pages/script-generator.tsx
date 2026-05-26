@@ -377,43 +377,197 @@ If this breakdown helped you see what is truly possible with AI automation in 20
     triggerToast('Output cleared');
   };
 
-  const handleImproveHook = () => {
-    triggerToast('Refining script hook... adding pattern interrupts.', 'success');
+  const handleImproveHook = async () => {
+    if (isGenerating || !streamContent) return;
+
     setIsGenerating(true);
-    setTimeout(() => {
-      const originalIntro = streamContent.split('[INTRO]')[1] || '';
+    setShowThinking(true);
+    setThinkingText('Analyzing current script and rewriting the hook with AI...');
+
+    const activeKey = currentProvider === 'groq' ? groqKey : geminiKey;
+    const model = currentProvider === 'groq' ? groqModel : geminiModel;
+
+    try {
+      const response = await fetch('/api/ai/script', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic,
+          format: selectedFormat,
+          tone: selectedTone,
+          length: selectedLength,
+          creativity,
+          provider: currentProvider,
+          model: model,
+          apiKey: activeKey || undefined,
+          action: 'improve_hook',
+          script: streamContent
+        })
+      });
+
+      if (!response.ok) {
+        let errMsg = `Server Error: ${response.status}`;
+        try {
+          const err = await response.json();
+          errMsg = err.error || errMsg;
+        } catch {}
+        throw new Error(errMsg);
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No readable stream available from server.');
+      }
+
+      setShowThinking(false);
+      setIsStreamingCompleted(false);
+
+      // Locate the index of [INTRO] or subsequent sections to keep the rest of the script
+      let introIndex = streamContent.indexOf('[INTRO]');
+      if (introIndex === -1) introIndex = streamContent.indexOf('[MAIN CONTENT]');
+      if (introIndex === -1) introIndex = streamContent.indexOf('[CTA]');
       
-      const newHook = `[HOOK]\nWhat if I told you that your screen time is making massive corporations rich, while you stay completely broke? [VISUAL CUE: Zoom into a glowing digital phone screen showing ad dashboards] But wait, in the next 15 seconds, I'm going to show you how a select group of teenagers is flipping the script and extracting $500 a day in pure passive income using free AI models.\n`;
-      
-      const refinedText = newHook + '\n[INTRO]' + originalIntro;
-      setStreamContent(refinedText);
-      parseTextIntoSections(refinedText);
+      const restOfScript = introIndex !== -1 ? streamContent.substring(introIndex) : '';
+
+      const decoder = new TextDecoder();
+      let newHook = '';
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        if (value) {
+          const chunk = decoder.decode(value, { stream: !done });
+          newHook += chunk;
+          
+          // Construct the updated script with the new hook streaming in real-time!
+          const updatedScript = newHook.trim() + '\n\n' + restOfScript;
+          setStreamContent(updatedScript);
+          parseTextIntoSections(updatedScript);
+          setWordCount(updatedScript.trim().split(/\s+/).filter(w => w).length);
+        }
+      }
+
+      setIsStreamingCompleted(true);
       setIsGenerating(false);
-      triggerToast('Hook improved successfully!');
-    }, 1200);
+      triggerToast('Script hook improved with real AI!', 'success');
+
+    } catch (err: any) {
+      console.error(err);
+      triggerToast(err.message || 'AI hook improvement failed. Running simulated improvement...', 'error');
+      
+      // Simulation fallback for Improve Hook
+      setTimeout(() => {
+        setShowThinking(false);
+        const introIndex = streamContent.indexOf('[INTRO]');
+        const restOfScript = introIndex !== -1 ? streamContent.substring(introIndex) : '';
+        const simulatedHook = `[HOOK]\nWhat if everything you've been told about financial freedom is a complete lie? [VISUAL CUE: Fast text flashing on screen with a red glitch effect] In the next 15 seconds, we're going to reveal the exact AI framework that's unlocking $500/day in passive income, starting today.\n`;
+        const updated = simulatedHook + '\n' + restOfScript;
+        setStreamContent(updated);
+        parseTextIntoSections(updated);
+        setIsGenerating(false);
+        triggerToast('Hook improved successfully!');
+      }, 1000);
+    }
   };
 
-  const handleAddPoint = () => {
-    triggerToast('Generating additional high-RPM point...', 'success');
+  const handleAddPoint = async () => {
+    if (isGenerating || !streamContent) return;
+
     setIsGenerating(true);
-    setTimeout(() => {
-      if (!streamContent.includes('[CTA]')) {
-        setIsGenerating(false);
-        triggerToast('Could not append point. CTA missing.', 'error');
-        return;
+    setShowThinking(true);
+    setThinkingText('Generating a new, high-RPM script point with AI...');
+
+    const activeKey = currentProvider === 'groq' ? groqKey : geminiKey;
+    const model = currentProvider === 'groq' ? groqModel : geminiModel;
+
+    try {
+      const response = await fetch('/api/ai/script', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic,
+          format: selectedFormat,
+          tone: selectedTone,
+          length: selectedLength,
+          creativity,
+          provider: currentProvider,
+          model: model,
+          apiKey: activeKey || undefined,
+          action: 'add_point',
+          script: streamContent
+        })
+      });
+
+      if (!response.ok) {
+        let errMsg = `Server Error: ${response.status}`;
+        try {
+          const err = await response.json();
+          errMsg = err.error || errMsg;
+        } catch {}
+        throw new Error(errMsg);
       }
-      
-      const beforeCTA = streamContent.split('[CTA]')[0] || '';
-      const ctaText = streamContent.split('[CTA]')[1] || '';
-      
-      const extraPoint = `\n[POINT 4]\nThe fourth hidden method is automated audio narration arbitrage. By converting these scripts into hyper-realistic voice tracks using premium AI voice generation, you can upload podcasts to Spotify and Apple Podcasts, earning ad income on two platforms simultaneously. [VISUAL CUE: Neon animation showing a soundwave splitting cleanly into Spotify and Apple logos]\n\n`;
-      
-      const appendedText = beforeCTA + extraPoint + '[CTA]' + ctaText;
-      setStreamContent(appendedText);
-      parseTextIntoSections(appendedText);
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No readable stream available from server.');
+      }
+
+      setShowThinking(false);
+      setIsStreamingCompleted(false);
+
+      // Locate [CTA] section to insert the new point right before it
+      const ctaIndex = streamContent.indexOf('[CTA]');
+      const beforeCTA = ctaIndex !== -1 ? streamContent.substring(0, ctaIndex) : streamContent;
+      const ctaText = ctaIndex !== -1 ? streamContent.substring(ctaIndex) : '';
+
+      const decoder = new TextDecoder();
+      let newPoint = '';
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        if (value) {
+          const chunk = decoder.decode(value, { stream: !done });
+          newPoint += chunk;
+          
+          // Construct the updated script with the new point streaming in real-time before CTA!
+          const updatedScript = beforeCTA.trim() + '\n\n' + newPoint.trim() + '\n\n' + ctaText;
+          setStreamContent(updatedScript);
+          parseTextIntoSections(updatedScript);
+          setWordCount(updatedScript.trim().split(/\s+/).filter(w => w).length);
+        }
+      }
+
+      setIsStreamingCompleted(true);
       setIsGenerating(false);
-      triggerToast('Arbitrage Point added!');
-    }, 1000);
+      triggerToast('New script point added successfully with AI!', 'success');
+
+    } catch (err: any) {
+      console.error(err);
+      triggerToast(err.message || 'AI Point generation failed. Running simulated addition...', 'error');
+      
+      // Simulation fallback for Add Point
+      setTimeout(() => {
+        setShowThinking(false);
+        const ctaIndex = streamContent.indexOf('[CTA]');
+        const beforeCTA = ctaIndex !== -1 ? streamContent.substring(0, ctaIndex) : streamContent;
+        const ctaText = ctaIndex !== -1 ? streamContent.substring(ctaIndex) : '';
+        
+        // Count existing points to dynamically number the point in simulation fallback
+        const matches = beforeCTA.match(/\[POINT \d+\]/gi) || [];
+        const nextPointNum = matches.length + 4; // base + matches
+        
+        const simulatedPoint = `\n[POINT ${nextPointNum}]\nThe next hidden method is high-retention keyword arbitrage. By optimizing the title tags, meta descriptions, and video tags using premium SEO analytics, you can unlock up to 300% more search impressions from your vertical content. [VISUAL CUE: Neon animation showing video impressions charting upwards vertically]\n\n`;
+        
+        const updated = beforeCTA.trim() + '\n' + simulatedPoint + ctaText;
+        setStreamContent(updated);
+        parseTextIntoSections(updated);
+        setIsGenerating(false);
+        triggerToast(`Simulated Point ${nextPointNum} added!`);
+      }, 1000);
+    }
   };
 
   const toggleSectionExpand = (sectionKey: string) => {
