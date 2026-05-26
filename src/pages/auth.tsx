@@ -58,35 +58,91 @@ export default function Auth() {
     setStrength({ pct, color: colors[score] || "#ff3d3d" });
   };
 
+  // 2FA state
+  const [showTotpStep, setShowTotpStep] = useState(false);
+  const [totpCode, setTotpCode] = useState('');
+  const [totpLoading, setTotpLoading] = useState(false);
+
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!signIn) return;
-    setAuthError("");
+    setAuthError('');
     setAuthLoading(true);
 
     try {
-      const result = await signIn.create({
+      const { error } = await signIn.create({
         identifier: signInEmail,
         password: signInPassword,
       });
 
-      if (result.error) {
-        setAuthError(result.error.message || "Invalid email or password. Please try again.");
-      } else if (signIn.status === "complete") {
-        const finalizeResult = await signIn.finalize();
-        if (finalizeResult.error) {
-          setAuthError(finalizeResult.error.message || "Failed to finalize session.");
+      if (error) {
+        setAuthError(error.longMessage || error.message || 'Invalid email or password.');
+        return;
+      }
+
+      const status = signIn.status;
+      if (status === 'complete') {
+        const { error: finalErr } = await signIn.finalize();
+        if (finalErr) {
+          setAuthError(finalErr.longMessage || finalErr.message || 'Failed to finalize session.');
         } else {
-          const dest = (router.query.redirect as string) || "/dashboard";
+          const dest = (router.query.redirect as string) || '/dashboard';
+          router.push(dest);
+        }
+      } else if (status === 'needs_second_factor') {
+        // Account has 2FA — show the TOTP/phone code step
+        setShowTotpStep(true);
+        setAuthError('');
+      } else if (status === 'needs_first_factor') {
+        setAuthError('Additional verification required. Please check your email.');
+      } else {
+        setAuthError('Sign in could not be completed. Please try again.');
+      }
+    } catch (err: any) {
+      const msg: string = err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || err.message || 'Invalid email or password.';
+      setAuthError(msg);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleTotpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!signIn) return;
+    setAuthError('');
+    setTotpLoading(true);
+
+    try {
+      // Try TOTP first (authenticator app), then phone code fallback
+      const totpResult = await signIn.mfa.verifyTOTP({ code: totpCode });
+      const mfaError = totpResult.error;
+
+      if (mfaError) {
+        // Fallback to phone code if TOTP fails
+        const phoneResult = await signIn.mfa.verifyPhoneCode({ code: totpCode });
+        if (phoneResult.error) {
+          setAuthError(phoneResult.error.longMessage || phoneResult.error.message || 'Invalid verification code.');
+          return;
+        }
+      }
+
+      // 2FA verified — finalize to create the session
+      if (signIn.status === 'complete') {
+        const { error: finalErr } = await signIn.finalize();
+        if (finalErr) {
+          setAuthError(finalErr.longMessage || finalErr.message || 'Failed to create session.');
+        } else {
+          const dest = (router.query.redirect as string) || '/dashboard';
           router.push(dest);
         }
       } else {
-        setAuthError(`Sign in status is ${signIn.status}. Additional steps may be required.`);
+        setAuthError('Verification failed. Please try again.');
       }
     } catch (err: any) {
-      setAuthError(err.message || "An unexpected error occurred.");
+      const msg: string = err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || err.message || 'Invalid verification code.';
+      setAuthError(msg);
     } finally {
-      setAuthLoading(false);
+      setTotpLoading(false);
     }
   };
 
@@ -279,95 +335,138 @@ export default function Auth() {
 
           {/* SIGN IN */}
           <form
-            onSubmit={handleSignInSubmit}
+            onSubmit={showTotpStep ? handleTotpSubmit : handleSignInSubmit}
             className={`${styles.pwScreen} ${tab === "signin" ? styles.active : ""}`}
           >
-            <h2 className={styles.formTitle}>Welcome back</h2>
-            <p className={styles.formSub}>Sign in to your workspace</p>
-            <div className={styles.oauthRow}>
-              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_google")} disabled={authLoading}>
-                <span className={styles.oauthIcon}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                  </svg>
-                </span> Google
-              </button>
-              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_facebook")} disabled={authLoading}>
-                <span className={styles.oauthIcon}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                </span> Facebook
-              </button>
-              <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_twitter")} disabled={authLoading}>
-                <span className={styles.oauthIcon}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                </span> Twitter
-              </button>
-            </div>
-            <div className={styles.dividerRow}>
-              <div className={styles.dividerLine}></div>
-              <div className={styles.dividerText}>or continue with email</div>
-              <div className={styles.dividerLine}></div>
-            </div>
-            <div className={styles.field}>
-              <label className={styles.fieldLabel}>Email Address</label>
-              <input
-                className={styles.inp}
-                type="email"
-                placeholder="you@example.com"
-                value={signInEmail}
-                onChange={(e) => setSignInEmail(e.target.value)}
-                required
-                disabled={authLoading}
-              />
-            </div>
-            <div className={styles.field}>
-              <div className={styles.fieldRow}>
-                <label className={styles.fieldLabel} style={{ margin: 0 }}>
-                  Password
-                </label>
-                <Link href="/password-reset" className={styles.forgot}>
-                  Forgot password?
-                </Link>
-              </div>
-              <div className={styles.inpWrap}>
-                <input
-                  className={styles.inp}
-                  type={showSignInPw ? "text" : "password"}
-                  placeholder="Enter your password"
-                  value={signInPassword}
-                  onChange={(e) => setSignInPassword(e.target.value)}
-                  required
-                  disabled={authLoading}
-                />
-                <span
-                  className={styles.inpIcon}
-                  onClick={() => setShowSignInPw(!showSignInPw)}
-                >
-                  {showSignInPw ? <EyeOff size={16} /> : <Eye size={16} />}
-                </span>
-              </div>
-            </div>
-            {authError && tab === "signin" && (
-              <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
-                {authError}
-              </div>
+            {showTotpStep ? (
+              /* ── 2FA VERIFICATION STEP ── */
+              <>
+                <h2 className={styles.formTitle}>Two-step verification</h2>
+                <p className={styles.formSub} style={{ marginBottom: '24px' }}>
+                  Enter the 6-digit code from your authenticator app or SMS to complete sign in.
+                </p>
+                <div className={styles.field}>
+                  <label className={styles.fieldLabel}>Verification Code</label>
+                  <input
+                    className={styles.inp}
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    placeholder="000000"
+                    maxLength={6}
+                    value={totpCode}
+                    onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    required
+                    disabled={totpLoading}
+                    autoFocus
+                    style={{ letterSpacing: '0.3em', fontSize: '20px', textAlign: 'center' }}
+                  />
+                </div>
+                {authError && (
+                  <div style={{ color: 'var(--red)', fontSize: '13px', marginBottom: '14px', textAlign: 'center' }}>
+                    {authError}
+                  </div>
+                )}
+                <button type="submit" className={styles.submitBtn} disabled={totpLoading || totpCode.length < 6}>
+                  {totpLoading ? 'Verifying...' : 'Verify & Sign In'}
+                </button>
+                <div className={styles.formNote} style={{ marginTop: '12px' }}>
+                  <a href="#" onClick={(e) => { e.preventDefault(); setShowTotpStep(false); setTotpCode(''); setAuthError(''); }}>
+                    ← Back to sign in
+                  </a>
+                </div>
+              </>
+            ) : (
+              /* ── NORMAL SIGN IN STEP ── */
+              <>
+                <h2 className={styles.formTitle}>Welcome back</h2>
+                <p className={styles.formSub}>Sign in to your workspace</p>
+                <div className={styles.oauthRow}>
+                  <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_google")} disabled={authLoading}>
+                    <span className={styles.oauthIcon}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                      </svg>
+                    </span> Google
+                  </button>
+                  <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_facebook")} disabled={authLoading}>
+                    <span className={styles.oauthIcon}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </span> Facebook
+                  </button>
+                  <button type="button" className={styles.oauthBtn} onClick={() => handleOAuthSignIn("oauth_twitter")} disabled={authLoading}>
+                    <span className={styles.oauthIcon}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                      </svg>
+                    </span> Twitter
+                  </button>
+                </div>
+                <div className={styles.dividerRow}>
+                  <div className={styles.dividerLine}></div>
+                  <div className={styles.dividerText}>or continue with email</div>
+                  <div className={styles.dividerLine}></div>
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.fieldLabel}>Email Address</label>
+                  <input
+                    className={styles.inp}
+                    type="email"
+                    placeholder="you@example.com"
+                    value={signInEmail}
+                    onChange={(e) => setSignInEmail(e.target.value)}
+                    required
+                    disabled={authLoading}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <div className={styles.fieldRow}>
+                    <label className={styles.fieldLabel} style={{ margin: 0 }}>
+                      Password
+                    </label>
+                    <Link href="/password-reset" className={styles.forgot}>
+                      Forgot password?
+                    </Link>
+                  </div>
+                  <div className={styles.inpWrap}>
+                    <input
+                      className={styles.inp}
+                      type={showSignInPw ? "text" : "password"}
+                      placeholder="Enter your password"
+                      value={signInPassword}
+                      onChange={(e) => setSignInPassword(e.target.value)}
+                      required
+                      disabled={authLoading}
+                    />
+                    <span
+                      className={styles.inpIcon}
+                      onClick={() => setShowSignInPw(!showSignInPw)}
+                    >
+                      {showSignInPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </span>
+                  </div>
+                </div>
+                {authError && tab === "signin" && (
+                  <div style={{ color: "var(--red)", fontSize: "13px", marginBottom: "14px", textAlign: "center" }}>
+                    {authError}
+                  </div>
+                )}
+                <button type="submit" className={styles.submitBtn} disabled={authLoading}>
+                  {authLoading ? "Signing in..." : "Sign In"}
+                </button>
+                <div className={styles.formNote}>
+                  Don&apos;t have an account?{" "}
+                  <a href="#" onClick={(e) => { e.preventDefault(); setTab("signup"); setAuthError(""); }}>
+                    Create one free
+                  </a>
+                </div>
+              </>
             )}
-            <button type="submit" className={styles.submitBtn} disabled={authLoading}>
-              {authLoading ? "Signing in..." : "Sign In"}
-            </button>
-            <div className={styles.formNote}>
-              Don&apos;t have an account?{" "}
-              <a href="#" onClick={(e) => { e.preventDefault(); setTab("signup"); setAuthError(""); }}>
-                Create one free
-              </a>
-            </div>
           </form>
 
           {/* SIGN UP */}

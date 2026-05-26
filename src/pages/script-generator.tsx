@@ -328,7 +328,6 @@ If this breakdown helped you see what is truly possible with AI automation in 20
       triggerToast(`Script generated! ${finalWords} words`, 'success');
 
     } catch (err: any) {
-      console.error(err);
       triggerToast(err.message || 'Something went wrong. Running simulation fallback...', 'error');
       
       // Graceful fallback to rich simulation
@@ -453,7 +452,6 @@ If this breakdown helped you see what is truly possible with AI automation in 20
       triggerToast('Script hook improved with real AI!', 'success');
 
     } catch (err: any) {
-      console.error(err);
       triggerToast(err.message || 'AI hook improvement failed. Running simulated improvement...', 'error');
       
       // Simulation fallback for Improve Hook
@@ -545,7 +543,6 @@ If this breakdown helped you see what is truly possible with AI automation in 20
       triggerToast('New script point added successfully with AI!', 'success');
 
     } catch (err: any) {
-      console.error(err);
       triggerToast(err.message || 'AI Point generation failed. Running simulated addition...', 'error');
       
       // Simulation fallback for Add Point

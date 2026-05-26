@@ -1,12 +1,31 @@
 import Head from 'next/head';
-
-
-import { Suspense, useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { Suspense, useState, useEffect, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/dashboard.module.css';
 import { ArrowDown, ArrowUp, BarChart3, Bell, Bot, Brain, Check, Clock, DollarSign, Flame, Landmark, Lightbulb, PenTool, Play, Search, Smartphone, TrendingUp, Upload, X, XCircle, Zap } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+
+// Typed interfaces for AI API responses
+interface TopicItem {
+  id: number;
+  title: string;
+  score: number;
+  badge: ReactNode;
+  badgeClass?: string;
+  views: string;
+  rpm: string;
+  comp: string;
+  isTop: boolean;
+}
+
+interface ShortClip {
+  id: number;
+  title: string;
+  meta: string;
+  score: number;
+  thumb?: ReactNode;
+}
 
 function DashboardContent() {
   const router = useRouter(); const searchParams = useMemo(() => ({ get: (key: string) => { const val = router.query[key]; return Array.isArray(val) ? val[0] : (val || null); } }), [router.query]);
@@ -85,7 +104,7 @@ function DashboardContent() {
   const [market, setMarket] = useState<string>('US Market');
   const [period, setPeriod] = useState<string>('This Week');
   const [isSearchingTopics, setIsSearchingTopics] = useState<boolean>(false);
-  const [topicList, setTopicList] = useState<any[]>([
+  const [topicList, setTopicList] = useState<TopicItem[]>([
     { id: 1, title: '"AI Side Hustles That Actually Pay $500/Day in 2026"', score: 9.4, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Flame size={14} /> HOT PICK</span>, badgeClass: styles.scoreHot, views: '2.1M', rpm: '$18', comp: 'Low', isTop: true },
     { id: 2, title: '"Why 99% of People Stay Broke (And How to Escape)"', score: 8.8, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Flame size={14} /> TRENDING</span>, badgeClass: styles.scoreHot, views: '1.7M', rpm: '$22', comp: 'Medium', isTop: false },
     { id: 3, title: '"I Tested Every AI Investing Tool for 30 Days — Here\'s What Happened"', score: 8.1, badge: <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Zap size={14} /> RISING</span>, badgeClass: styles.scoreWarm, views: '980K', rpm: '$15', comp: 'Low', isTop: false },
@@ -137,13 +156,11 @@ function DashboardContent() {
         throw new Error('Invalid response structure');
       }
     } catch (err: any) {
-      console.error(err);
-      triggerToast(err.message || 'Failed to search topics. Running offline simulation...', 'error');
-      
-      // Graceful simulation fallback
+      triggerToast(err.message || 'Failed to search topics. Using cached demo data.', 'error');
+      // Graceful simulation: show a toast after a brief delay
       setTimeout(() => {
-        triggerToast('Simulation loaded! Found 6 trending viral topics!');
-      }, 1000);
+        triggerToast('Showing demo topics! Configure API keys to load live data.');
+      }, 1200);
     } finally {
       setIsSearchingTopics(false);
     }
@@ -158,7 +175,7 @@ function DashboardContent() {
   const [youtubeUrl, setYoutubeUrl] = useState<string>('');
   const [isProcessingShorts, setIsProcessingShorts] = useState<boolean>(false);
   const [shortsProgress, setShortsProgress] = useState<number>(100);
-  const [shortsClips, setShortsClips] = useState<any[]>([
+  const [shortsClips, setShortsClips] = useState<ShortClip[]>([
     { id: 1, title: 'Hook: "What if I told you people are making $500/day with AI…"', meta: '0:00 – 0:38 · Perfect hook · High energy', score: 9.6, thumb: <Flame size={14} /> },
     { id: 2, title: 'AI Faceless YouTube breakdown — numbers revealed', meta: '2:14 – 2:58 · Surprising stat · Strong CTA', score: 8.9, thumb: <Lightbulb size={14} /> },
     { id: 3, title: '"This one tool replaced my $3K/mo freelancer"', meta: '5:40 – 6:22 · Value bomb · Shareable', score: 8.7, thumb: <DollarSign size={14} /> },
@@ -220,24 +237,27 @@ function DashboardContent() {
         throw new Error('Invalid response structure');
       }
     } catch (err: any) {
-      console.error(err);
       clearInterval(progressTimer);
       triggerToast(err.message || 'Failed to parse video. Running offline simulation...', 'error');
       
-      // Graceful simulation fallback
+      // Graceful simulation fallback — do NOT call setIsProcessingShorts(false) yet,
+      // let the interval control the loading state to avoid a race condition.
       setShortsProgress(15);
       const interval = setInterval(() => {
         setShortsProgress((prev) => {
           if (prev >= 100) {
             clearInterval(interval);
             setIsProcessingShorts(false);
-            triggerToast('Repurposer processing complete! Found 5 viral clips.');
+            triggerToast('Repurposer processing complete! Showing demo clips.');
             return 100;
           }
           return prev + 17;
         });
       }, 400);
+      // Return here so the finally block does not run setIsProcessingShorts(false) prematurely
+      return;
     } finally {
+      // Only runs on success or non-simulation errors
       setIsProcessingShorts(false);
     }
   };
