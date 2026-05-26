@@ -53,19 +53,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const groqKey = process.env.GROQ_API_KEY || '';
     const geminiKey = process.env.GEMINI_API_KEY || '';
+    const localClerkSecret = process.env.CLERK_SECRET_KEY || '';
+
+    const proxySecret = req.headers['x-proxy-secret'];
+    const proxyUserId = req.headers['x-proxy-user-id'];
+    
+    let userId: string | null = null;
+    let isProxiedRequest = false;
+    
+    if (proxySecret && proxySecret === localClerkSecret && proxyUserId) {
+      userId = proxyUserId as string;
+      isProxiedRequest = true;
+      console.log(`Authenticated proxied topics request for user ${userId} via shared secret validation.`);
+    } else {
+      const auth = getAuth(req);
+      userId = auth.userId;
+    }
 
     // Active Proxy Forwarding: If local keys are placeholders, forward to live Render!
     const isLocalPlaceholder = !groqKey || groqKey.includes('placeholder');
-    if (isLocalPlaceholder) {
+    if (isLocalPlaceholder && !isProxiedRequest) {
+      if (!userId) {
+        return res.status(401).json({ error: 'Authentication required. Please sign in.' });
+      }
+
       const renderUrl = process.env.NEXT_PUBLIC_RENDER_URL || 'https://auto-tube-os.onrender.com';
-      console.log(`Local API key is a placeholder. Forwarding topics request to live Render server (${renderUrl})...`);
+      console.log(`Local API key is a placeholder. Forwarding authenticated topics request to live Render server (${renderUrl})...`);
       try {
         const renderRes = await fetch(`${renderUrl}/api/ai/topics`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': req.headers.authorization || '',
-            'Cookie': req.headers.cookie || '',
+            'X-Proxy-Secret': localClerkSecret,
+            'X-Proxy-User-Id': userId,
           },
           body: JSON.stringify(req.body),
         });
@@ -81,7 +101,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 1. Auth & Rate Limit Check
-    const { userId } = getAuth(req);
     if (!userId) {
       return res.status(401).json({ error: 'Authentication required. Please sign in.' });
     }

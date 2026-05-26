@@ -556,7 +556,16 @@ If this breakdown helped you see what is truly possible with AI automation in 20
         const matches = beforeCTA.match(/\[POINT \d+\]/gi) || [];
         const nextPointNum = matches.length + 4; // base + matches
         
-        const simulatedPoint = `\n[POINT ${nextPointNum}]\nThe next hidden method is high-retention keyword arbitrage. By optimizing the title tags, meta descriptions, and video tags using premium SEO analytics, you can unlock up to 300% more search impressions from your vertical content. [VISUAL CUE: Neon animation showing video impressions charting upwards vertically]\n\n`;
+        const fallbackPoints = [
+          "The next hidden method is high-retention keyword arbitrage. By optimizing the title tags, meta descriptions, and video tags using premium SEO analytics, you can unlock up to 300% more search impressions from your vertical content. [VISUAL CUE: Neon animation showing video impressions charting upwards vertically]",
+          "We must deploy interactive community loops. By asking a highly polarized, relevant question in the first 30 seconds of the video and pinning the most engaged comment, you can drive up the comment-to-view ratio by 400% almost instantly. [VISUAL CUE: Mobile UI screenshot showing a pinned comment glowing in neon green]",
+          "We must master thumbnail-video synergy. Ensure that the very first frame of your video matches your custom thumbnail visual layout exactly. This simple step eliminates cognitive disconnect, keeping viewers locked in for the first critical seconds. [VISUAL CUE: High-speed split-screen of a custom thumbnail transitioning smoothly into a video intro]",
+          "We must leverage the audio pattern interrupt. Switch background tracks or drop the music entirely for 3 seconds when delivering your most crucial value statement. This sudden silence triggers an immediate neurological focus response in your audience. [VISUAL CUE: Waveform audio visualizer dropping to a flat line, then pulsing in red]",
+          "We must execute visual pacing compression. Speed up static graphic presentations by 15% and layer them with haptic sound effects (like whooshes and camera clicks). This maintains visual interest and completely eliminates mid-video pacing drop-offs. [VISUAL CUE: Neon timeline showing graphic clips compressed and aligned with sound spikes]"
+        ];
+        
+        const pointText = fallbackPoints[(nextPointNum - 4) % fallbackPoints.length];
+        const simulatedPoint = `\n[POINT ${nextPointNum}]\n${pointText}\n\n`;
         
         const updated = beforeCTA.trim() + '\n' + simulatedPoint + ctaText;
         setStreamContent(updated);
