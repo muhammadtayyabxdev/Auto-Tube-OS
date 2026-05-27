@@ -62,6 +62,7 @@ export default function Auth() {
   const [showTotpStep, setShowTotpStep] = useState(false);
   const [totpCode, setTotpCode] = useState('');
   const [totpLoading, setTotpLoading] = useState(false);
+  const [factorMessage, setFactorMessage] = useState('Enter the 6-digit code to complete sign in.');
 
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +91,41 @@ export default function Auth() {
           router.push(dest);
         }
       } else if (status === 'needs_second_factor') {
-        // Account has 2FA — show the TOTP/phone code step
+        // Find which second factors are supported
+        const secondFactors = signIn.supportedSecondFactors || [];
+        const phoneFactor = secondFactors.find(f => f.strategy === 'phone_code');
+        const emailFactor = secondFactors.find(f => f.strategy === 'email_code');
+        const totpFactor = secondFactors.find(f => f.strategy === 'totp');
+
+        let msg = 'Enter the 6-digit verification code to complete sign in.';
+
+        try {
+          if (phoneFactor) {
+            // Send SMS code
+            await (signIn as any).prepareSecondFactor({
+              strategy: 'phone_code',
+              phoneNumberId: phoneFactor.phoneNumberId
+            });
+            msg = 'Enter the 6-digit code sent to your registered phone number via SMS.';
+          } else if (emailFactor) {
+            // Send email code
+            await (signIn as any).prepareSecondFactor({
+              strategy: 'email_code',
+              emailAddressId: emailFactor.emailAddressId
+            });
+            msg = 'Enter the 6-digit code sent to your registered email address.';
+          } else if (totpFactor) {
+            msg = 'Enter the 6-digit code from your authenticator app.';
+          }
+        } catch (prepErr: any) {
+          console.error('Error preparing second factor:', prepErr);
+          const prepMsg = prepErr?.errors?.[0]?.longMessage || prepErr?.errors?.[0]?.message || prepErr.message;
+          if (prepMsg) {
+            msg = `Could not send verification code: ${prepMsg}`;
+          }
+        }
+
+        setFactorMessage(msg);
         setShowTotpStep(true);
         setAuthError('');
       } else if (status === 'needs_first_factor') {
@@ -113,30 +148,53 @@ export default function Auth() {
     setTotpLoading(true);
 
     try {
-      // Try TOTP first (authenticator app), then phone code fallback
-      const totpResult = await signIn.mfa.verifyTOTP({ code: totpCode });
-      const mfaError = totpResult.error;
+      const secondFactors = signIn.supportedSecondFactors || [];
+      const phoneFactor = secondFactors.find(f => f.strategy === 'phone_code');
+      const emailFactor = secondFactors.find(f => f.strategy === 'email_code');
+      const totpFactor = secondFactors.find(f => f.strategy === 'totp');
 
-      if (mfaError) {
-        // Fallback to phone code if TOTP fails
-        const phoneResult = await signIn.mfa.verifyPhoneCode({ code: totpCode });
-        if (phoneResult.error) {
-          setAuthError(phoneResult.error.longMessage || phoneResult.error.message || 'Invalid verification code.');
-          return;
+      let attemptResult;
+
+      // Verify the code using attemptSecondFactor on the correct strategy
+      if (phoneFactor) {
+        attemptResult = await (signIn as any).attemptSecondFactor({
+          strategy: 'phone_code',
+          code: totpCode
+        });
+      } else if (emailFactor) {
+        attemptResult = await (signIn as any).attemptSecondFactor({
+          strategy: 'email_code',
+          code: totpCode
+        });
+      } else if (totpFactor) {
+        attemptResult = await (signIn as any).attemptSecondFactor({
+          strategy: 'totp',
+          code: totpCode
+        });
+      } else {
+        // Fallback to the first supported strategy
+        const fallbackStrategy = secondFactors[0]?.strategy;
+        if (fallbackStrategy) {
+          attemptResult = await (signIn as any).attemptSecondFactor({
+            strategy: fallbackStrategy,
+            code: totpCode
+          });
+        } else {
+          throw new Error('No supported second factor found.');
         }
       }
 
-      // 2FA verified — finalize to create the session
+      // If verified, finalize to generate session
       if (signIn.status === 'complete') {
         const { error: finalErr } = await signIn.finalize();
         if (finalErr) {
-          setAuthError(finalErr.longMessage || finalErr.message || 'Failed to create session.');
+          setAuthError(finalErr.longMessage || finalErr.message || 'Failed to finalize session.');
         } else {
           const dest = (router.query.redirect as string) || '/dashboard';
           router.push(dest);
         }
       } else {
-        setAuthError('Verification failed. Please try again.');
+        setAuthError('Verification failed. Please check your code and try again.');
       }
     } catch (err: any) {
       const msg: string = err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || err.message || 'Invalid verification code.';
@@ -343,7 +401,7 @@ export default function Auth() {
               <>
                 <h2 className={styles.formTitle}>Two-step verification</h2>
                 <p className={styles.formSub} style={{ marginBottom: '24px' }}>
-                  Enter the 6-digit code from your authenticator app or SMS to complete sign in.
+                  {factorMessage}
                 </p>
                 <div className={styles.field}>
                   <label className={styles.fieldLabel}>Verification Code</label>
