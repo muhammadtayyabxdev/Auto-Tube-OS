@@ -74,17 +74,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       userId = auth.userId;
     }
 
-    // Active Proxy Forwarding: If local keys are placeholders, forward to live Render!
+    // Active Proxy Forwarding: If local keys are placeholders, forward to live Vercel!
     const isLocalPlaceholder = !groqKey || groqKey.includes('placeholder');
     if (isLocalPlaceholder && !isProxiedRequest) {
       if (!userId) {
         return res.status(401).json({ error: 'Authentication required. Please sign in.' });
       }
 
-      const renderUrl = process.env.NEXT_PUBLIC_RENDER_URL || 'https://auto-tube-os.onrender.com';
-      console.log(`Local API key is a placeholder. Forwarding authenticated retention request to live Render server (${renderUrl})...`);
+      const vercelUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://autotubeos.vercel.app';
+      console.log(`Local API key is a placeholder. Forwarding authenticated retention request to live Vercel server (${vercelUrl})...`);
       try {
-        const renderRes = await fetch(`${renderUrl}/api/ai/retention`, {
+        const vercelRes = await fetch(`${vercelUrl}/api/ai/retention`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -94,13 +94,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           body: JSON.stringify(req.body),
         });
 
-        const text = await renderRes.text();
-        return res.status(renderRes.status)
+        const text = await vercelRes.text();
+        return res.status(vercelRes.status)
                   .setHeader('Content-Type', 'application/json')
                   .send(text);
       } catch (proxyError: any) {
-        console.error('Render retention proxy failed:', proxyError);
-        return res.status(500).json({ error: `Connection to Render failed: ${proxyError.message}` });
+        console.error('Vercel retention proxy failed:', proxyError);
+        return res.status(500).json({ error: `Connection to Vercel failed: ${proxyError.message}` });
       }
     }
 

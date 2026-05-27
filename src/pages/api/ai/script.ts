@@ -36,18 +36,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       userId = auth.userId;
     }
 
-    // Active Proxy Forwarding: If local keys are placeholders, forward to live Render!
+    // Active Proxy Forwarding: If local keys are placeholders, forward to live Vercel!
     const isLocalPlaceholder = !serverGroqKey || serverGroqKey.includes('placeholder');
     if (isLocalPlaceholder && !isProxiedRequest) {
       if (!userId) {
         return res.status(401).json({ error: 'Authentication required. Please sign in.' });
       }
 
-      const renderUrl = process.env.NEXT_PUBLIC_RENDER_URL || 'https://auto-tube-os.onrender.com';
-      console.log(`Local API key is a placeholder. Forwarding authenticated script request to live Render server (${renderUrl})...`);
+      const vercelUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://autotubeos.vercel.app';
+      console.log(`Local API key is a placeholder. Forwarding authenticated script request to live Vercel server (${vercelUrl})...`);
       
       try {
-        const renderRes = await fetch(`${renderUrl}/api/ai/script`, {
+        const vercelRes = await fetch(`${vercelUrl}/api/ai/script`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -57,9 +57,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           body: JSON.stringify(req.body),
         });
 
-        if (!renderRes.ok) {
-          const text = await renderRes.text();
-          return res.status(renderRes.status).send(text);
+        if (!vercelRes.ok) {
+          const text = await vercelRes.text();
+          return res.status(vercelRes.status).send(text);
         }
 
         res.writeHead(200, {
@@ -68,8 +68,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Connection': 'keep-alive',
         });
 
-        // Forward stream chunks from Render directly to the local client browser
-        const reader = renderRes.body;
+        // Forward stream chunks from Vercel directly to the local client browser
+        const reader = vercelRes.body;
         if (reader) {
           for await (const chunk of reader as any) {
             res.write(chunk);
@@ -78,8 +78,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.end();
         return;
       } catch (proxyError: any) {
-        console.error('Render Proxy redirection failed:', proxyError);
-        return res.status(500).json({ error: `Connection to Render failed: ${proxyError.message}` });
+        console.error('Vercel Proxy redirection failed:', proxyError);
+        return res.status(500).json({ error: `Connection to Vercel failed: ${proxyError.message}` });
       }
     }
 

@@ -1,15 +1,20 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+import crypto from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import { clerkClient } from '@clerk/nextjs/server';
-import { NextRequest, NextResponse } from 'next/server';
-import crypto from 'node:crypto';
 
-// Setup Supabase admin client with service role key to bypass database RLS during updates
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 const getSupabaseAdmin = () => {
   if (!supabaseUrl || !supabaseServiceKey) {
-    throw new Error('Supabase admin environment variables (NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY) are not set.');
+    throw new Error('Supabase admin environment variables are not set.');
   }
   return createClient(supabaseUrl, supabaseServiceKey, {
     auth: {
@@ -19,7 +24,6 @@ const getSupabaseAdmin = () => {
   });
 };
 
-// Helper mock function to log sending invoice emails
 function sendInvoiceEmail(email: string, invoiceUrl: string, amount: string) {
   console.log(`
 =========================================
@@ -32,26 +36,34 @@ Status: Success
   `);
 }
 
-export async function POST(request: NextRequest) {
-  const secret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
+  const secret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET;
   if (!secret) {
     console.error('LEMONSQUEEZY_WEBHOOK_SECRET is not configured.');
-    return NextResponse.json({ error: 'Webhook secret is not configured on server.' }, { status: 500 });
+    return res.status(500).json({ error: 'Webhook secret is not configured on server.' });
   }
 
   try {
-    // 1. Get raw request body and signature header
-    const rawBody = await request.text();
-    const signature = request.headers.get('x-signature');
+    // 1. Read raw stream body
+    const chunks = [];
+    for await (const chunk of req) {
+      chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+    }
+    const rawBodyBuffer = Buffer.concat(chunks);
+    const rawBody = rawBodyBuffer.toString('utf8');
 
-    if (!signature) {
-      return NextResponse.json({ error: 'Missing x-signature header' }, { status: 400 });
+    // 2. Validate webhook signature
+    const signature = req.headers['x-signature'];
+    if (!signature || typeof signature !== 'string') {
+      return res.status(400).json({ error: 'Missing x-signature header' });
     }
 
-    // 2. Validate webhook signature using timingSafeEqual
     const hmac = crypto.createHmac('sha256', secret);
-    const digest = Buffer.from(hmac.update(rawBody).digest('hex'), 'utf8');
+    const digest = Buffer.from(hmac.update(rawBodyBuffer).digest('hex'), 'utf8');
     const signatureBuffer = Buffer.from(signature, 'utf8');
 
     if (
@@ -59,7 +71,7 @@ export async function POST(request: NextRequest) {
       !crypto.timingSafeEqual(digest, signatureBuffer)
     ) {
       console.warn('Received webhook request with invalid signature.');
-      return NextResponse.json({ error: 'Invalid webhook signature.' }, { status: 400 });
+      return res.status(400).json({ error: 'Invalid webhook signature.' });
     }
 
     // 3. Parse and process payload
@@ -69,13 +81,12 @@ export async function POST(request: NextRequest) {
     const userId = customData?.user_id;
 
     if (!eventName) {
-      return NextResponse.json({ error: 'Missing event name in payload.' }, { status: 400 });
+      return res.status(400).json({ error: 'Missing event name in payload.' });
     }
 
-    // Acknowledge events without user_id immediately to prevent LemonSqueezy retries
     if (!userId) {
       console.log(`Webhook received event "${eventName}" without custom_data.user_id. Ignoring.`);
-      return NextResponse.json({ success: true, message: 'Event ignored: No user_id provided.' });
+      return res.status(200).json({ success: true, message: 'Event ignored: No user_id provided.' });
     }
 
     console.log(`Processing LemonSqueezy event: "${eventName}" for User: "${userId}"`);
@@ -83,7 +94,6 @@ export async function POST(request: NextRequest) {
     const supabase = getSupabaseAdmin();
     const clerk = await clerkClient();
 
-    // Map variant ID to plan name
     const variantId = event.data?.attributes?.variant_id?.toString();
     const subscriptionId = event.data?.id?.toString();
     const status = event.data?.attributes?.status;
@@ -104,7 +114,6 @@ export async function POST(request: NextRequest) {
       case 'subscription_updated': {
         console.log(`Syncing plan "${plan}" (status: ${status}) for user ${userId} to Supabase and Clerk.`);
 
-        // Upsert subscription state in Supabase
         const { error: dbError } = await supabase
           .from('subscriptions')
           .upsert({
@@ -119,10 +128,9 @@ export async function POST(request: NextRequest) {
 
         if (dbError) {
           console.error('Supabase subscription upsert failed:', dbError);
-          return NextResponse.json({ error: 'Database update failed' }, { status: 500 });
+          return res.status(500).json({ error: 'Database update failed' });
         }
 
-        // Deep merge metadata in Clerk
         await clerk.users.updateUserMetadata(userId, {
           publicMetadata: {
             plan,
@@ -136,7 +144,6 @@ export async function POST(request: NextRequest) {
       case 'subscription_cancelled': {
         console.log(`Subscription ${subscriptionId} cancelled by user ${userId}. Access maintained until period end: ${currentPeriodEnd}`);
 
-        // Update database record status to 'cancelled' (we preserve user plan access until period end)
         const { error: dbError } = await supabase
           .from('subscriptions')
           .update({
@@ -148,19 +155,14 @@ export async function POST(request: NextRequest) {
 
         if (dbError) {
           console.error('Supabase subscription cancellation update failed:', dbError);
-          return NextResponse.json({ error: 'Database update failed' }, { status: 500 });
+          return res.status(500).json({ error: 'Database update failed' });
         }
-
-        // Note: We DO NOT immediately downgrade Clerk publicMetadata plan here.
-        // We let them maintain Pro/Agency privileges during their grace period.
-        // The downgrade will be handled by the 'subscription_expired' webhook event below.
         break;
       }
 
       case 'subscription_expired': {
         console.log(`Subscription ${subscriptionId} expired for user ${userId}. Downgrading to free plan.`);
 
-        // Update database subscription status to 'expired' and plan to 'free'
         const { error: dbError } = await supabase
           .from('subscriptions')
           .update({
@@ -172,10 +174,9 @@ export async function POST(request: NextRequest) {
 
         if (dbError) {
           console.error('Supabase subscription expiration downgrade failed:', dbError);
-          return NextResponse.json({ error: 'Database update failed' }, { status: 500 });
+          return res.status(500).json({ error: 'Database update failed' });
         }
 
-        // Update Clerk publicMetadata to 'free'
         await clerk.users.updateUserMetadata(userId, {
           publicMetadata: {
             plan: 'free',
@@ -204,9 +205,9 @@ export async function POST(request: NextRequest) {
         break;
     }
 
-    return NextResponse.json({ success: true });
+    return res.status(200).json({ success: true });
   } catch (err: any) {
     console.error('Webhook endpoint encountered an unhandled error:', err);
-    return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 });
+    return res.status(500).json({ error: err.message || 'Internal Server Error' });
   }
 }

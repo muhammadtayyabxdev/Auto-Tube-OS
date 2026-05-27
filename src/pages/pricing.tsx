@@ -1,16 +1,67 @@
 import Head from 'next/head';
-
-
 import { useState } from "react";
 import Link from "next/link";
+import Script from 'next/script';
+import { useRouter } from 'next/router';
+import { useUser } from '@clerk/nextjs';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "@/styles/pricing.module.css";
 import { Check, Globe, Lock, X, Zap } from 'lucide-react';
 
+declare global {
+  interface Window {
+    LemonSqueezy: any;
+  }
+}
+
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0); // Open first FAQ by default
+  const { isSignedIn, user } = useUser();
+  const router = useRouter();
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  // Get active plan from Clerk user metadata
+  const currentPlan = (user?.publicMetadata?.plan as string || 'free').toLowerCase();
+
+  const handleUpgrade = async (planName: 'pro' | 'agency') => {
+    if (!isSignedIn) {
+      router.push(`/auth?redirect=/pricing`);
+      return;
+    }
+
+    setLoadingPlan(planName);
+    try {
+      const response = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          plan: planName,
+          billingCycle: isAnnual ? 'annual' : 'monthly'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.checkoutUrl) {
+        if (window.LemonSqueezy) {
+          window.LemonSqueezy.Url.Open(data.checkoutUrl);
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
+      } else {
+        alert(data.error || 'Failed to generate checkout link.');
+      }
+    } catch (error) {
+      console.error('Upgrade checkout error:', error);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
 
   const toggleFaq = (index: number) => {
     if (openFaqIndex === index) {
@@ -125,9 +176,14 @@ export default function Pricing() {
             <span className={styles.per}>/mo</span>
           </div>
           <p className={styles.planDesc}>For serious faceless creators who want to scale without burning out.</p>
-          <Link href="/auth" className={`${styles.planBtn} ${styles.btnRed}`}>
-            Start 14-Day Free Trial
-          </Link>
+          <button 
+            onClick={() => handleUpgrade('pro')}
+            disabled={loadingPlan !== null}
+            className={`${styles.planBtn} ${styles.btnRed}`}
+            style={{ cursor: 'pointer', border: 'none', width: '100%', fontFamily: 'inherit' }}
+          >
+            {loadingPlan === 'pro' ? 'Loading...' : currentPlan === 'pro' ? 'Current Plan' : 'Start 14-Day Free Trial'}
+          </button>
           <div className={styles.divider}></div>
           <div className={styles.featLabel}>Everything in Free, plus</div>
           <div className={styles.feats}>
@@ -187,9 +243,14 @@ export default function Pricing() {
             <span className={styles.per}>/mo</span>
           </div>
           <p className={styles.planDesc}>For teams and agencies managing multiple channels and clients at scale.</p>
-          <Link href="/contact" className={`${styles.planBtn} ${styles.btnGhost}`}>
-            Contact Sales
-          </Link>
+          <button 
+            onClick={() => handleUpgrade('agency')}
+            disabled={loadingPlan !== null}
+            className={`${styles.planBtn} ${styles.btnGhost}`}
+            style={{ cursor: 'pointer', width: '100%', fontFamily: 'inherit' }}
+          >
+            {loadingPlan === 'agency' ? 'Loading...' : currentPlan === 'agency' ? 'Current Plan' : 'Upgrade to Agency'}
+          </button>
           <div className={styles.divider}></div>
           <div className={styles.featLabel}>Everything in Pro, plus</div>
           <div className={styles.feats}>
@@ -369,9 +430,14 @@ export default function Pricing() {
         <h2>Start building your channel system today.</h2>
         <p>Join 1,200+ creators already on the waitlist. Early members lock in 50% off forever.</p>
         <div className={styles.ctaBtns}>
-          <Link href="/auth" className={styles.ctaMain}>
-            Start Free Trial
-          </Link>
+          <button 
+            onClick={() => handleUpgrade('pro')}
+            disabled={loadingPlan !== null}
+            className={styles.ctaMain}
+            style={{ cursor: 'pointer', border: 'none', fontFamily: 'inherit' }}
+          >
+            {loadingPlan === 'pro' ? 'Loading...' : 'Start Free Trial'}
+          </button>
           <Link href="/dashboard" className={styles.ctaSec}>
             See the Dashboard
           </Link>
@@ -385,6 +451,7 @@ export default function Pricing() {
       </div>
 
       <Footer />
+      <Script src="https://app.lemonsqueezy.com/js/lemon.js" defer />
     </>
   );
 }

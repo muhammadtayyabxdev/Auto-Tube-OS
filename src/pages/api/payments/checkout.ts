@@ -1,6 +1,6 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getAuth, clerkClient } from '@clerk/nextjs/server';
 import { createCheckout, lemonSqueezySetup } from '@lemonsqueezy/lemonsqueezy.js';
-import { auth, clerkClient } from '@clerk/nextjs/server';
-import { NextRequest, NextResponse } from 'next/server';
 
 // Ensure LemonSqueezy is initialized with the API key
 const apiKey = process.env.LEMONSQUEEZY_API_KEY;
@@ -10,12 +10,18 @@ if (apiKey) {
   console.warn('LEMONSQUEEZY_API_KEY is not set in environment variables.');
 }
 
-export async function POST(request: NextRequest) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    // 1. Authenticate user using Clerk
-    const { userId } = await auth();
+    // 1. Authenticate user using Clerk Pages Router auth helper
+    const auth = getAuth(req);
+    const userId = auth.userId;
+
     if (!userId) {
-      return NextResponse.json({ error: 'Authentication required. Please sign in.' }, { status: 401 });
+      return res.status(401).json({ error: 'Authentication required. Please sign in.' });
     }
 
     // 2. Fetch user's email using Clerk client
@@ -24,37 +30,41 @@ export async function POST(request: NextRequest) {
     const email = user.emailAddresses[0]?.emailAddress;
 
     if (!email) {
-      return NextResponse.json({ error: 'No email address found for this user.' }, { status: 400 });
+      return res.status(400).json({ error: 'No email address found for this user.' });
     }
 
     // 3. Parse and validate the request body
-    const { plan, billingCycle, redirectUrl } = await request.json();
+    const { plan, variantId: bodyVariantId, billingCycle, redirectUrl } = req.body;
 
     if (!plan || (plan !== 'pro' && plan !== 'agency')) {
-      return NextResponse.json({ error: "Invalid plan. Must be 'pro' or 'agency'." }, { status: 400 });
+      return res.status(400).json({ error: "Invalid plan. Must be 'pro' or 'agency'." });
     }
 
     // 4. Map the requested plan to the correct variant ID
-    // Let's allow fallback to variantId directly in body, otherwise map from env
-    let variantId = '';
-    if (plan === 'pro') {
-      variantId = process.env.LEMONSQUEEZY_PRO_VARIANT_ID || '';
-    } else if (plan === 'agency') {
-      variantId = process.env.LEMONSQUEEZY_AGENCY_VARIANT_ID || '';
+    let variantId = bodyVariantId || '';
+    if (!variantId) {
+      if (plan === 'pro') {
+        variantId = process.env.LEMONSQUEEZY_PRO_VARIANT_ID || '';
+      } else if (plan === 'agency') {
+        variantId = process.env.LEMONSQUEEZY_AGENCY_VARIANT_ID || '';
+      }
     }
 
     if (!variantId) {
-      return NextResponse.json({ 
+      return res.status(500).json({ 
         error: `Variant ID for plan '${plan}' is not configured in env variables.` 
-      }, { status: 500 });
+      });
     }
 
     const storeId = process.env.LEMONSQUEEZY_STORE_ID;
     if (!storeId) {
-      return NextResponse.json({ error: 'LemonSqueezy Store ID is not configured.' }, { status: 500 });
+      return res.status(500).json({ error: 'LemonSqueezy Store ID is not configured.' });
     }
 
-    const liveUrl = process.env.NEXT_PUBLIC_RENDER_URL || 'https://auto-tube-os.onrender.com';
+    let liveUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://autotubeos.vercel.app';
+    if (process.env.VERCEL_URL) {
+      liveUrl = `https://${process.env.VERCEL_URL}`;
+    }
     const finalRedirectUrl = redirectUrl || `${liveUrl}/dashboard`;
 
     // 5. Create checkout session with LemonSqueezy
@@ -82,18 +92,18 @@ export async function POST(request: NextRequest) {
 
     if (checkout.error) {
       console.error('LemonSqueezy createCheckout API error:', checkout.error);
-      return NextResponse.json({ error: checkout.error.message }, { status: 500 });
+      return res.status(500).json({ error: checkout.error.message });
     }
 
     const checkoutUrl = checkout.data?.data?.attributes?.url;
 
     if (!checkoutUrl) {
-      return NextResponse.json({ error: 'Failed to generate checkout URL.' }, { status: 500 });
+      return res.status(500).json({ error: 'Failed to generate checkout URL.' });
     }
 
-    return NextResponse.json({ checkoutUrl });
+    return res.status(200).json({ checkoutUrl });
   } catch (err: any) {
     console.error('Checkout creation endpoint encountered an error:', err);
-    return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 });
+    return res.status(500).json({ error: err.message || 'Internal Server Error' });
   }
 }

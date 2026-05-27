@@ -3,10 +3,12 @@ import Head from 'next/head';
 
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import Sidebar from '@/components/Sidebar';
 import styles from '@/styles/settings.module.css';
 import { useAuth } from '@/hooks/useAuth';
-import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Check, CreditCard, Link2, Lock, Mail, Play, Receipt, Rocket, Shield, User, Users, XCircle } from 'lucide-react';
+import { useUser, useClerk } from '@clerk/nextjs';
+import { AlertTriangle, ArrowDown, BarChart3, Bell, Bot, Check, CreditCard, Link2, Lock, Mail, Play, Receipt, Rocket, Shield, User, Users, XCircle, Zap } from 'lucide-react';
 import { GroqIcon, GeminiIcon } from '@/components/BrandIcons';
 
 function SettingsContent() {
@@ -47,6 +49,13 @@ function SettingsContent() {
     }, 3000);
   };
 
+  const { user } = useUser();
+  const { signOut } = useClerk();
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  // Get active plan from Clerk user metadata
+  const currentPlan = (user?.publicMetadata?.plan as string || 'free').toLowerCase();
+
   // 1. Profile State
   const [profile, setProfile] = useState({
     firstName: 'Ahmed',
@@ -56,6 +65,51 @@ function SettingsContent() {
     niche: 'Finance',
     market: 'US Market'
   });
+
+  // Sync Clerk user with profile state
+  useEffect(() => {
+    if (user) {
+      setProfile(prev => ({
+        ...prev,
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        email: user.primaryEmailAddress?.emailAddress || '',
+      }));
+    }
+  }, [user]);
+
+  const handleUpgrade = async (planName: 'pro' | 'agency') => {
+    setLoadingPlan(planName);
+    try {
+      const response = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          plan: planName,
+          billingCycle: 'monthly'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.checkoutUrl) {
+        if (window.LemonSqueezy) {
+          window.LemonSqueezy.Url.Open(data.checkoutUrl);
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
+      } else {
+        alert(data.error || 'Failed to generate checkout link.');
+      }
+    } catch (error) {
+      console.error('Upgrade checkout error:', error);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
 
   const handleProfileChange = (key: string, value: string) => {
     setProfile(prev => ({ ...prev, [key]: value }));
@@ -175,8 +229,21 @@ function SettingsContent() {
   };
 
   // Global Save Handler
-  const handleSaveChanges = () => {
-    triggerToast('Settings changes saved successfully!');
+  const handleSaveChanges = async () => {
+    try {
+      if (user) {
+        await user.update({
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+        });
+        triggerToast('Profile and settings updated successfully!');
+      } else {
+        triggerToast('Settings changes saved successfully!');
+      }
+    } catch (error: any) {
+      console.error('Error saving profile changes:', error);
+      triggerToast(error?.message || 'Failed to update profile', 'error');
+    }
   };
 
   const tabTitles: Record<string, string> = {
@@ -707,50 +774,113 @@ function SettingsContent() {
                     <div className={styles.pcRow}>
                       <div>
                         <div style={{ fontSize: '11px', color: 'var(--muted2)', marginBottom: '4px' }}>Current Plan</div>
-                        <div className={styles.pcName}><Rocket size={16} /> Pro Plan</div>
+                        <div className={styles.pcName}>
+                          {currentPlan === 'agency' ? (
+                            <><Zap size={16} /> Agency Plan</>
+                          ) : currentPlan === 'pro' ? (
+                            <><Rocket size={16} /> Pro Plan</>
+                          ) : (
+                            <><User size={16} /> Free Plan</>
+                          )}
+                        </div>
                       </div>
                       <div className={styles.pcPrice}>
-                        $29<span className={styles.pcPriceSpan}>/mo</span>
+                        {currentPlan === 'agency' ? '$99' : currentPlan === 'pro' ? '$29' : '$0'}
+                        <span className={styles.pcPriceSpan}>/mo</span>
                       </div>
                     </div>
                     <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--muted2)' }}>
-                      <span>Next charge: June 1, 2026</span>
-                      <span>Visa •••• 4242</span>
+                      <span>Status: {currentPlan !== 'free' ? 'Active (Synced via Webhook)' : 'Free Tier'}</span>
+                      <span>No credit card required</span>
                     </div>
                   </div>
 
                   <div className={styles.setSec}>
                     <div className={styles.setSecTitle}>Actions</div>
                     
-                    <div className={styles.setRow}>
-                      <div>
-                        <div className={styles.srLabel}>Upgrade to Agency</div>
-                        <div className={styles.srDesc}>Unlimited channels + team collaboration</div>
-                      </div>
-                      <button className={styles.saveBtn} onClick={() => triggerToast('Opening upgrade checkout form...')}>
-                        Upgrade — $99/mo
-                      </button>
-                    </div>
+                    {currentPlan === 'free' && (
+                      <>
+                        <div className={styles.setRow}>
+                          <div>
+                            <div className={styles.srLabel}>Upgrade to Pro</div>
+                            <div className={styles.srDesc}>Unlimited topic ideas + unlimited scripts</div>
+                          </div>
+                          <button 
+                            className={styles.saveBtn} 
+                            disabled={loadingPlan !== null}
+                            onClick={() => handleUpgrade('pro')}
+                          >
+                            {loadingPlan === 'pro' ? 'Loading...' : 'Upgrade — $29/mo'}
+                          </button>
+                        </div>
+                        <div className={styles.setRow}>
+                          <div>
+                            <div className={styles.srLabel}>Upgrade to Agency</div>
+                            <div className={styles.srDesc}>Unlimited channels + team collaboration</div>
+                          </div>
+                          <button 
+                            className={styles.saveBtn} 
+                            disabled={loadingPlan !== null}
+                            onClick={() => handleUpgrade('agency')}
+                          >
+                            {loadingPlan === 'agency' ? 'Loading...' : 'Upgrade — $99/mo'}
+                          </button>
+                        </div>
+                      </>
+                    )}
 
-                    <div className={styles.setRow}>
-                      <div>
-                        <div className={styles.srLabel}>Switch to Annual</div>
-                        <div className={styles.srDesc}>Save 35% — pay $19/mo billed yearly</div>
-                      </div>
-                      <button className={styles.saveBtn} style={{ background: 'var(--green)' }} onClick={() => triggerToast('Applied annual billing discount!')}>
-                        Save 35%
-                      </button>
-                    </div>
+                    {currentPlan === 'pro' && (
+                      <>
+                        <div className={styles.setRow}>
+                          <div>
+                            <div className={styles.srLabel}>Upgrade to Agency</div>
+                            <div className={styles.srDesc}>Unlimited channels + team collaboration (10 seats)</div>
+                          </div>
+                          <button 
+                            className={styles.saveBtn} 
+                            disabled={loadingPlan !== null}
+                            onClick={() => handleUpgrade('agency')}
+                          >
+                            {loadingPlan === 'agency' ? 'Loading...' : 'Upgrade — $99/mo'}
+                          </button>
+                        </div>
+                        <div className={styles.setRow}>
+                          <div>
+                            <div className={styles.srLabel}>Manage Pro Subscription</div>
+                            <div className={styles.srDesc}>Update payment details, download invoices, or cancel plan.</div>
+                          </div>
+                          <button 
+                            className={styles.saveBtn} 
+                            style={{ background: '#7928ca' }}
+                            onClick={() => {
+                              triggerToast('Opening LemonSqueezy Billing Portal...');
+                              window.open('https://autotubeos.lemonsqueezy.com/billing', '_blank');
+                            }}
+                          >
+                            Billing Portal
+                          </button>
+                        </div>
+                      </>
+                    )}
 
-                    <div className={styles.setRow}>
-                      <div>
-                        <div className={styles.srLabel}>Update Payment Method</div>
-                        <div className={styles.srDesc}>Visa •••• 4242 · expires 08/2027</div>
+                    {currentPlan === 'agency' && (
+                      <div className={styles.setRow}>
+                        <div>
+                          <div className={styles.srLabel}>Manage Agency Subscription</div>
+                          <div className={styles.srDesc}>Update payment details, download invoices, or cancel plan.</div>
+                        </div>
+                        <button 
+                          className={styles.saveBtn} 
+                          style={{ background: '#7928ca' }}
+                          onClick={() => {
+                            triggerToast('Opening LemonSqueezy Billing Portal...');
+                            window.open('https://autotubeos.lemonsqueezy.com/billing', '_blank');
+                          }}
+                        >
+                          Billing Portal
+                        </button>
                       </div>
-                      <button className={styles.dangerBtn} style={{ fontSize: '12px', padding: '7px 14px' }} onClick={() => triggerToast('Loading payment card update modal...')}>
-                        Update Card
-                      </button>
-                    </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -983,6 +1113,7 @@ export default function Settings() {
     }>
       <SettingsContent />
     </Suspense>
-      </>
+      <Script src="https://app.lemonsqueezy.com/js/lemon.js" defer />
+    </>
   );
 }

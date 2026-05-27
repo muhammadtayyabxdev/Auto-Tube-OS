@@ -164,7 +164,13 @@ export default function Sidebar({ currentView = 'home', onViewChange }: SidebarP
               </div>
               <div className={styles.userInfo}>
                 <div className={styles.name}>{user?.fullName || "Creator"}</div>
-                <div className={styles.plan}>Pro Plan</div>
+                <div className={styles.plan}>
+                  {user?.publicMetadata?.plan === 'pro'
+                    ? 'Pro Plan'
+                    : user?.publicMetadata?.plan === 'agency'
+                    ? 'Agency Plan'
+                    : 'Free Plan'}
+                </div>
               </div>
               <ChevronDown size={12} style={{ marginLeft: 'auto', color: 'var(--muted)', transform: userMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </button>
