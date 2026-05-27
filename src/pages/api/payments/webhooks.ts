@@ -100,8 +100,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const currentPeriodEnd = event.data?.attributes?.renews_at || event.data?.attributes?.ends_at;
 
     let plan = 'free';
-    const proVariantId = process.env.LEMONSQUEEZY_PRO_VARIANT_ID?.toString();
-    const agencyVariantId = process.env.LEMONSQUEEZY_AGENCY_VARIANT_ID?.toString();
+    const proVariantId = (process.env.LEMONSQUEEZY_PRO_VARIANT_ID || '1089718').toString();
+    const agencyVariantId = (process.env.LEMONSQUEEZY_AGENCY_VARIANT_ID || '1089761').toString();
 
     if (variantId === proVariantId) {
       plan = 'pro';

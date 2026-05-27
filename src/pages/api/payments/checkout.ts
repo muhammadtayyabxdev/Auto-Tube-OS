@@ -44,9 +44,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let variantId = bodyVariantId || '';
     if (!variantId) {
       if (plan === 'pro') {
-        variantId = process.env.LEMONSQUEEZY_PRO_VARIANT_ID || '';
+        variantId = process.env.LEMONSQUEEZY_PRO_VARIANT_ID || '1089718';
       } else if (plan === 'agency') {
-        variantId = process.env.LEMONSQUEEZY_AGENCY_VARIANT_ID || '';
+        variantId = process.env.LEMONSQUEEZY_AGENCY_VARIANT_ID || '1089761';
       }
     }
 
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    const storeId = process.env.LEMONSQUEEZY_STORE_ID;
+    const storeId = process.env.LEMONSQUEEZY_STORE_ID || '388046';
     if (!storeId) {
       return res.status(500).json({ error: 'LemonSqueezy Store ID is not configured.' });
     }
