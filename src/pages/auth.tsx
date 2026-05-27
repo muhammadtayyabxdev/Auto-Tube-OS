@@ -102,17 +102,11 @@ export default function Auth() {
         try {
           if (phoneFactor) {
             // Send SMS code
-            await (signIn as any).prepareSecondFactor({
-              strategy: 'phone_code',
-              phoneNumberId: phoneFactor.phoneNumberId
-            });
+            await (signIn as any).mfa.sendPhoneCode();
             msg = 'Enter the 6-digit code sent to your registered phone number via SMS.';
           } else if (emailFactor) {
             // Send email code
-            await (signIn as any).prepareSecondFactor({
-              strategy: 'email_code',
-              emailAddressId: emailFactor.emailAddressId
-            });
+            await (signIn as any).mfa.sendEmailCode();
             msg = 'Enter the 6-digit code sent to your registered email address.';
           } else if (totpFactor) {
             msg = 'Enter the 6-digit code from your authenticator app.';
@@ -157,28 +151,28 @@ export default function Auth() {
 
       // Verify the code using attemptSecondFactor on the correct strategy
       if (phoneFactor) {
-        attemptResult = await (signIn as any).attemptSecondFactor({
-          strategy: 'phone_code',
+        attemptResult = await (signIn as any).mfa.verifyPhoneCode({
           code: totpCode
         });
       } else if (emailFactor) {
-        attemptResult = await (signIn as any).attemptSecondFactor({
-          strategy: 'email_code',
+        attemptResult = await (signIn as any).mfa.verifyEmailCode({
           code: totpCode
         });
       } else if (totpFactor) {
-        attemptResult = await (signIn as any).attemptSecondFactor({
-          strategy: 'totp',
+        attemptResult = await (signIn as any).mfa.verifyTOTP({
           code: totpCode
         });
       } else {
         // Fallback to the first supported strategy
         const fallbackStrategy = secondFactors[0]?.strategy;
         if (fallbackStrategy) {
-          attemptResult = await (signIn as any).attemptSecondFactor({
-            strategy: fallbackStrategy,
-            code: totpCode
-          });
+          if (fallbackStrategy === 'phone_code') {
+            attemptResult = await (signIn as any).mfa.verifyPhoneCode({ code: totpCode });
+          } else if (fallbackStrategy === 'email_code') {
+            attemptResult = await (signIn as any).mfa.verifyEmailCode({ code: totpCode });
+          } else {
+            attemptResult = await (signIn as any).mfa.verifyTOTP({ code: totpCode });
+          }
         } else {
           throw new Error('No supported second factor found.');
         }
